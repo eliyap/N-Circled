@@ -10,7 +10,7 @@ struct ContentView: View {
             DoodleView()
                 .border(Color.red)
                 .onAppear(perform: {
-                    testAccelerate()
+                    test()
                 })
         }
     }
