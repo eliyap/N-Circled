@@ -35,8 +35,8 @@ func testAccelerate() -> Void {
     
     for index in 0..<count { 
         let angle: Float = .tau * Float(index) / Float(count)
-        reValues.append(cos(angle))
-        imValues.append(sin(angle))
+        reValues.append(cos(angle + .pi / 2))
+        imValues.append(sin(angle + .pi / 2))
     }
 
     let dft: vDSP.DiscreteFourierTransform<Float>
