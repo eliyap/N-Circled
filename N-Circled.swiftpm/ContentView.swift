@@ -9,6 +9,9 @@ struct ContentView: View {
             Text("Hello, WWDC!")
             DoodleView()
                 .border(Color.red)
+                .onAppear(perform: {
+                    testAccelerate()
+                })
         }
     }
 }
