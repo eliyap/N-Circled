@@ -28,7 +28,7 @@ func testAccelerate() -> Void {
      * - `f` is 2, 3, 5, 3x3, 3x5, or 5x5,
      * - `n` >= 2.
      */
-    let count = 2 * 2 * 2 * 2 * 2
+    let count = 2 * 2 * 2
 
     var reValues: [Float] = []
     var imValues: [Float] = []
