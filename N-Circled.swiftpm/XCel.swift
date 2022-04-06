@@ -12,7 +12,7 @@ extension Float {
     static let tau: Float = Float.pi * 2
 }
 
-func test() -> Void {
+func test() -> [Complex<Float>] {
     let count = 64
     
     var values: [Complex<Float>] = []
@@ -25,7 +25,7 @@ func test() -> Void {
         ))
     }
     
-    _ = testAccelerate(values: values)
+    return testAccelerate(values: values)
 }
 
 func testAccelerate(values: [Complex<Float>]) -> [Complex<Float>] {
