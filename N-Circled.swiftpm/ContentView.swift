@@ -12,6 +12,7 @@ struct ContentView: View {
                 .onAppear(perform: {
                     test()
                 })
+            SpinnerView()
         }
     }
 }
