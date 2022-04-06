@@ -6,8 +6,11 @@
 //
 
 import SwiftUI
+import Combine
 
 struct SpinnerView: View {
+    
+    @State var date: Date = .init()
     
     public let dftResults: [Complex<Float>] = test()
     
@@ -18,31 +21,50 @@ struct SpinnerView: View {
         .init(amplitude: 1.00, frequency: 4, phase: .zero),
     ]
     
+    static let interval: Double = 1.0 / 30.0
+    private let ticker = Timer.publish(
+        every: interval,
+        tolerance: interval,
+        on: .main,
+        in: .common
+    ).autoconnect()
+    
+//    public var cancellable: AnyCancellable? = nil
+    
+    init() {
+//        cancellable = ticker.sink(receiveValue: { [self] date in
+//            self.date = date
+//        })
+    }
+    
     var body: some View {
-        TimelineView(.animation) { timeline in
             Canvas { (context, size) in
-                let location = dftResults.fourierSeriesResult(date: timeline.date, size: size)
+                let date = self.date
+                let location = dftResults.fourierSeriesResult(date: date, size: size)
                 context.draw(Image(systemName: "heart"), at: location)
                 
                 var offset: CGPoint = .zero
                 for spinner in spinners {
-                    spinner.draw(in: &context, date: timeline.date, size: size, offset: offset)
-//                    offset.x += spinner.offset(at: timeline.date).x * min(size.height, size.height)
-//                    offset.y += spinner.offset(at: timeline.date).y * min(size.height, size.height)
+                    spinner.draw(in: &context, date: date, size: size, offset: offset)
+//                    offset.x += spinner.offset(at: date).x * min(size.height, size.height)
+//                    offset.y += spinner.offset(at: date).y * min(size.height, size.height)
                 }
             }
             ScrollView(.horizontal) {
                 HStack {
                     ForEach(spinners) { spinner in
                         Canvas { (context, size) in
-                            spinner.draw(in: &context, date: timeline.date, size: size, offset: .zero)
+                            spinner.draw(in: &context, date: self.date, size: size, offset: .zero)
                         }
                             .aspectRatio(1, contentMode: .fit)
                     }
                 }
             }
                 .frame(height: 100)
-        }
+                .onReceive(ticker, perform: {
+                    date = $0
+                })
+        
     }
 }
 
