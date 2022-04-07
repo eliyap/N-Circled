@@ -43,11 +43,11 @@ final class CASpinnerView: UIView {
         gradientLayer.frame = .init(origin: .zero, size: size)
         layer.addSublayer(gradientLayer)
         
-        let sideLength = min(size.width, size.height)
-        
         let shapeLayer = CAShapeLayer()
-        shapeLayer.path = makePath(diameter: 50, frameSize: size)
-        shapeLayer.fillColor = UIColor.red.cgColor
+        shapeLayer.path = makePath(diameter: 100, frameSize: size)
+        shapeLayer.lineWidth = 5
+        shapeLayer.strokeColor = UIColor.black.cgColor
+        shapeLayer.fillColor = nil
         
         let animation = makeAnimation()
         
