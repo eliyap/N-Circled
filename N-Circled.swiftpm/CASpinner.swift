@@ -40,7 +40,7 @@ final class CASpinnerView: UIView {
         gradientLayer.endPoint = CGPoint(x: 0.5, y: 0)
         gradientLayer.type = .conic
         gradientLayer.colors = [UIColor.red.cgColor, UIColor.orange.cgColor, UIColor.green.cgColor]
-        gradientLayer.frame = .init(origin: .zero, size: CGSize(width: 100, height: 100))
+        gradientLayer.frame = .init(origin: .zero, size: size)
         layer.addSublayer(gradientLayer)
         
         let shapeLayer = CAShapeLayer()
@@ -56,8 +56,8 @@ final class CASpinnerView: UIView {
         animation.repeatCount = .infinity
         
         shapeLayer.add(animation, property: .transform)
-        
-        layer.addSublayer(shapeLayer)
+
+        gradientLayer.mask = shapeLayer
     }
     
     required init?(coder: NSCoder) {
