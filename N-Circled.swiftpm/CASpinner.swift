@@ -33,7 +33,7 @@ final class CASpinnerView: UIView {
     init(size: CGSize) {
         super.init(frame: .zero)
         
-        let d1: CGFloat = 100
+        let d1: CGFloat = 200
         
         let gl1 = CAGradientLayer()
         gl1.startPoint = CGPoint(x: 0.5, y: 0.5)
@@ -47,8 +47,6 @@ final class CASpinnerView: UIView {
         
         let l1 = CALayer()
         l1.frame = CGRect(x: 0, y: 0, width: d1, height: d1)
-        l1.borderColor = UIColor.green.cgColor
-        l1.borderWidth = 2
         layer.addSublayer(l1)
         l1.addSublayer(gl1)
         
@@ -67,7 +65,7 @@ final class CASpinnerView: UIView {
         
         //
 
-        let d2: CGFloat = 50
+        let d2: CGFloat = 100
         
         let gl2 = CAGradientLayer()
         gl2.startPoint = CGPoint(x: 0.5, y: 0.5)
@@ -81,13 +79,14 @@ final class CASpinnerView: UIView {
 
         let l2 = CALayer()
         l2.frame = CGRect(x: 0, y: 0, width: d2, height: d2)
-        l2.borderColor = UIColor.green.cgColor
-        l2.borderWidth = 2
         layer.addSublayer(l2)
         l2.addSublayer(gl2)
 
         let sl2 = CAShapeLayer()
         sl2.path = makePath(diameter: d2, frameSize: .zero)
+        sl2.fillColor = nil
+        sl2.strokeColor = UIColor.black.cgColor
+        sl2.lineWidth = 2
         sl2.frame = CGRect(x: 0, y: 0, width: d2, height: d2)
         gl2.mask = sl2
         let a2 = makeAnimation(offset: CGPoint(
@@ -98,7 +97,7 @@ final class CASpinnerView: UIView {
         
         //
 
-        let d3: CGFloat = 25
+        let d3: CGFloat = 50
         
         let gl3 = CAGradientLayer()
         gl3.startPoint = CGPoint(x: 0.5, y: 0.5)
@@ -112,18 +111,19 @@ final class CASpinnerView: UIView {
 
         let l3 = CALayer()
         l3.frame = CGRect(x: 0, y: 0, width: d3, height: d3)
-        l3.borderColor = UIColor.green.cgColor
-        l3.borderWidth = 3
         layer.addSublayer(l3)
         l3.addSublayer(gl3)
 
         let sl3 = CAShapeLayer()
         sl3.path = makePath(diameter: d3, frameSize: .zero)
+        sl3.fillColor = nil
+        sl3.strokeColor = UIColor.black.cgColor
+        sl3.lineWidth = 2
         sl3.frame = CGRect(x: 0, y: 0, width: d3, height: d3)
         gl3.mask = sl3
         let a3 = makeAnimation(offset: CGPoint(
-            x: d1/3 - d3/3,
-            y: -d3/3
+            x: d2/2 - d3/2,
+            y: -d3/2
         ))
         l3.add(a3, property: .transform)
         
@@ -177,36 +177,7 @@ func makeAnimation(offset: CGPoint) -> CAAnimation {
     }
     animation.values = transforms
     animation.keyTimes = keyTimes
-    animation.duration = 1.25
-    animation.autoreverses = false
-    animation.repeatCount = .infinity
-    
-    return animation
-}
-
-func makeSublayerAnimation(size: CGSize) -> CAAnimation {
-    let animation = CAKeyframeAnimation(keyPath: CALayer.AnimatableProperty.sublayerTransform.rawValue)
-
-    var transforms: [CATransform3D] = []
-    var keyTimes: [NSNumber] = []
-    
-    /// Move by quarters, as if we go by halves the rotation will be back and forth.
-    /// Thirds might be possible, but could introduce floating point errors.
-    for val in stride(from: 0, through: 1, by: 0.3333) {
-        let transform = CGAffineTransform(translationX: 100, y: 0)
-            .rotated(by: val * 2 * .pi)
-//            .concatenating(
-//                CGAffineTransform(rotationAngle: val * 2 * .pi)
-//                    .translatedBy(x: 50, y: 50)
-//                CGAffineTransform(translationX: -50, y: -50)
-//                    .rotated(by: val * 2 * .pi)
-//            )
-        transforms.append(CATransform3DMakeAffineTransform(transform))
-        keyTimes.append(val as NSNumber)
-    }
-    animation.values = transforms
-    animation.keyTimes = keyTimes
-    animation.duration = 1.25
+    animation.duration = 4
     animation.autoreverses = false
     animation.repeatCount = .infinity
     
