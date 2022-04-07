@@ -34,13 +34,36 @@ final class CASpinnerView: UIView {
         super.init(frame: .zero)
         
         let d1: CGFloat = 100
+        
+        let gl1 = CAGradientLayer()
+        gl1.startPoint = CGPoint(x: 0.5, y: 0.5)
+        gl1.endPoint = CGPoint(x: 0.5, y: 0)
+        gl1.type = .conic
+        gl1.colors = [
+            UIColor.clear.cgColor,
+            UIColor.label.cgColor,
+        ]
+        gl1.frame = CGRect(x: 0, y: 0, width: d1, height: d1)
+        
+        let l1 = CALayer()
+        l1.frame = CGRect(x: 0, y: 0, width: d1, height: d1)
+        l1.borderColor = UIColor.green.cgColor
+        l1.borderWidth = 2
+        layer.addSublayer(l1)
+        l1.addSublayer(gl1)
+        
         let sl1 = CAShapeLayer()
         sl1.path = makePath(diameter: d1, frameSize: .zero)
         sl1.borderColor = UIColor.green.cgColor
         sl1.borderWidth = 2
         sl1.frame = CGRect(x: 0, y: 0, width: d1, height: d1)
         sl1.fillColor = UIColor.green.cgColor
-        sl1.add(makeAnimation(), property: .transform)
+        gl1.mask = sl1
+        let a1 = makeAnimation(offset: CGPoint(
+            x: size.width/2 - d1/2,
+            y: size.height/2 - d1/2
+        ))
+        l1.add(a1, property: .transform)
         
         let d2: CGFloat = 50
         let sl2 = CAShapeLayer()
@@ -49,7 +72,11 @@ final class CASpinnerView: UIView {
         sl2.borderWidth = 2
         sl2.frame = CGRect(x: 0, y: 0, width: d2, height: d2)
         sl2.fillColor = UIColor.red.cgColor
-        sl2.add(makeAnimation(), property: .transform)
+        let a2 = makeAnimation(offset: CGPoint(
+            x: d1/2 - d2/2,
+            y: -d2/2
+        ))
+        sl2.add(a2, property: .transform)
         
         let d3: CGFloat = 25
         let sl3 = CAShapeLayer()
@@ -58,19 +85,13 @@ final class CASpinnerView: UIView {
         sl3.borderWidth = 2
         sl3.frame = CGRect(x: 0, y: 0, width: d3, height: d3)
         sl3.fillColor = UIColor.purple.cgColor
-        sl3.add(makeAnimation(), property: .transform)
-            
-        layer.addSublayer(sl1)
-        layer.sublayerTransform = CATransform3DMakeAffineTransform(CGAffineTransform(
-            translationX: size.width/2 - d1/2,
-            y: size.height/2 - d1/2
-        ))
+//        sl3.add(makeAnimation(), property: .transform)
         
-        sl1.addSublayer(sl2)
-        sl1.sublayerTransform = CATransform3DMakeAffineTransform(CGAffineTransform(
-            translationX: d1/2 - d2/2,
-            y: -d2/2
-        ))
+        l1.addSublayer(sl2)
+//        l1.sublayerTransform = CATransform3DMakeAffineTransform(CGAffineTransform(
+//            translationX: d1/2 - d2/2,
+//            y: -d2/2
+//        ))
         
         sl2.addSublayer(sl3)
         sl2.sublayerTransform = CATransform3DMakeAffineTransform(CGAffineTransform(
@@ -108,7 +129,7 @@ func makePath(diameter: CGFloat, frameSize: CGSize) -> CGPath {
     return UIBezierPath(roundedRect: rect, cornerRadius: diameter/2).cgPath
 }
 
-func makeAnimation() -> CAAnimation {
+func makeAnimation(offset: CGPoint) -> CAAnimation {
     let animation = CAKeyframeAnimation(keyPath: CALayer.AnimatableProperty.transform.rawValue)
 
     var transforms: [CATransform3D] = []
@@ -118,6 +139,7 @@ func makeAnimation() -> CAAnimation {
     /// Thirds might be possible, but could introduce floating point errors.
     for val in stride(from: 0, through: 1, by: 0.25) {
         let transform = CGAffineTransform(rotationAngle: val * 2 * .pi)
+            .concatenating(CGAffineTransform(translationX: offset.x, y: offset.y))
         transforms.append(CATransform3DMakeAffineTransform(transform))
         keyTimes.append(val as NSNumber)
     }
