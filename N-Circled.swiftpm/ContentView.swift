@@ -1,13 +1,17 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @StateObject private var spinnerHolder: SpinnerHolder = .init()
+    
     var body: some View {
         VStack {
             Image(systemName: "globe")
                 .imageScale(.large)
                 .foregroundColor(.accentColor)
             Text("Hello, WWDC!")
-            DoodleView()
+            Text("\(spinnerHolder.spinners.count)")
+            DoodleView(spinnerHolder: spinnerHolder)
                 .border(Color.red)
                 .onAppear(perform: {
                     test()
@@ -18,4 +22,8 @@ struct ContentView: View {
                 .border(Color.red)
         }
     }
+}
+
+final class SpinnerHolder: ObservableObject {
+    @Published var spinners: [Spinner] = []
 }
