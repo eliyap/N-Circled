@@ -31,13 +31,43 @@ final class CASpinnerView: UIView {
     private let spinners = [
         Spinner(amplitude: 1.00, frequency: +1, phase: .pi / 2),
         Spinner(amplitude: 0.50, frequency: +2, phase: .pi / 2),
-//            Spinner(amplitude: 0.25, frequency: +3, phase: .pi / 2),
-//            Spinner(amplitude: 0.125, frequency: +4, phase: .pi / 2),
-//            Spinner(amplitude: 0.0625, frequency: +5, phase: .pi / 2),
+        Spinner(amplitude: 0.25, frequency: +3, phase: .pi / 2),
+//        Spinner(amplitude: 0.125, frequency: +4, phase: .pi / 2),
+//        Spinner(amplitude: 0.0625, frequency: +5, phase: .pi / 2),
     ]
     
     init(size: CGSize) {
         super.init(frame: .zero)
+        
+        let path = UIBezierPath()
+        path.move(to: .zero)
+        
+        let baseRadius: CGFloat = 200
+        
+        for val in stride(from: 0.0, through: 1.0, by: 0.001) {
+            var offset: CGPoint = .zero
+            for spinner in spinners {
+                let spinnerOffset = spinner.offset(proportion: val)
+                offset.x += spinnerOffset.x * baseRadius
+                offset.y += spinnerOffset.y * baseRadius
+            }
+            
+            offset.x /= 2
+            offset.y /= 2
+            
+            offset.x += size.width/2
+            offset.y += size.height/2
+            
+            path.addLine(to: offset)
+        }
+        
+        path.close()
+        
+        let sl = CAShapeLayer()
+        sl.path = path.cgPath
+        sl.fillColor = UIColor.purple.cgColor
+        
+        layer.addSublayer(sl)
         
         addSpinners(size: size)
     }
