@@ -32,106 +32,55 @@ final class CASpinnerView: UIView {
         
         let baseRadius: CGFloat = 200
         
-        let spinner1 = Spinner(
-            amplitude: 1,
-            frequency: 1,
-            phase: .pi / 2
-        )
-        
-        let d1: CGFloat = baseRadius * spinner1.amplitude
-        
-        let gl1 = makeGradient()
-        gl1.frame = CGRect(x: 0, y: 0, width: d1, height: d1)
-        
-        let l1 = CALayer()
-        l1.frame = CGRect(x: 0, y: 0, width: d1, height: d1)
-        layer.addSublayer(l1)
-        l1.addSublayer(gl1)
-        
-        let sl1 = CAShapeLayer()
-        sl1.path = makePath(diameter: d1)
-        sl1.fillColor = nil
-        sl1.strokeColor = UIColor.black.cgColor
-        sl1.lineWidth = 2
-        sl1.frame = CGRect(x: 0, y: 0, width: d1, height: d1)
-        gl1.mask = sl1
-        let a1 = makeAnimation(offset: CGPoint(
-            x: size.width/2 - d1/2,
-            y: size.height/2 - d1/2
-        ), spinner: spinner1)
-        l1.add(a1, property: .transform)
-        
-        //
-        
-        let spinner2 = Spinner(
-            amplitude: 0.5,
-            frequency: -1,
-            phase: .zero
-        )
-        let d2: CGFloat = baseRadius * spinner2.amplitude
-        
-        let gl2 = makeGradient()
-        gl2.colors = [
-            UIColor.clear.cgColor,
-            UIColor.label.cgColor,
+        let spinners = [
+            Spinner(amplitude: 1.00, frequency: +1, phase: .pi / 2),
+            Spinner(amplitude: 0.50, frequency: -1, phase: .pi / 2),
+            Spinner(amplitude: 0.25, frequency: +3, phase: .pi / 2),
         ]
-        gl2.frame = CGRect(x: 0, y: 0, width: d2, height: d2)
-
-        let l2 = CALayer()
-        l2.frame = CGRect(x: 0, y: 0, width: d2, height: d2)
-        layer.addSublayer(l2)
-        l2.addSublayer(gl2)
-
-        let sl2 = CAShapeLayer()
-        sl2.path = makePath(diameter: d2)
-        sl2.fillColor = nil
-        sl2.strokeColor = UIColor.black.cgColor
-        sl2.lineWidth = 2
-        sl2.frame = CGRect(x: 0, y: 0, width: d2, height: d2)
-        gl2.mask = sl2
-        let a2 = makeAnimation(offset: CGPoint(
-            x: d1/2 - d2/2,
-            y: -d2/2
-        ), spinner: spinner2)
-        l2.add(a2, property: .transform)
         
-        //
-
-        let spinner3 = Spinner(
-            amplitude: 0.25,
-            frequency: 3,
-            phase: .zero
-        )
-        let d3: CGFloat = baseRadius * spinner3.amplitude
+        var prevLayer: CALayer = layer
+        var prevFrameSize: CGSize = size
         
-        let gl3 = makeGradient()
-        gl3.colors = [
-            UIColor.clear.cgColor,
-            UIColor.label.cgColor,
-        ]
-        gl3.frame = CGRect(x: 0, y: 0, width: d3, height: d3)
-
-        let l3 = CALayer()
-        l3.frame = CGRect(x: 0, y: 0, width: d3, height: d3)
-        layer.addSublayer(l3)
-        l3.addSublayer(gl3)
-
-        let sl3 = CAShapeLayer()
-        sl3.path = makePath(diameter: d3)
-        sl3.fillColor = nil
-        sl3.strokeColor = UIColor.black.cgColor
-        sl3.lineWidth = 2
-        sl3.frame = CGRect(x: 0, y: 0, width: d3, height: d3)
-        gl3.mask = sl3
-        let a3 = makeAnimation(offset: CGPoint(
-            x: d2/2 - d3/2,
-            y: -d3/2
-        ), spinner: spinner3)
-        l3.add(a3, property: .transform)
-        
-        l1.addSublayer(l2)
-        
-        l2.addSublayer(l3)
+        for index in spinners.indices {
+            let spinner = spinners[index]
+            
+            let diameter: CGFloat = baseRadius * spinner.amplitude
+            let layerFrame = CGRect(x: 0, y: 0, width: diameter, height: diameter)
+            
+            /// Create layers.
+            let gradientLayer = makeGradient()
+            gradientLayer.frame = layerFrame
+            
+            let newLayer = CALayer()
+            newLayer.frame = layerFrame
+            
+            let shapeLayer = CAShapeLayer()
+            shapeLayer.frame = layerFrame
+            shapeLayer.path = makePath(diameter: diameter)
+            shapeLayer.fillColor = nil
+            shapeLayer.strokeColor = UIColor.black.cgColor
+            shapeLayer.lineWidth = 2
+            
+            /// Assemble layers.
+            gradientLayer.mask = shapeLayer
+            newLayer.addSublayer(gradientLayer)
+            prevLayer.addSublayer(newLayer)
+            
+            /// Add offset and rotation.
+            var offset = CGPoint(
+                x: prevFrameSize.width/2 - diameter/2,
+                y: -diameter/2
+            )
+            if index == spinners.startIndex {
+                offset.y += prevFrameSize.height / 2
+            }
+            let animation = makeAnimation(offset: offset, spinner: spinner)
+            newLayer.add(animation, property: .transform)
+            
+            /// Prepare for next iteration.
+            prevLayer = newLayer
+            prevFrameSize = layerFrame.size
+        }
     }
     
     required init?(coder: NSCoder) {
@@ -161,6 +110,10 @@ func makePath(diameter: CGFloat) -> CGPath {
         height: diameter
     )
     return UIBezierPath(roundedRect: rect, cornerRadius: diameter/2).cgPath
+}
+
+func x() {
+    
 }
 
 func makeAnimation(offset: CGPoint, spinner: Spinner) -> CAAnimation {
