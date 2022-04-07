@@ -27,16 +27,23 @@ struct CASpinner: UIViewRepresentable {
 }
 
 final class CASpinnerView: UIView {
+    
+    private let spinners = [
+        Spinner(amplitude: 1.00, frequency: +1, phase: .pi / 2),
+        Spinner(amplitude: 0.50, frequency: +2, phase: .pi / 2),
+//            Spinner(amplitude: 0.25, frequency: +3, phase: .pi / 2),
+//            Spinner(amplitude: 0.125, frequency: +4, phase: .pi / 2),
+//            Spinner(amplitude: 0.0625, frequency: +5, phase: .pi / 2),
+    ]
+    
     init(size: CGSize) {
         super.init(frame: .zero)
         
+        addSpinners(size: size)
+    }
+    
+    private func addSpinners(size: CGSize) {
         let baseRadius: CGFloat = 200
-        
-        let spinners = [
-            Spinner(amplitude: 1.00, frequency: +1, phase: .pi / 2),
-            Spinner(amplitude: 0.50, frequency: -1, phase: .pi / 2),
-            Spinner(amplitude: 0.25, frequency: +3, phase: .pi / 2),
-        ]
         
         var prevLayer: CALayer = layer
         var prevFrameSize: CGSize = size
