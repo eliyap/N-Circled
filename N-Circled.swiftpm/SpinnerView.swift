@@ -102,6 +102,14 @@ struct Spinner {
             y: amplitude * sin(angle)
         )
     }
+    
+    func offset(proportion: Double) -> CGPoint {
+        let angle: CGFloat = (proportion * 2 * .pi * CGFloat(frequency)) + phase
+        return CGPoint(
+            x: amplitude * cos(angle),
+            y: amplitude * sin(angle)
+        )
+    }
 }
 
 extension Spinner: Identifiable {
