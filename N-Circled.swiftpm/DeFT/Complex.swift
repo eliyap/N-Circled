@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import CoreGraphics
 
 public struct Complex<Value: FloatingPoint> {
     let real: Value
@@ -29,5 +30,12 @@ extension Complex {
 extension Complex {
     var magnitude: Value {
         return sqrt(real * real + imaginary * imaginary)
+    }
+}
+
+extension Complex where Value == Float {
+    init(cgPoint: CGPoint) {
+        self.real = Float(cgPoint.x)
+        self.imaginary = Float(cgPoint.y)
     }
 }

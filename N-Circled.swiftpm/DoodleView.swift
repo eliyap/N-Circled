@@ -45,17 +45,40 @@ final class UIDoodleViewController: UIViewController {
 
 extension UIDoodleViewController: PKCanvasViewDelegate {
     func canvasViewDrawingDidChange(_ canvasView: PKCanvasView) {
-        print(strokePoints(canvasView: canvasView).count)
+        /// Prevent infinite loop from clearing canvas.
+        guard canvasView.drawing.strokes.isEmpty == false else { return }
+        
+        let points = strokePoints(canvasView: canvasView)
+        let values = points.map { point in Complex<Float>(cgPoint: point) }
+        let dft = testAccelerate(values: values)
+        var spinners: [Spinner] = []
+        for (idx, complex) in dft.enumerated() {
+            let spinner = Spinner(
+                amplitude: CGFloat(complex.magnitude) / CGFloat(values.count),
+                frequency: idx,
+                phase: .zero
+            )
+            #warning("todo fix phase")
+            
+            spinners.append(spinner)
+        }
+        
+        spinnerHolder.spinners = spinners
+        
+        /// Clear canvas after each stroke.
+        canvasView.drawing = .init()
     }
     
     private func strokePoints(canvasView: PKCanvasView) -> [CGPoint] {
-        let epsilon = 0.001
+        /// Due to `Accelerate` requirements, must be a power of 2.
+        let sampleCount = 1024
         
         var points: [CGPoint] = []
         
         for stroke in canvasView.drawing.strokes {
             guard stroke.path.isEmpty == false else { continue }
-            for proportion in stride(from: 0.0, to: 1.0, by: epsilon) {
+            for index in 0..<sampleCount {
+                let proportion = CGFloat(index) / CGFloat(sampleCount)
                 let location = stroke.path.interpolatedLocation(at: CGFloat(stroke.path.endIndex) * proportion)
                 points.append(location)
             }

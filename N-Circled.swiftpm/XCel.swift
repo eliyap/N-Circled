@@ -37,8 +37,6 @@ func testAccelerate(values: [Complex<Float>]) -> [Complex<Float>] {
      */
     let count = values.count
 
-    
-
     let dft: vDSP.DiscreteFourierTransform<Float>
     do {
         dft = try vDSP.DiscreteFourierTransform(
