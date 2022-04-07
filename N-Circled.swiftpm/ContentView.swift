@@ -17,7 +17,7 @@ struct ContentView: View {
                     test()
                 })
             GeometryReader { geo in
-                CASpinner(size: geo.size)
+                CASpinner(size: geo.size, spinnerHolder: spinnerHolder)
             }
                 .border(Color.red)
         }

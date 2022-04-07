@@ -6,18 +6,22 @@
 //
 
 import SwiftUI
+import Combine
 
 struct CASpinner: UIViewRepresentable {
     typealias UIViewType = CASpinnerView
     
     let size: CGSize
     
-    init(size: CGSize) {
+    let spinnerHolder: SpinnerHolder
+    
+    init(size: CGSize, spinnerHolder: SpinnerHolder) {
         self.size = size
+        self.spinnerHolder = spinnerHolder
     }
     
     func makeUIView(context: Context) -> CASpinnerView {
-        let view: UIViewType = .init(size: size)
+        let view: UIViewType = .init(size: size, spinnerHolder: spinnerHolder)
         return view
     }
     
@@ -28,7 +32,7 @@ struct CASpinner: UIViewRepresentable {
 
 final class CASpinnerView: UIView {
     
-    private let spinners = [
+    private var spinners = [
         Spinner(amplitude: 0.5, frequency: +1, phase: .pi / 10),
         Spinner(amplitude: 0.4, frequency: +2, phase: .pi / 17),
         Spinner(amplitude: 0.3, frequency: +3, phase: .pi / 20),
@@ -36,9 +40,33 @@ final class CASpinnerView: UIView {
         Spinner(amplitude: 0.1, frequency: +5, phase: .pi / 4),
     ]
     
-    init(size: CGSize) {
+    private var cancellable: AnyCancellable? = nil
+    
+    private let size: CGSize
+    
+    init(size: CGSize, spinnerHolder: SpinnerHolder) {
+        self.size = size
         super.init(frame: .zero)
+        addShape(size: size)
+        addSpinners(size: size)
         
+        self.cancellable = spinnerHolder.$spinners.sink(receiveValue: { [weak self] spinners in
+            print("sc", spinners)
+            self?.spinners = spinners
+            self?.redrawSpinners()
+        })
+    }
+    
+    public func redrawSpinners() {
+        for sublayer in layer.sublayers ?? [] {
+            sublayer.removeFromSuperlayer()
+        }
+        print(frame.size)
+        addShape(size: size)
+        addSpinners(size: size)
+    }
+    
+    private func addShape(size: CGSize) -> Void {
         let path = UIBezierPath()
         path.move(to: .zero)
         
@@ -71,11 +99,9 @@ final class CASpinnerView: UIView {
         sl.fillColor = UIColor.purple.cgColor
         
         layer.addSublayer(sl)
-        
-        addSpinners(size: size)
     }
     
-    private func addSpinners(size: CGSize) {
+    private func addSpinners(size: CGSize) -> Void {
         let baseRadius: CGFloat = 200
         
         var prevLayer: CALayer = layer
@@ -128,6 +154,10 @@ final class CASpinnerView: UIView {
             prevFrameSize = layerFrame.size
             prevSpinner = spinner
         }
+    }
+    
+    deinit {
+        cancellable?.cancel()
     }
     
     required init?(coder: NSCoder) {

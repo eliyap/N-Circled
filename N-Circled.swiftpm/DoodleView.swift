@@ -53,8 +53,12 @@ extension UIDoodleViewController: PKCanvasViewDelegate {
         let dft = testAccelerate(values: values)
         var spinners: [Spinner] = []
         for (idx, complex) in dft.enumerated() {
+            var amp = CGFloat(complex.magnitude) / CGFloat(values.count)
+            amp /= 100
+            #warning("temp damper")
+            
             let spinner = Spinner(
-                amplitude: CGFloat(complex.magnitude) / CGFloat(values.count),
+                amplitude: amp,
                 frequency: idx,
                 phase: .zero
             )
@@ -71,7 +75,7 @@ extension UIDoodleViewController: PKCanvasViewDelegate {
     
     private func strokePoints(canvasView: PKCanvasView) -> [CGPoint] {
         /// Due to `Accelerate` requirements, must be a power of 2.
-        let sampleCount = 1024
+        let sampleCount = 8
         
         var points: [CGPoint] = []
         
