@@ -30,16 +30,17 @@ final class CASpinnerView: UIView {
     init(size: CGSize) {
         super.init(frame: .zero)
         
-        let d1: CGFloat = 200
+        let baseRadius: CGFloat = 200
         
-        let gl1 = CAGradientLayer()
-        gl1.startPoint = CGPoint(x: 0.5, y: 0.5)
-        gl1.endPoint = CGPoint(x: 0.5, y: 0)
-        gl1.type = .conic
-        gl1.colors = [
-            UIColor.clear.cgColor,
-            UIColor.label.cgColor,
-        ]
+        let spinner1 = Spinner(
+            amplitude: 1,
+            frequency: 1,
+            phase: .pi / 2
+        )
+        
+        let d1: CGFloat = baseRadius * spinner1.amplitude
+        
+        let gl1 = makeGradient()
         gl1.frame = CGRect(x: 0, y: 0, width: d1, height: d1)
         
         let l1 = CALayer()
@@ -57,17 +58,19 @@ final class CASpinnerView: UIView {
         let a1 = makeAnimation(offset: CGPoint(
             x: size.width/2 - d1/2,
             y: size.height/2 - d1/2
-        ))
+        ), spinner: spinner1)
         l1.add(a1, property: .transform)
         
         //
-
-        let d2: CGFloat = 100
         
-        let gl2 = CAGradientLayer()
-        gl2.startPoint = CGPoint(x: 0.5, y: 0.5)
-        gl2.endPoint = CGPoint(x: 0.5, y: 0)
-        gl2.type = .conic
+        let spinner2 = Spinner(
+            amplitude: 0.5,
+            frequency: -1,
+            phase: .zero
+        )
+        let d2: CGFloat = baseRadius * spinner2.amplitude
+        
+        let gl2 = makeGradient()
         gl2.colors = [
             UIColor.clear.cgColor,
             UIColor.label.cgColor,
@@ -89,17 +92,19 @@ final class CASpinnerView: UIView {
         let a2 = makeAnimation(offset: CGPoint(
             x: d1/2 - d2/2,
             y: -d2/2
-        ))
+        ), spinner: spinner2)
         l2.add(a2, property: .transform)
         
         //
 
-        let d3: CGFloat = 50
+        let spinner3 = Spinner(
+            amplitude: 0.25,
+            frequency: 3,
+            phase: .zero
+        )
+        let d3: CGFloat = baseRadius * spinner3.amplitude
         
-        let gl3 = CAGradientLayer()
-        gl3.startPoint = CGPoint(x: 0.5, y: 0.5)
-        gl3.endPoint = CGPoint(x: 0.5, y: 0)
-        gl3.type = .conic
+        let gl3 = makeGradient()
         gl3.colors = [
             UIColor.clear.cgColor,
             UIColor.label.cgColor,
@@ -121,7 +126,7 @@ final class CASpinnerView: UIView {
         let a3 = makeAnimation(offset: CGPoint(
             x: d2/2 - d3/2,
             y: -d3/2
-        ))
+        ), spinner: spinner3)
         l3.add(a3, property: .transform)
         
         l1.addSublayer(l2)
@@ -158,16 +163,17 @@ func makePath(diameter: CGFloat, frameSize: CGSize) -> CGPath {
     return UIBezierPath(roundedRect: rect, cornerRadius: diameter/2).cgPath
 }
 
-func makeAnimation(offset: CGPoint) -> CAAnimation {
+func makeAnimation(offset: CGPoint, spinner: Spinner) -> CAAnimation {
     let animation = CAKeyframeAnimation(keyPath: CALayer.AnimatableProperty.transform.rawValue)
 
     var transforms: [CATransform3D] = []
     var keyTimes: [NSNumber] = []
     
-    /// Move by quarters, as if we go by halves the rotation will be back and forth.
-    /// Thirds might be possible, but could introduce floating point errors.
-    for val in stride(from: 0, through: 1, by: 0.25) {
-        let transform = CGAffineTransform(rotationAngle: val * 2 * .pi)
+    /// Due to `CoreAnimation`'s high performance, we can afford many keyframes.
+    /// A higher number mitigates issues arising from the "shortest rotation" behaviour in `CATransform`s.
+    for val in stride(from: 0, through: 1, by: 0.025) {
+        let radians = (val * 2 * .pi * Double(spinner.frequency)) + spinner.phase
+        let transform = CGAffineTransform(rotationAngle: radians)
             .concatenating(CGAffineTransform(translationX: offset.x, y: offset.y))
         transforms.append(CATransform3DMakeAffineTransform(transform))
         keyTimes.append(val as NSNumber)
@@ -179,4 +185,17 @@ func makeAnimation(offset: CGPoint) -> CAAnimation {
     animation.repeatCount = .infinity
     
     return animation
+}
+
+func makeGradient() -> CAGradientLayer {
+    let gl = CAGradientLayer()
+    gl.startPoint = CGPoint(x: 0.5, y: 0.5)
+    gl.endPoint = CGPoint(x: 0.5, y: 0)
+    gl.type = .conic
+    gl.colors = [
+        UIColor.clear.cgColor,
+        UIColor.label.cgColor,
+    ]
+    
+    return gl
 }
