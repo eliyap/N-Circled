@@ -119,10 +119,6 @@ func makePath(diameter: CGFloat) -> CGPath {
     return UIBezierPath(roundedRect: rect, cornerRadius: diameter/2).cgPath
 }
 
-func x() {
-    
-}
-
 func makeAnimation(offset: CGPoint, spinner: Spinner) -> CAAnimation {
     let animation = CAKeyframeAnimation(keyPath: CALayer.AnimatableProperty.transform.rawValue)
 
