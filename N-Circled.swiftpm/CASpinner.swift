@@ -48,16 +48,16 @@ final class CASpinnerView: UIView {
             var offset: CGPoint = .zero
             for spinner in spinners {
                 let spinnerOffset = spinner.offset(proportion: val)
-                offset.x += spinnerOffset.y * baseRadius
-                offset.y -= spinnerOffset.x * baseRadius
+                offset.x += spinnerOffset.x * baseRadius
+                offset.y += spinnerOffset.y * baseRadius
             }
             
-//            offset.x *= -1
-//            offset.y *= -1
+            /// Rotate point 90 degrees.
+            (offset.x, offset.y) = (offset.y, -offset.x)
             
+            /// Apply scaling and offset.
             offset.x /= 2
             offset.y /= 2
-            
             offset.x += size.width/2
             offset.y += size.height/2
             
