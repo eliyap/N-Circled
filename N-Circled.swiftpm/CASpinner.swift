@@ -36,7 +36,9 @@ final class CASpinnerView: UIView {
         animation.fromValue = CATransform3DMakeAffineTransform(CGAffineTransform.identity)
         animation.toValue = CATransform3DMakeAffineTransform(CGAffineTransform.init(rotationAngle: .pi))
         animation.duration = 1.25
-
+        animation.autoreverses = false
+        animation.repeatCount = .infinity
+        
         shapeLayer.add(animation, property: .transform)
         
         layer.addSublayer(shapeLayer)
