@@ -39,7 +39,10 @@ final class CASpinnerView: UIView {
         gradientLayer.startPoint = CGPoint(x: 0.5, y: 0.5)
         gradientLayer.endPoint = CGPoint(x: 0.5, y: 0)
         gradientLayer.type = .conic
-        gradientLayer.colors = [UIColor.red.cgColor, UIColor.orange.cgColor, UIColor.green.cgColor]
+        gradientLayer.colors = [
+            UIColor.clear.cgColor,
+            UIColor.label.cgColor,
+        ]
         gradientLayer.frame = .init(origin: .zero, size: size)
         layer.addSublayer(gradientLayer)
         
