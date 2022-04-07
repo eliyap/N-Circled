@@ -168,9 +168,11 @@ func makeAnimation(
     
     /// Due to `CoreAnimation`'s high performance, we can afford many keyframes.
     /// A higher number mitigates issues arising from the "shortest rotation" behaviour in `CATransform`s.
-    for val in stride(from: 0, through: 1, by: 0.025) {
         var radians = (val * 2 * .pi * Double(spinner.frequency - counterFreq))
         radians += spinner.phase
+    let numKeyframes: Int = 40
+    
+    for val in stride(from: 0, through: 1, by: 1 / CGFloat(numKeyframes)) {
         let transform = CGAffineTransform(rotationAngle: radians)
             .concatenating(CGAffineTransform(translationX: offset.x, y: offset.y))
         transforms.append(CATransform3DMakeAffineTransform(transform))
