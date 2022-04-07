@@ -54,10 +54,10 @@ final class CASpinnerView: UIView {
         
         let sl1 = CAShapeLayer()
         sl1.path = makePath(diameter: d1, frameSize: .zero)
-        sl1.borderColor = UIColor.green.cgColor
-        sl1.borderWidth = 2
+        sl1.fillColor = nil
+        sl1.strokeColor = UIColor.black.cgColor
+        sl1.lineWidth = 2
         sl1.frame = CGRect(x: 0, y: 0, width: d1, height: d1)
-        sl1.fillColor = UIColor.green.cgColor
         gl1.mask = sl1
         let a1 = makeAnimation(offset: CGPoint(
             x: size.width/2 - d1/2,
@@ -65,39 +65,71 @@ final class CASpinnerView: UIView {
         ))
         l1.add(a1, property: .transform)
         
+        //
+
         let d2: CGFloat = 50
+        
+        let gl2 = CAGradientLayer()
+        gl2.startPoint = CGPoint(x: 0.5, y: 0.5)
+        gl2.endPoint = CGPoint(x: 0.5, y: 0)
+        gl2.type = .conic
+        gl2.colors = [
+            UIColor.clear.cgColor,
+            UIColor.label.cgColor,
+        ]
+        gl2.frame = CGRect(x: 0, y: 0, width: d2, height: d2)
+
+        let l2 = CALayer()
+        l2.frame = CGRect(x: 0, y: 0, width: d2, height: d2)
+        l2.borderColor = UIColor.green.cgColor
+        l2.borderWidth = 2
+        layer.addSublayer(l2)
+        l2.addSublayer(gl2)
+
         let sl2 = CAShapeLayer()
         sl2.path = makePath(diameter: d2, frameSize: .zero)
-        sl2.borderColor = UIColor.red.cgColor
-        sl2.borderWidth = 2
         sl2.frame = CGRect(x: 0, y: 0, width: d2, height: d2)
-        sl2.fillColor = UIColor.red.cgColor
+        gl2.mask = sl2
         let a2 = makeAnimation(offset: CGPoint(
             x: d1/2 - d2/2,
             y: -d2/2
         ))
-        sl2.add(a2, property: .transform)
+        l2.add(a2, property: .transform)
         
+        //
+
         let d3: CGFloat = 25
+        
+        let gl3 = CAGradientLayer()
+        gl3.startPoint = CGPoint(x: 0.5, y: 0.5)
+        gl3.endPoint = CGPoint(x: 0.5, y: 0)
+        gl3.type = .conic
+        gl3.colors = [
+            UIColor.clear.cgColor,
+            UIColor.label.cgColor,
+        ]
+        gl3.frame = CGRect(x: 0, y: 0, width: d3, height: d3)
+
+        let l3 = CALayer()
+        l3.frame = CGRect(x: 0, y: 0, width: d3, height: d3)
+        l3.borderColor = UIColor.green.cgColor
+        l3.borderWidth = 3
+        layer.addSublayer(l3)
+        l3.addSublayer(gl3)
+
         let sl3 = CAShapeLayer()
         sl3.path = makePath(diameter: d3, frameSize: .zero)
-        sl3.borderColor = UIColor.purple.cgColor
-        sl3.borderWidth = 2
         sl3.frame = CGRect(x: 0, y: 0, width: d3, height: d3)
-        sl3.fillColor = UIColor.purple.cgColor
-//        sl3.add(makeAnimation(), property: .transform)
-        
-        l1.addSublayer(sl2)
-//        l1.sublayerTransform = CATransform3DMakeAffineTransform(CGAffineTransform(
-//            translationX: d1/2 - d2/2,
-//            y: -d2/2
-//        ))
-        
-        sl2.addSublayer(sl3)
-        sl2.sublayerTransform = CATransform3DMakeAffineTransform(CGAffineTransform(
-            translationX: d2/2 - d3/2,
-            y: -d3/2
+        gl3.mask = sl3
+        let a3 = makeAnimation(offset: CGPoint(
+            x: d1/3 - d3/3,
+            y: -d3/3
         ))
+        l3.add(a3, property: .transform)
+        
+        l1.addSublayer(l2)
+        
+        l2.addSublayer(l3)
     }
     
     required init?(coder: NSCoder) {
