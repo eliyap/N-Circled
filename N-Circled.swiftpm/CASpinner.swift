@@ -24,9 +24,6 @@ struct CASpinner: UIViewRepresentable {
     func updateUIView(_ uiView: CASpinnerView, context: Context) {
         /// Nothing.
     }
-    
-    
-    
 }
 
 final class CASpinnerView: UIView {
