@@ -92,12 +92,13 @@ final class CASpinnerView: UIView {
             let newLayer = CALayer()
             newLayer.frame = layerFrame
             
+            let lineWidth: CGFloat = 2
             let shapeLayer = CAShapeLayer()
             shapeLayer.frame = layerFrame
-            shapeLayer.path = makePath(diameter: diameter)
+            shapeLayer.path = makePath(diameter: diameter, lineWidth: lineWidth)
             shapeLayer.fillColor = nil
             shapeLayer.strokeColor = UIColor.black.cgColor
-            shapeLayer.lineWidth = 2
+            shapeLayer.lineWidth = lineWidth
             
             /// Assemble layers.
             gradientLayer.mask = shapeLayer
@@ -144,13 +145,13 @@ extension CALayer {
     }
 }
 
-func makePath(diameter: CGFloat) -> CGPath {
+func makePath(diameter: CGFloat, lineWidth: CGFloat) -> CGPath {
     /// Center square at frame center.
     let rect = CGRect(
-        x: 0,
-        y: 0,
-        width: diameter,
-        height: diameter
+        x: lineWidth / 2,
+        y: lineWidth / 2,
+        width: diameter - lineWidth,
+        height: diameter - lineWidth
     )
     return UIBezierPath(roundedRect: rect, cornerRadius: diameter/2).cgPath
 }
