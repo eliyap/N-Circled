@@ -29,11 +29,11 @@ struct CASpinner: UIViewRepresentable {
 final class CASpinnerView: UIView {
     
     private let spinners = [
-        Spinner(amplitude: 1.00, frequency: +1, phase: .pi / 2),
-        Spinner(amplitude: 0.50, frequency: +2, phase: .pi / 2),
-        Spinner(amplitude: 0.25, frequency: +3, phase: .pi / 2),
-//        Spinner(amplitude: 0.125, frequency: +4, phase: .pi / 2),
-//        Spinner(amplitude: 0.0625, frequency: +5, phase: .pi / 2),
+        Spinner(amplitude: 0.5, frequency: +1, phase: .pi / 10),
+        Spinner(amplitude: 0.4, frequency: +2, phase: .pi / 17),
+        Spinner(amplitude: 0.3, frequency: +3, phase: .pi / 20),
+        Spinner(amplitude: 0.2, frequency: +4, phase: .pi / 6),
+        Spinner(amplitude: 0.1, frequency: +5, phase: .pi / 4),
     ]
     
     init(size: CGSize) {
@@ -48,9 +48,12 @@ final class CASpinnerView: UIView {
             var offset: CGPoint = .zero
             for spinner in spinners {
                 let spinnerOffset = spinner.offset(proportion: val)
-                offset.x += spinnerOffset.x * baseRadius
-                offset.y += spinnerOffset.y * baseRadius
+                offset.x += spinnerOffset.y * baseRadius
+                offset.y -= spinnerOffset.x * baseRadius
             }
+            
+//            offset.x *= -1
+//            offset.y *= -1
             
             offset.x /= 2
             offset.y /= 2
@@ -116,7 +119,7 @@ final class CASpinnerView: UIView {
             let animation = makeAnimation(
                 offset: offset,
                 spinner: spinner,
-                counterFreq: prevSpinner?.frequency ?? .zero
+                counterSpinner: prevSpinner
             )
             newLayer.add(animation, property: .transform)
             
@@ -159,7 +162,7 @@ func makePath(diameter: CGFloat, lineWidth: CGFloat) -> CGPath {
 func makeAnimation(
     offset: CGPoint,
     spinner: Spinner,
-    counterFreq: Int
+    counterSpinner: Spinner?
 ) -> CAAnimation {
     let animation = CAKeyframeAnimation(keyPath: CALayer.AnimatableProperty.transform.rawValue)
 
@@ -168,11 +171,11 @@ func makeAnimation(
     
     /// Due to `CoreAnimation`'s high performance, we can afford many keyframes.
     /// A higher number mitigates issues arising from the "shortest rotation" behaviour in `CATransform`s.
-        var radians = (val * 2 * .pi * Double(spinner.frequency - counterFreq))
-        radians += spinner.phase
     let numKeyframes: Int = 40
     
     for val in stride(from: 0, through: 1, by: 1 / CGFloat(numKeyframes)) {
+        var radians = spinner.radians(proportion: val)
+        radians -= counterSpinner?.radians(proportion: val) ?? 0
         let transform = CGAffineTransform(rotationAngle: radians)
             .concatenating(CGAffineTransform(translationX: offset.x, y: offset.y))
         transforms.append(CATransform3DMakeAffineTransform(transform))

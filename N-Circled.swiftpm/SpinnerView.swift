@@ -91,8 +91,9 @@ struct Spinner {
         return (date.timeIntervalSince1970 * TimeInterval(frequency)) + phase
     }
     
-    func angle(at date: Date) -> Angle {
-        .init(radians: radians(at: date))
+    /// Unit: radians.
+    func radians(proportion: Double) -> Double {
+        (proportion * 2 * .pi * CGFloat(frequency)) + phase
     }
     
     func offset(at date: Date) -> CGPoint {
@@ -104,7 +105,7 @@ struct Spinner {
     }
     
     func offset(proportion: Double) -> CGPoint {
-        let angle: CGFloat = (proportion * 2 * .pi * CGFloat(frequency)) + phase
+        let angle: CGFloat = self.radians(proportion: proportion)
         return CGPoint(
             x: amplitude * cos(angle),
             y: amplitude * sin(angle)
