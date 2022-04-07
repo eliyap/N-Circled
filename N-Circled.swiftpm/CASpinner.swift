@@ -49,7 +49,7 @@ final class CASpinnerView: UIView {
         l1.addSublayer(gl1)
         
         let sl1 = CAShapeLayer()
-        sl1.path = makePath(diameter: d1, frameSize: .zero)
+        sl1.path = makePath(diameter: d1)
         sl1.fillColor = nil
         sl1.strokeColor = UIColor.black.cgColor
         sl1.lineWidth = 2
@@ -83,7 +83,7 @@ final class CASpinnerView: UIView {
         l2.addSublayer(gl2)
 
         let sl2 = CAShapeLayer()
-        sl2.path = makePath(diameter: d2, frameSize: .zero)
+        sl2.path = makePath(diameter: d2)
         sl2.fillColor = nil
         sl2.strokeColor = UIColor.black.cgColor
         sl2.lineWidth = 2
@@ -117,7 +117,7 @@ final class CASpinnerView: UIView {
         l3.addSublayer(gl3)
 
         let sl3 = CAShapeLayer()
-        sl3.path = makePath(diameter: d3, frameSize: .zero)
+        sl3.path = makePath(diameter: d3)
         sl3.fillColor = nil
         sl3.strokeColor = UIColor.black.cgColor
         sl3.lineWidth = 2
@@ -152,7 +152,7 @@ extension CALayer {
     }
 }
 
-func makePath(diameter: CGFloat, frameSize: CGSize) -> CGPath {
+func makePath(diameter: CGFloat) -> CGPath {
     /// Center square at frame center.
     let rect = CGRect(
         x: 0,
