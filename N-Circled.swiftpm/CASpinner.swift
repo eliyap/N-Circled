@@ -47,6 +47,7 @@ final class CASpinnerView: UIView {
         
         var prevLayer: CALayer = layer
         var prevFrameSize: CGSize = size
+        var prevSpinner: Spinner? = nil
         
         for index in spinners.indices {
             let spinner = spinners[index]
@@ -81,12 +82,17 @@ final class CASpinnerView: UIView {
             if index == spinners.startIndex {
                 offset.y += prevFrameSize.height / 2
             }
-            let animation = makeAnimation(offset: offset, spinner: spinner)
+            let animation = makeAnimation(
+                offset: offset,
+                spinner: spinner,
+                counterFreq: prevSpinner?.frequency ?? .zero
+            )
             newLayer.add(animation, property: .transform)
             
             /// Prepare for next iteration.
             prevLayer = newLayer
             prevFrameSize = layerFrame.size
+            prevSpinner = spinner
         }
     }
     
@@ -119,7 +125,11 @@ func makePath(diameter: CGFloat) -> CGPath {
     return UIBezierPath(roundedRect: rect, cornerRadius: diameter/2).cgPath
 }
 
-func makeAnimation(offset: CGPoint, spinner: Spinner) -> CAAnimation {
+func makeAnimation(
+    offset: CGPoint,
+    spinner: Spinner,
+    counterFreq: Int
+) -> CAAnimation {
     let animation = CAKeyframeAnimation(keyPath: CALayer.AnimatableProperty.transform.rawValue)
 
     var transforms: [CATransform3D] = []
@@ -128,7 +138,8 @@ func makeAnimation(offset: CGPoint, spinner: Spinner) -> CAAnimation {
     /// Due to `CoreAnimation`'s high performance, we can afford many keyframes.
     /// A higher number mitigates issues arising from the "shortest rotation" behaviour in `CATransform`s.
     for val in stride(from: 0, through: 1, by: 0.025) {
-        let radians = (val * 2 * .pi * Double(spinner.frequency)) + spinner.phase
+        var radians = (val * 2 * .pi * Double(spinner.frequency - counterFreq))
+        radians += spinner.phase
         let transform = CGAffineTransform(rotationAngle: radians)
             .concatenating(CGAffineTransform(translationX: offset.x, y: offset.y))
         transforms.append(CATransform3DMakeAffineTransform(transform))
