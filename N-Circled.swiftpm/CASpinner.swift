@@ -10,8 +10,14 @@ import SwiftUI
 struct CASpinner: UIViewRepresentable {
     typealias UIViewType = CASpinnerView
     
+    let size: CGSize
+    
+    init(size: CGSize) {
+        self.size = size
+    }
+    
     func makeUIView(context: Context) -> CASpinnerView {
-        let view: UIViewType = .init()
+        let view: UIViewType = .init(size: size)
         return view
     }
     
@@ -24,7 +30,7 @@ struct CASpinner: UIViewRepresentable {
 }
 
 final class CASpinnerView: UIView {
-    init() {
+    init(size: CGSize) {
         super.init(frame: .zero)
         
         print(size)
@@ -44,7 +50,7 @@ final class CASpinnerView: UIView {
         let animation = CABasicAnimation(keyPath: "transform")
 
         animation.fromValue = CATransform3DMakeAffineTransform(CGAffineTransform.identity)
-        animation.toValue = CATransform3DMakeAffineTransform(CGAffineTransform.init(rotationAngle: .pi))
+        animation.toValue = CATransform3DMakeAffineTransform(CGAffineTransform(rotationAngle: .pi))
         animation.duration = 1.25
         animation.autoreverses = false
         animation.repeatCount = .infinity
