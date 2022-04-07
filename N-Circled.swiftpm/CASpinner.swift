@@ -27,6 +27,16 @@ final class CASpinnerView: UIView {
     init() {
         super.init(frame: .zero)
         
+        print(size)
+        
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.startPoint = CGPoint(x: 0.5, y: 0.5)
+        gradientLayer.endPoint = CGPoint(x: 0.5, y: 0)
+        gradientLayer.type = .conic
+        gradientLayer.colors = [UIColor.red.cgColor, UIColor.orange.cgColor, UIColor.green.cgColor]
+        gradientLayer.frame = .init(origin: .zero, size: CGSize(width: 100, height: 100))
+        layer.addSublayer(gradientLayer)
+        
         let shapeLayer = CAShapeLayer()
         shapeLayer.path = UIBezierPath(roundedRect: CGRect(x: 64, y: 64, width: 160, height: 160), cornerRadius: 50).cgPath
         shapeLayer.fillColor = UIColor.red.cgColor
