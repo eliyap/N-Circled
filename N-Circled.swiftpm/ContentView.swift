@@ -12,7 +12,9 @@ struct ContentView: View {
                 .onAppear(perform: {
                     test()
                 })
-            CASpinner()
+            GeometryReader { geo in
+                CASpinner(size: geo.size)
+            }
         }
     }
 }
