@@ -48,36 +48,11 @@ final class CASpinnerView: UIView {
         let shapeLayer = CAShapeLayer()
         shapeLayer.path = makePath(diameter: 50, frameSize: size)
         shapeLayer.fillColor = UIColor.red.cgColor
-        print("sap", shapeLayer.anchorPoint)
         
-        let animation = CAKeyframeAnimation(keyPath: "transform")
-
-        var transforms: [CATransform3D] = []
-        var keyTimes: [NSNumber] = []
-        
-        /// Move by quarters, as if we go by halves the rotation will be back and forth.
-        /// Thirds might be possible, but could introduce floating point errors.
-        for val in stride(from: 0, through: 1, by: 0.25) {
-            var transform = CGAffineTransform.identity
-            transform = transform.rotated(by: val * 2 * .pi)
-//            transform = transform.translatedBy(x: -sideLength / 2, y: -sideLength / 2)
-            
-            transforms.append(CATransform3DMakeAffineTransform(transform))
-            keyTimes.append(val as NSNumber)
-        }
-        animation.values = transforms
-        animation.keyTimes = keyTimes
-        animation.duration = 1.25
-        animation.autoreverses = false
-        animation.repeatCount = .infinity
+        let animation = makeAnimation()
         
         gradientLayer.add(animation, property: .transform)
-//        shapeLayer.add(animation, property: .transform)
-
         gradientLayer.mask = shapeLayer
-//        layer.addSublayer(shapeLayer)
-        
-        print("sap", shapeLayer.anchorPoint)
     }
     
     required init?(coder: NSCoder) {
@@ -106,4 +81,26 @@ func makePath(diameter: CGFloat, frameSize: CGSize) -> CGPath {
         height: diameter
     )
     return UIBezierPath(roundedRect: rect, cornerRadius: diameter/2).cgPath
+}
+
+func makeAnimation() -> CAAnimation {
+    let animation = CAKeyframeAnimation(keyPath: CALayer.AnimatableProperty.transform.rawValue)
+
+    var transforms: [CATransform3D] = []
+    var keyTimes: [NSNumber] = []
+    
+    /// Move by quarters, as if we go by halves the rotation will be back and forth.
+    /// Thirds might be possible, but could introduce floating point errors.
+    for val in stride(from: 0, through: 1, by: 0.25) {
+        let transform = CGAffineTransform(rotationAngle: val * 2 * .pi)
+        transforms.append(CATransform3DMakeAffineTransform(transform))
+        keyTimes.append(val as NSNumber)
+    }
+    animation.values = transforms
+    animation.keyTimes = keyTimes
+    animation.duration = 1.25
+    animation.autoreverses = false
+    animation.repeatCount = .infinity
+    
+    return animation
 }
