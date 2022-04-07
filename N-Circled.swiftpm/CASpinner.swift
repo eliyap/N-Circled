@@ -44,7 +44,7 @@ final class CASpinnerView: UIView {
         
         let baseRadius: CGFloat = 200
         
-        for val in stride(from: 0.0, through: 1.0, by: 0.001) {
+        for val in stride(from: 0.0, through: 1.0, by: 0.0001) {
             var offset: CGPoint = .zero
             for spinner in spinners {
                 let spinnerOffset = spinner.offset(proportion: val)
