@@ -33,10 +33,8 @@ final class CASpinnerView: UIView {
         
         let animation = CABasicAnimation(keyPath: "transform")
 
-        var transform = CATransform3DIdentity
-        transform.m34 = -0.002
-
-        animation.toValue = CATransform3DRotate(transform, CGFloat(90 * Double.pi / 180.0), 0, 1, 0)
+        animation.fromValue = CATransform3DMakeAffineTransform(CGAffineTransform.identity)
+        animation.toValue = CATransform3DMakeAffineTransform(CGAffineTransform.init(rotationAngle: .pi))
         animation.duration = 1.25
 
         shapeLayer.add(animation, property: .transform)
