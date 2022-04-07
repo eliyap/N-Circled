@@ -15,6 +15,7 @@ struct ContentView: View {
             GeometryReader { geo in
                 CASpinner(size: geo.size)
             }
+                .border(Color.red)
         }
     }
 }
