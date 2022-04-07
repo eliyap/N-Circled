@@ -78,14 +78,14 @@ struct Spinner {
     
     /// Non-negative by convention.
     /// Normalized to `[0, 1]`.
-    let amplitude: CGFloat
+    public let amplitude: CGFloat
     
     /// Discrete frequency.
-    let frequency: Int
+    public let frequency: Int
     
     /// Unit: radians.
     /// Not bounded to `[0, 2pi]`.
-    let phase: CGFloat
+    public let phase: CGFloat
     
     func radians(at date: Date) -> CGFloat {
         return (date.timeIntervalSince1970 * TimeInterval(frequency)) + phase
