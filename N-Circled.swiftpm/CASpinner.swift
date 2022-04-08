@@ -89,6 +89,9 @@ final class CASpinnerView: UIView {
             offset.x += size.width/2
             offset.y += size.height/2
             
+            assert(!offset.x.isNaN)
+            assert(!offset.y.isNaN)
+            
             path.addLine(to: offset)
         }
         
