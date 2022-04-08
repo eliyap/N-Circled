@@ -70,4 +70,3 @@ extension Collection where Element == Complex<Float> {
         )
     }
 }
-

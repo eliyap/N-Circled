@@ -49,9 +49,7 @@ struct Spinner {
     }
 }
 
-extension Spinner: Identifiable {
-    
-}
+extension Spinner: Identifiable { }
 
 extension Spinner {
     func gradient(at date: Date) -> SwiftUI.Gradient {
