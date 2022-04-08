@@ -13,9 +13,6 @@ struct ContentView: View {
             Text("\(spinnerHolder.spinners.count)")
             DoodleView(spinnerHolder: spinnerHolder)
                 .border(Color.red)
-                .onAppear(perform: {
-                    test()
-                })
             GeometryReader { geo in
                 CASpinner(size: geo.size, spinnerHolder: spinnerHolder)
             }

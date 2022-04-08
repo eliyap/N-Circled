@@ -12,22 +12,6 @@ extension Float {
     static let tau: Float = Float.pi * 2
 }
 
-func test() -> [Complex<Float>] {
-    let count = 64
-    
-    var values: [Complex<Float>] = []
-    
-    for index in 0..<count {
-        let angle: Float = .tau * Float(index) / Float(count)
-        values.append(Complex<Float>(
-            re: cos(angle + .pi / 2),
-            im: sin(angle + .pi / 2)
-        ))
-    }
-    
-    return testAccelerate(values: values)
-}
-
 func testAccelerate(values: [Complex<Float>]) -> [Complex<Float>] {
     /**
      * https://developer.apple.com/documentation/accelerate/vdsp/discretefouriertransform/3801973-init
