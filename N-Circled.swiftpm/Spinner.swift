@@ -50,3 +50,18 @@ struct Spinner {
 }
 
 extension Spinner: Identifiable { }
+
+extension Spinner: CustomStringConvertible {
+    var description: String {
+        String(
+            format: """
+                Frequency %d, \
+                Amplitude: %.3f, \
+                Phase: %.3f
+                """,
+            frequency,
+            amplitude,
+            phase
+        )
+    }
+}
