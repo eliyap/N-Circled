@@ -7,6 +7,7 @@
 
 import Foundation
 import Accelerate
+import ComplexModule
 
 extension Float {
     static let tau: Float = Float.pi * 2
@@ -48,8 +49,8 @@ func testAccelerate(values: [Complex<Float>]) -> [Complex<Float>] {
     var result: [Complex<Float>] = []
     for idx in splitComplexOutput.real.indices {
         result.append(Complex<Float>(
-            re: splitComplexOutput.real[idx],
-            im: splitComplexOutput.imaginary[idx]
+            splitComplexOutput.real[idx],
+            splitComplexOutput.imaginary[idx]
         ))
     }
     
