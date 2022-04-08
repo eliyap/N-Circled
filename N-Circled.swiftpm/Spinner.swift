@@ -10,7 +10,7 @@ import SwiftUI
 /// Represents a uniformly rotating circle with some size, at some phase.
 struct Spinner {
     
-    let id: UUID = .init()
+    public let id: UUID = .init()
     
     /// Non-negative by convention.
     /// Normalized to `[0, 1]`.
