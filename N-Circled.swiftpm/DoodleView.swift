@@ -65,7 +65,7 @@ extension UIDoodleViewController: PKCanvasViewDelegate {
             let spinner = Spinner(
                 amplitude: amp,
                 frequency: idx,
-                phase: .zero
+                phase: CGFloat(complex.phase)
             )
             #warning("todo fix phase")
             
