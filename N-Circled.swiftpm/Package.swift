@@ -34,9 +34,15 @@ let package = Package(
             ]
         )
     ],
+    dependencies: [
+        .package(url: "https://github.com/apple/swift-numerics.git", "1.0.0"..<"2.0.0")
+    ],
     targets: [
         .executableTarget(
             name: "AppModule",
+            dependencies: [
+                .product(name: "ComplexModule", package: "swift-numerics")
+            ],
             path: "."
         )
     ]
