@@ -56,9 +56,9 @@ extension UIDoodleViewController: PKCanvasViewDelegate {
         let dft = testAccelerate(values: values)
         var spinners: [Spinner] = []
         for (idx, complex) in dft.enumerated() {
-            var amp = CGFloat(complex.magnitude) / CGFloat(values.count)
             guard complex.phase.isNaN == false else { continue }
             
+            var amp = CGFloat(complex.length) / CGFloat(values.count)
             amp /= 100
             #warning("temp damper")
             
