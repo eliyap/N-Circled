@@ -50,7 +50,9 @@ extension UIDoodleViewController: PKCanvasViewDelegate {
         guard canvasView.drawing.strokes.isEmpty == false else { return }
         
         let points = strokePoints(canvasView: canvasView)
-        let values = points.map { point in Complex<Float>(Float(point.x), Float(point.y)) }
+        let values = points.map { point in
+            return Complex<Float>(Float(point.x), Float(point.y))
+        }
         let dft = testAccelerate(values: values)
         var spinners: [Spinner] = []
         for (idx, complex) in dft.enumerated() {
