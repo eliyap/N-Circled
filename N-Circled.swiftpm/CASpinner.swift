@@ -50,11 +50,12 @@ final class CASpinnerView: UIView {
         addShape(size: size)
         addSpinners(size: size)
         
-        self.cancellable = spinnerHolder.$spinners.sink(receiveValue: { [weak self] spinners in
-            print("sc", spinners)
-            self?.spinners = spinners
-            self?.redrawSpinners()
-        })
+        self.cancellable = spinnerHolder.$spinners
+            .dropFirst() /// Skip `@Published` default initial value.
+            .sink(receiveValue: { [weak self] spinners in
+                self?.spinners = spinners
+                self?.redrawSpinners()
+            })
     }
     
     public func redrawSpinners() {
