@@ -20,7 +20,3 @@ struct ContentView: View {
         }
     }
 }
-
-final class SpinnerHolder: ObservableObject {
-    @Published var spinners: [Spinner] = []
-}
