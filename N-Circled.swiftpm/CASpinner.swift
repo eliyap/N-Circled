@@ -100,6 +100,7 @@ final class CASpinnerView: UIView {
         
         let sl = CAShapeLayer()
         sl.path = path.cgPath
+        sl.fillRule = .evenOdd
         sl.fillColor = UIColor.purple.cgColor
         
         layer.addSublayer(sl)
