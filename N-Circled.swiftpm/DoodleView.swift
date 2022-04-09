@@ -9,6 +9,7 @@ import SwiftUI
 import UIKit
 import PencilKit
 import ComplexModule
+import Combine
 
 struct DoodleView: UIViewControllerRepresentable {
     typealias UIViewControllerType = UIDoodleViewController
@@ -30,6 +31,8 @@ final class UIDoodleViewController: UIViewController {
     private let doodleView: UIDoodleView
     private let spinnerHolder: SpinnerHolder
     
+    private var cancellable: AnyCancellable? = nil
+    
     init(spinnerHolder: SpinnerHolder) {
         self.doodleView = .init()
         self.spinnerHolder = spinnerHolder
@@ -37,6 +40,10 @@ final class UIDoodleViewController: UIViewController {
         
         self.view = doodleView
         doodleView.delegate = self
+    }
+    
+    deinit {
+        cancellable?.cancel()
     }
     
     required init?(coder: NSCoder) {
