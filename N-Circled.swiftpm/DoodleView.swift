@@ -50,29 +50,7 @@ extension UIDoodleViewController: PKCanvasViewDelegate {
         guard canvasView.drawing.strokes.isEmpty == false else { return }
         
         let points = strokePoints(canvasView: canvasView)
-        let values = points.map { point in
-            return Complex<Float>(Float(point.x), Float(point.y))
-        }
-        let dft = testAccelerate(values: values)
-        var spinners: [Spinner] = []
-        for (idx, complex) in dft.enumerated() {
-            guard complex.phase.isNaN == false else { continue }
-            
-            var amp = CGFloat(complex.length) / CGFloat(values.count)
-            amp /= 100
-            #warning("temp damper")
-            
-            let spinner = Spinner(
-                amplitude: amp,
-                frequency: idx,
-                phase: CGFloat(complex.phase)
-            )
-            #warning("todo fix phase")
-            
-            spinners.append(spinner)
-        }
-        
-        spinnerHolder.spinners = spinners
+        spinnerHolder.points = points
         
         /// Clear canvas after each stroke.
         canvasView.drawing = .init()

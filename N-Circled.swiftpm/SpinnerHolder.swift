@@ -5,7 +5,8 @@
 //  Created by Secret Asian Man Dev on 9/4/22.
 //
 
-import SwiftUI
+import CoreGraphics
+import Combine
 import ComplexModule
 
 final class SpinnerHolder: ObservableObject {
@@ -14,8 +15,18 @@ final class SpinnerHolder: ObservableObject {
     
     @Published var points: [CGPoint] = []
     
+    private var cancellable: AnyCancellable? = nil
+    
     init() {
-        
+        self.cancellable = $points.sink(receiveValue: { [weak self] points in
+            if let spinners = makeSpinners(from: points) {
+                self?.spinners = spinners
+            }
+        })
+    }
+    
+    deinit {
+        cancellable?.cancel()
     }
 }
 
