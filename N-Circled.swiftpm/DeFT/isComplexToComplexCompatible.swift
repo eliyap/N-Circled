@@ -16,6 +16,8 @@ extension Int {
      * - `n` >= 3.
      */
     var isComplexToComplexCompatible: Bool {
+        guard self != 0 else { return true }
+        
         var num = self
         
         /// Number of times 2 has been factored out.
