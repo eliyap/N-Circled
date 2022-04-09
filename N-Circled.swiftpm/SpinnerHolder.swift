@@ -21,6 +21,12 @@ final class SpinnerHolder: ObservableObject {
         self.cancellable = $points.sink(receiveValue: { [weak self] points in
             if let spinners = makeSpinners(from: points) {
                 self?.spinners = spinners
+                
+                #warning("DEBUG")
+                print("sc")
+                for spinner in spinners {
+                    print(spinner)
+                }
             }
         })
     }
