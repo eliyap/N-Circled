@@ -13,14 +13,12 @@ struct TwiddlerCollectionView: View {
     
     var body: some View {
         ScrollView(.horizontal) {
-            HStack(spacing: .zero) {
+            HStack {
                 ForEach($spinnerHolder.spinners) { $spinner in
                     SpinnerThumbnailView(spinner: $spinner)
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
-                        .aspectRatio(1, contentMode: .fit)
-                        .border(.red)
                 }
             }
+                .padding(SpinnerThumbnailView.shadowRadius)
         }
     }
 }
@@ -31,8 +29,18 @@ struct SpinnerThumbnailView: View {
     
     @State private var isEditing: Bool = false
     
+    private let cornerRadius: CGFloat = 7
+    public static let shadowRadius: CGFloat = 7
+    
     var body: some View {
         Text("s")
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .aspectRatio(1, contentMode: .fit)
+            .background(content: {
+                RoundedRectangle(cornerRadius: cornerRadius)
+                    .foregroundColor(Color(uiColor: .secondarySystemBackground))
+                    .shadow(color: Color.black.opacity(0.1), radius: Self.shadowRadius / 2, x: 0, y: 0)
+            })
             .onTapGesture(perform: {
                 isEditing = true
             })
