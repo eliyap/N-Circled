@@ -63,16 +63,21 @@ struct AngleAdjustmentView: View {
             let initialSpinner = initialSpinner
         else { return }
         
-        let deltaX = value.location.x - initialPos.x
-        let deltaY = value.location.y - initialPos.y
+        /// Scale delta up to compensate for reduced size.
+        let deltaX = (value.location.x - initialPos.x) / Self.proportion
+        let deltaY = (value.location.y - initialPos.y) / Self.proportion
+        
+        /// Collapse to unit vector.
         let normalizedX = deltaX / size.width
         let normalizedY = deltaY / size.width
+        
         let updatedComplex = Complex(
             normalizedX + cos(initialSpinner.phase) * initialSpinner.amplitude,
             normalizedY + sin(initialSpinner.phase) * initialSpinner.amplitude
         )
         spinner.phase = updatedComplex.phase
-        spinner.amplitude = min(max(updatedComplex.magnitude, 0), 1)
+        
+        /// Intentionally leave magnitude alone, I found it irritating for that to change at the same time.
     }
     
     private func dragDidEnd(with value: DragGesture.Value) -> Void {
