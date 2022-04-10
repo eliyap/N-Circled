@@ -22,6 +22,9 @@ struct AngleAdjustmentView: View {
     @State private var initialPos: CGPoint? = nil
     @State private var initialSpinner: Spinner? = nil
     
+    @State private var isDragging: Bool = false
+    private let dragChangeAnimation: Animation = .easeInOut(duration: 0.1)
+    
     var body: some View {
         ZStack(alignment: .topLeading) {
             Circle()
@@ -31,8 +34,7 @@ struct AngleAdjustmentView: View {
                     height: size.width * Self.proportion * spinner.amplitude
                 )
                 .padding(size.width * 0.5 * (1 - Self.proportion * spinner.amplitude))
-            Handle
-                .offset(x: -handleRadius/2, y: -handleRadius/2)
+            HandleView(isDragging: isDragging)
                 .offset(x: size.width/2, y: size.width/2)
                 .offset(
                     x: cos(spinner.phase) * spinner.amplitude * size.width * Self.proportion * 0.5,
@@ -42,10 +44,18 @@ struct AngleAdjustmentView: View {
         }
     }
     
+    func simpleSuccess() {
+        let generator = UINotificationFeedbackGenerator()
+        generator.notificationOccurred(.success)
+    }
+    
     private func dragDidChange(with value: DragGesture.Value) -> Void {
+        withAnimation(dragChangeAnimation) { isDragging = true }
+        
         if (initialPos == nil) || (initialSpinner == nil) {
             initialPos = value.startLocation
             initialSpinner = spinner
+            simpleSuccess()
         }
         
         guard
@@ -69,13 +79,23 @@ struct AngleAdjustmentView: View {
         /// Reset values.
         initialPos = nil
         initialSpinner = nil
+        withAnimation(dragChangeAnimation) { isDragging = false }
+    }
+}
+
+struct HandleView: View {
+    
+    public let isDragging: Bool
+    
+    var handleRadius: CGFloat {
+        isDragging ? 30: 20
     }
     
-    private let handleRadius: CGFloat = 20
-    private var Handle: some View {
+    var body: some View {
         Circle()
             .frame(width: handleRadius, height: handleRadius)
             .foregroundColor(Color(uiColor: .systemBackground))
             .shadow(color: .primary.opacity(0.5), radius: 3, x: 0, y: 0)
+            .offset(x: -handleRadius/2, y: -handleRadius/2)
     }
 }
