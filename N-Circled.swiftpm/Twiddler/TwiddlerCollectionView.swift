@@ -35,17 +35,26 @@ struct SpinnerThumbnailView: View {
     public static let shadowRadius: CGFloat = 7
     
     var body: some View {
-        Text("s")
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
+        ZStack(alignment: .topTrailing) {
+            Text("s")
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+            Button(action: { isEditing = true }, label: {
+                Image(systemName: "square.and.pencil")
+                    .resizable()
+                    .frame(width: 20, height: 20)
+                    .padding(5)
+                    .contentShape(Rectangle())
+            })
+        }
+            .padding(3)
+            .frame(width: TwiddlerCollectionView.viewHeight, height: TwiddlerCollectionView.viewHeight)
             .aspectRatio(1, contentMode: .fit)
             .background(content: {
                 RoundedRectangle(cornerRadius: cornerRadius)
                     .foregroundColor(Color(uiColor: .secondarySystemBackground))
                     .shadow(color: Color.black.opacity(0.1), radius: Self.shadowRadius / 2, x: 0, y: 0)
             })
-            .onTapGesture(perform: {
-                isEditing = true
-            })
+            .onTapGesture(count: 2, perform: { isEditing = true })
             .fullScreenCover(isPresented: $isEditing, content: {
                 SpinnerEditView.init(spinner: $spinner)
             })
