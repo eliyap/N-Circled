@@ -90,8 +90,8 @@ final class CASpinnerView: UIView {
         
         let sl = CAShapeLayer()
         sl.path = path.cgPath
-        sl.fillRule = .evenOdd
-        sl.fillColor = UIColor.purple.cgColor
+        sl.strokeColor = UIColor.purple.cgColor
+        sl.fillColor = nil
         
         layer.addSublayer(sl)
     }
