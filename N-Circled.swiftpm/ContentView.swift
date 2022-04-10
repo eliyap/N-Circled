@@ -15,6 +15,7 @@ struct ContentView: View {
                 CASpinner(size: geo.size, spinnerHolder: spinnerHolder)
             }
                 .border(Color.red)
+            TwiddlerCollectionView(spinnerHolder: spinnerHolder)
         }
     }
 }
