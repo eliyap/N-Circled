@@ -18,6 +18,7 @@ struct AngleAdjustmentView: View {
     private static let proportion: CGFloat = 0.75
     private static let remainder: CGFloat = 1 - proportion
     
+    /// Maintains pre-gesture values to allow easy calculation of intermediate and final values.
     @State private var initialPos: CGPoint? = nil
     @State private var initialSpinner: Spinner? = nil
     
