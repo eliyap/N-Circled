@@ -33,23 +33,28 @@ struct SpinnerEditView: View {
                 + Text("Do \(modified.frequency) \(modified.frequency == 1 ? "rotation" : "rotations")")
             })
                 .padding(buttonPadding)
-                .background(content: {
-                    RoundedRectangle(cornerRadius: cornerRadius)
-                        .foregroundColor(buttonBackground)
-                })
+                .modifier(TwiddleBackground())
             
             AmplitudeSliderView(spinner: $modified)
                 .padding(buttonPadding)
-                .background(content: {
-                    RoundedRectangle(cornerRadius: cornerRadius)
-                        .foregroundColor(buttonBackground)
-                })
+                .modifier(TwiddleBackground())
             
-            GeometryReader { geo in
-                AngleAdjustmentView(size: geo.size, spinner: $modified)
+            VStack {
+                HStack {
+                    Text(Image(systemName: "dial.min.fill")) + Text(" ") + Text("Spin Start")
+                    
+                    Spacer()
+                    
+                    Text(Image(systemName: "hand.draw.fill")) + Text(" ") + Text("Drag to Adjust")
+                }
+                    .padding(buttonPadding)
+                
+                GeometryReader { geo in
+                    AngleAdjustmentView(size: geo.size, spinner: $modified)
+                }
+                    .aspectRatio(1, contentMode: .fit)
             }
-                .aspectRatio(1, contentMode: .fit)
-                .border(.red)
+                .modifier(TwiddleBackground())
             
             Spacer()
         }
@@ -100,6 +105,27 @@ struct SpinnerEditView: View {
                     .foregroundColor(buttonBackground)
                 RoundedRectangle(cornerRadius: cornerRadius)
                     .stroke(buttonStroke)
+            })
+    }
+}
+
+struct TwiddleBackground: ViewModifier {
+    
+    @Environment(\.colorScheme) private var colorScheme
+    
+    let buttonPadding: CGFloat = 7.5
+    let cornerRadius: CGFloat = 7
+    var buttonBackground: Color {
+        colorScheme == .light
+            ? .gray.opacity(0.07)
+            : .gray.opacity(0.20)
+    }
+    
+    func body(content: Content) -> some View {
+        content
+            .background(content: {
+                RoundedRectangle(cornerRadius: cornerRadius)
+                    .foregroundColor(buttonBackground)
             })
     }
 }

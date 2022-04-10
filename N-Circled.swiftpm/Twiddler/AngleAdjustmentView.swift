@@ -34,6 +34,7 @@ struct AngleAdjustmentView: View {
                     height: size.width * Self.proportion * spinner.amplitude
                 )
                 .padding(size.width * 0.5 * (1 - Self.proportion * spinner.amplitude))
+            
             HandleView(isDragging: isDragging)
                 .offset(x: size.width/2, y: size.width/2)
                 .offset(
