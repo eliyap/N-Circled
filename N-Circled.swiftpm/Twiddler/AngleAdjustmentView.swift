@@ -30,7 +30,7 @@ struct AngleAdjustmentView: View {
                     width: size.width * Self.proportion * spinner.amplitude,
                     height: size.width * Self.proportion * spinner.amplitude
                 )
-                .padding(size.width * 0.5 * (Self.remainder + Self.proportion * (1 - spinner.amplitude)))
+                .padding(size.width * 0.5 * (1 - Self.proportion * spinner.amplitude))
             Handle
                 .offset(x: -handleRadius/2, y: -handleRadius/2)
                 .offset(x: size.width/2, y: size.width/2)
