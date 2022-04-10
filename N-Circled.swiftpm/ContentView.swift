@@ -16,7 +16,7 @@ struct ContentView: View {
             }
                 .border(Color.red)
             TwiddlerCollectionView(spinnerHolder: spinnerHolder)
-                .frame(height: 100)
+                .frame(height: TwiddlerCollectionView.viewHeight)
         }
     }
 }

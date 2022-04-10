@@ -11,6 +11,8 @@ struct TwiddlerCollectionView: View {
     
     @ObservedObject public var spinnerHolder: SpinnerHolder
     
+    public static let viewHeight: CGFloat = 100
+    
     var body: some View {
         ScrollView(.horizontal) {
             HStack {
