@@ -9,7 +9,7 @@ import SwiftUI
 import ComplexModule
 
 /// `size` assumed to be a square.
-struct AngleAdjustmentView: View {
+struct DialView: View {
     
     public let size: CGSize
     @Binding public var spinner: Spinner

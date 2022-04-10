@@ -32,11 +32,11 @@ struct SpinnerEditView: View {
                 + Text(" ")
                 + Text("Do \(modified.frequency) \(modified.frequency == 1 ? "rotation" : "rotations")")
             })
-                .padding(buttonPadding)
+                .padding(SpinnerEditView.buttonPadding)
                 .modifier(TwiddleBackground())
             
             AmplitudeSliderView(spinner: $modified)
-                .padding(buttonPadding)
+                .padding(SpinnerEditView.buttonPadding)
                 .modifier(TwiddleBackground())
             
             VStack {
@@ -47,10 +47,10 @@ struct SpinnerEditView: View {
                     
                     Text(Image(systemName: "hand.draw.fill")) + Text(" ") + Text("Drag to Adjust")
                 }
-                    .padding(buttonPadding)
+                    .padding(SpinnerEditView.buttonPadding)
                 
                 GeometryReader { geo in
-                    AngleAdjustmentView(size: geo.size, spinner: $modified)
+                    DialView(size: geo.size, spinner: $modified)
                 }
                     .aspectRatio(1, contentMode: .fit)
             }
@@ -58,10 +58,10 @@ struct SpinnerEditView: View {
             
             Spacer()
         }
-            .padding(buttonPadding * 2)
+            .padding(SpinnerEditView.buttonPadding * 2)
     }
     
-    let buttonPadding: CGFloat = 7.5
+    public static let buttonPadding: CGFloat = 7.5
     let cornerRadius: CGFloat = 7
     var buttonBackground: Color {
         colorScheme == .light
@@ -81,7 +81,7 @@ struct SpinnerEditView: View {
         }, label: {
             Text("Cancel") + Text(" ") + Text(Image(systemName: "xmark"))
         })
-            .padding(buttonPadding)
+            .padding(SpinnerEditView.buttonPadding)
             .background(content: {
                 RoundedRectangle(cornerRadius: cornerRadius)
                     .foregroundColor(buttonBackground)
@@ -99,7 +99,7 @@ struct SpinnerEditView: View {
         }, label: {
             Text("Done") + Text(" ") + Text(Image(systemName: "checkmark"))
         })
-            .padding(buttonPadding)
+            .padding(SpinnerEditView.buttonPadding)
             .background(content: {
                 RoundedRectangle(cornerRadius: cornerRadius)
                     .foregroundColor(buttonBackground)
@@ -113,7 +113,7 @@ struct TwiddleBackground: ViewModifier {
     
     @Environment(\.colorScheme) private var colorScheme
     
-    let buttonPadding: CGFloat = 7.5
+    let buttonPadding: CGFloat = SpinnerEditView.buttonPadding
     let cornerRadius: CGFloat = 7
     var buttonBackground: Color {
         colorScheme == .light
