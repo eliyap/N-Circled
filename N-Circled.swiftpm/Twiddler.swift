@@ -16,6 +16,9 @@ struct TwiddlerCollectionView: View {
             HStack(spacing: .zero) {
                 ForEach($spinnerHolder.spinners) { $spinner in
                     SpinnerTwiddlerView(spinner: $spinner)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        .aspectRatio(1, contentMode: .fit)
+                        .border(.red)
                 }
             }
         }
