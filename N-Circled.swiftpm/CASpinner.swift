@@ -57,14 +57,12 @@ final class CASpinnerView: UIView {
     
     private func addShape(size: CGSize) -> Void {
         let path = UIBezierPath()
-        path.move(to: .zero)
-        
         let baseRadius: CGFloat = 200
         
-        for val in stride(from: 0.0, through: 1.0, by: 0.0001) {
+        func point(at proportion: CGFloat) -> CGPoint {
             var offset: CGPoint = .zero
             for spinner in spinners {
-                let spinnerOffset = spinner.offset(proportion: val)
+                let spinnerOffset = spinner.offset(proportion: proportion)
                 offset.x += spinnerOffset.x * baseRadius
                 offset.y += spinnerOffset.y * baseRadius
             }
@@ -81,9 +79,13 @@ final class CASpinnerView: UIView {
             assert(!offset.x.isNaN)
             assert(!offset.y.isNaN)
             
-            path.addLine(to: offset)
+            return offset
         }
         
+        path.move(to: point(at: .zero))
+        for val in stride(from: 0.0, through: 1.0, by: 0.0001) {
+            path.addLine(to: point(at: val))
+        }
         path.close()
         
         let sl = CAShapeLayer()
