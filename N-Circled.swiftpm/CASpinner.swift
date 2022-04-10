@@ -27,13 +27,7 @@ struct CASpinner: UIViewRepresentable {
 
 final class CASpinnerView: UIView {
     
-    private var spinners = [
-        Spinner(amplitude: 0.5, frequency: +1, phase: .pi / 10),
-        Spinner(amplitude: 0.4, frequency: +2, phase: .pi / 17),
-        Spinner(amplitude: 0.3, frequency: +3, phase: .pi / 20),
-        Spinner(amplitude: 0.2, frequency: +4, phase: .pi / 6),
-        Spinner(amplitude: 0.1, frequency: +5, phase: .pi / 4),
-    ]
+    private var spinners: [Spinner] = []
     
     private var cancellable: AnyCancellable? = nil
     
@@ -46,7 +40,6 @@ final class CASpinnerView: UIView {
         addSpinners(size: size)
         
         self.cancellable = spinnerHolder.$spinners
-            .dropFirst() /// Skip `@Published` default initial value.
             .sink(receiveValue: { [weak self] spinners in
                 self?.spinners = spinners
                 self?.redrawSpinners()
