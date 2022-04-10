@@ -12,7 +12,7 @@ struct ContentView: View {
             Text("Hello, WWDC!")
             Text("\(spinnerHolder.spinners.count)")
             GeometryReader { geo in
-                CASpinner(size: geo.size, spinnerHolder: spinnerHolder)
+                CASpinner.init(size: geo.size, spinnerHolder: spinnerHolder)
             }
                 .border(Color.red)
             TwiddlerCollectionView(spinnerHolder: spinnerHolder)
