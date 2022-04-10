@@ -8,6 +8,7 @@
 import SwiftUI
 import Combine
 
+/// A `CoreAnimation` powered view for displaying `Spinner`s.
 struct CASpinner: UIViewRepresentable {
     typealias UIViewType = CASpinnerView
     
@@ -135,9 +136,12 @@ final class CASpinnerView: UIView {
             shapeLayer.lineWidth = lineWidth
             
             /// Assemble layers.
-            gradientLayer.mask = shapeLayer
             newLayer.addSublayer(gradientLayer)
             prevLayer.addSublayer(newLayer)
+            
+            /// https://developer.apple.com/documentation/quartzcore/calayer/1410861-mask
+            /// > The layer you assign to this property **must not have a superlayer.**
+            gradientLayer.mask = shapeLayer
             
             /// Add offset and rotation.
             var offset = CGPoint(
