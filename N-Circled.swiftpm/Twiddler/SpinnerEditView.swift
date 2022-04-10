@@ -20,45 +20,43 @@ struct SpinnerEditView: View {
     }
     
     var body: some View {
-        ScrollView(.vertical) {
+        VStack {
+            HStack {
+                CancelButton
+                Spacer()
+                DoneButton
+            }
+            
+            Stepper(value: $modified.frequency, in: (-5)...(+5), step: 1, label: {
+                Text(Image(systemName: "tornado"))
+                + Text(" ")
+                + Text("Do \(modified.frequency) \(modified.frequency == 1 ? "rotation" : "rotations")")
+            })
+                .padding(SpinnerEditView.buttonPadding)
+                .modifier(TwiddleBackground())
+            
+            AmplitudeSliderView(spinner: $modified)
+                .padding(SpinnerEditView.buttonPadding)
+                .modifier(TwiddleBackground())
+            
             VStack {
                 HStack {
-                    CancelButton
-                    Spacer()
-                    DoneButton
-                }
-                
-                Stepper(value: $modified.frequency, in: (-5)...(+5), step: 1, label: {
-                    Text(Image(systemName: "tornado"))
-                    + Text(" ")
-                    + Text("Do \(modified.frequency) \(modified.frequency == 1 ? "rotation" : "rotations")")
-                })
-                    .padding(SpinnerEditView.buttonPadding)
-                    .modifier(TwiddleBackground())
-                
-                AmplitudeSliderView(spinner: $modified)
-                    .padding(SpinnerEditView.buttonPadding)
-                    .modifier(TwiddleBackground())
-                
-                VStack {
-                    HStack {
-                        Text(Image(systemName: "dial.min.fill")) + Text(" ") + Text("Spin Start")
-                        
-                        Spacer()
-                        
-                        Text(Image(systemName: "hand.draw.fill")) + Text(" ") + Text("Drag to Adjust")
-                    }
-                        .padding(SpinnerEditView.buttonPadding)
+                    Text(Image(systemName: "dial.min.fill")) + Text(" ") + Text("Spin Start")
                     
-                    GeometryReader { geo in
-                        DialView(size: geo.size, spinner: $modified)
-                    }
-                        .aspectRatio(1, contentMode: .fit)
+                    Spacer()
+                    
+                    Text(Image(systemName: "hand.draw.fill")) + Text(" ") + Text("Drag to Adjust")
                 }
-                    .modifier(TwiddleBackground())
+                    .padding(SpinnerEditView.buttonPadding)
                 
-                Spacer()
+                GeometryReader { geo in
+                    DialView(size: geo.size, spinner: $modified)
+                }
+                    .aspectRatio(1, contentMode: .fit)
             }
+                .modifier(TwiddleBackground())
+            
+            Spacer()
         }
             .padding(SpinnerEditView.buttonPadding * 2)
     }
