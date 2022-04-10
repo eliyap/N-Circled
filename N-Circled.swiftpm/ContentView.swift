@@ -11,8 +11,6 @@ struct ContentView: View {
                 .foregroundColor(.accentColor)
             Text("Hello, WWDC!")
             Text("\(spinnerHolder.spinners.count)")
-            DoodleView(spinnerHolder: spinnerHolder)
-                .border(Color.red)
             GeometryReader { geo in
                 CASpinner(size: geo.size, spinnerHolder: spinnerHolder)
             }
