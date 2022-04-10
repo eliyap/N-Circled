@@ -12,14 +12,8 @@ import Combine
 struct CASpinner: UIViewRepresentable {
     typealias UIViewType = CASpinnerView
     
-    let size: CGSize
-    
-    let spinnerHolder: SpinnerHolder
-    
-    init(size: CGSize, spinnerHolder: SpinnerHolder) {
-        self.size = size
-        self.spinnerHolder = spinnerHolder
-    }
+    public let size: CGSize
+    public let spinnerHolder: SpinnerHolder
     
     func makeUIView(context: Context) -> CASpinnerView {
         let view: UIViewType = .init(size: size, spinnerHolder: spinnerHolder)
