@@ -18,6 +18,9 @@ struct TwiddlerCollectionView: View {
             HStack {
                 ForEach($spinnerHolder.spinners) { $spinner in
                     SpinnerThumbnailView(spinner: $spinner)
+                        .onTapGesture(perform: {
+                            spinnerHolder.highlighted = spinner
+                        })
                 }
             }
                 .padding(SpinnerThumbnailView.shadowRadius)
