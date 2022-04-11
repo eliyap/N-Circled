@@ -130,15 +130,14 @@ final class CASpinnerView: UIView {
         }
         path.close()
         
-        let sl = CAShapeLayer()
-        sl.path = path.cgPath
-        sl.strokeColor = UIColor.systemTeal.cgColor
-        sl.fillColor = nil
-        sl.lineWidth = 3
+        strokeStartLayer.path = path.cgPath
+        strokeStartLayer.strokeColor = UIColor.systemTeal.cgColor
+        strokeStartLayer.fillColor = nil
+        strokeStartLayer.lineWidth = 3
         
         sl.add(makeStrokeAnimation(spinners: spinners), property: .strokeEnd)
         
-        layer.addSublayer(sl)
+        layer.addSublayer(strokeStartLayer)
     }
     
     private func addSpinners(size: CGSize) -> Void {
