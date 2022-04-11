@@ -27,18 +27,20 @@ let package = Package(
                 .phone
             ],
             supportedInterfaceOrientations: [
-                .portrait,
+                .portrait
             ]
         )
     ],
     dependencies: [
-        .package(url: "https://github.com/apple/swift-numerics.git", "1.0.0"..<"2.0.0")
+        .package(url: "https://github.com/apple/swift-numerics.git", "1.0.0"..<"2.0.0"),
+        .package(url: "https://github.com/Bersaelor/KDTree", "1.0.0"..<"2.0.0")
     ],
     targets: [
         .executableTarget(
             name: "AppModule",
             dependencies: [
-                .product(name: "ComplexModule", package: "swift-numerics")
+                .product(name: "ComplexModule", package: "swift-numerics"),
+                .product(name: "KDTree", package: "kdtree")
             ],
             path: "."
         )
