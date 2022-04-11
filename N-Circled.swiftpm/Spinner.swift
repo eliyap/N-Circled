@@ -31,8 +31,9 @@ struct Spinner {
         (proportion * 2 * .pi * CGFloat(frequency)) + phase
     }
     
-    
-    func offset(proportion: Double) -> CGPoint {
+    /// Returns a point on the unit circle, from a [0, 1] proportion.
+    /// The full [0, 1] range will show increments through `frequency` full turns.
+    func unitOffset(proportion: Double) -> CGPoint {
         let angle: CGFloat = self.radians(proportion: proportion)
         return CGPoint(
             x: amplitude * cos(angle),
