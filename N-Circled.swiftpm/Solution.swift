@@ -6,37 +6,74 @@
 //
 
 import CoreGraphics
-import simd
+import KDTree
+
+struct Scorer {
+    let base: Double
+    let maxExponent: Double
+    let scalar: Double
+    
+    init(
+        base: Double = 2.0,
+        maxExponent: Double = 2.0,
+        scalar: Double = 1.0
+    ) {
+        self.base = base
+        self.maxExponent = maxExponent
+        self.scalar = scalar
+    }
+    
+    /** Scores a distance.
+     *  Scoring goals:
+     *  - higher is better, better is higher
+     *  - should always be positive
+     *  - bounded values (has a minimum and maximum)
+     * 
+     *  Exponents satisfy all these criteria.
+     */
+    func score(distance: Double) -> Double { 
+        assert(distance >= 0, "Received negative distance: \(distance)")
+        
+        return pow(base, maxExponent - (scalar * distance))
+    }
+
+    func normalizedScore(distance: Double) -> Double {
+        return score(distance: distance) / maxScore
+    }
+
+    var maxScore: Double {
+        return pow(base, maxExponent)
+    }
+}
 
 struct Solution {
     let spinners: [Spinner]
     
-    func grade(attempt: [Spinner], samples: Int) -> Float {
+    func score(attempt: [Spinner], samples: Int) -> Double {
         
-        let attemptSamples: [simd_float2] = (0..<samples).map { (sampleNo) in
-            let pt: CGPoint = attempt.vectorFor(proportion: CGFloat(sampleNo) / CGFloat(samples))
-            return simd_float2(x: Float(pt.x), y: Float(pt.y))
+        let attemptSamples: [CGPoint] = (0..<samples).map { (sampleNo) in
+            return attempt.vectorFor(proportion: CGFloat(sampleNo) / CGFloat(samples))
         }
         
-        let solutionSamples: [simd_float2] = (0..<samples).map { (sampleNo) in
-            let pt: CGPoint = spinners.vectorFor(proportion: CGFloat(sampleNo) / CGFloat(samples))
-            return simd_float2(x: Float(pt.x), y: Float(pt.y))
+        let solutionSamples: [CGPoint] = (0..<samples).map { (sampleNo) in
+            return spinners.vectorFor(proportion: CGFloat(sampleNo) / CGFloat(samples))
         }
+        let solutionTree = KDTree(values: solutionSamples)
         
-        var score: Float = .zero
+        let scorer = Scorer()
+        var score: Double = .zero
         
         for attemptSample in attemptSamples {
-            /// Iterate to find the closest point using `simd` instructions.
-            var closest: simd_float2 = solutionSamples.first!
-            for solutionSample in solutionSamples {
-                if simd_distance_squared(attemptSample, solutionSample) < simd_distance_squared(attemptSample, closest) {
-                    closest = solutionSample
-                }
+            guard let closest = solutionTree.nearest(to: attemptSample) else {
+                assert(false, "Could not find closest point to \(attemptSample)")
+                continue
             }
-            
-            /// Add the smallest value to the score.
-            score += simd_distance(attemptSample, closest)
+            let distance = attemptSample.squaredDistance(to: closest)
+            score += scorer.normalizedScore(distance: distance)
         }
+        
+        /// Normalize score.
+        score /= Double(samples)
         
         return score
     }
