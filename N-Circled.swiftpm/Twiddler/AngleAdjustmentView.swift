@@ -76,7 +76,9 @@ struct DialView: View {
             normalizedX + cos(initialSpinner.phase) * initialSpinner.amplitude,
             normalizedY + sin(initialSpinner.phase) * initialSpinner.amplitude
         )
-        spinner.phase = updatedComplex.phase
+        if updatedComplex.phase.isNaN == false {
+            spinner.phase = updatedComplex.phase
+        }
         
         /// Intentionally leave magnitude alone, I found it irritating for that to change at the same time.
     }
