@@ -60,3 +60,19 @@ extension Spinner: CustomStringConvertible {
         )
     }
 }
+
+extension Collection where Element == Spinner {
+    /// Combines the offsets for all spinners at the same proportion.
+    func vectorFor(proportion: Double) -> CGPoint {
+        self
+            .map { (spinner) in
+                return spinner.unitOffset(proportion: proportion)
+            }
+            .reduce(CGPoint.zero, {
+                return CGPoint(
+                    x: $0.x + $1.x,
+                    y: $0.y + $1.y
+                )
+            })
+    }
+}
