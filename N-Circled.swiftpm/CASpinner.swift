@@ -47,7 +47,7 @@ final class CASpinnerView: UIView {
         spinnersObserver.store(in: &observers)
     }
     
-    public func redrawSpinners() {
+    private func redrawSpinners() {
         for sublayer in layer.sublayers ?? [] {
             sublayer.removeFromSuperlayer()
         }
