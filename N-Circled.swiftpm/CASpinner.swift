@@ -49,6 +49,11 @@ final class CASpinnerView: UIView {
         let highlightObserver = spinnerHolder.$highlighted
             .sink(receiveValue: highlight)
         highlightObserver.store(in: &observers)
+        
+        /// Addresses an issue where `CoreAnimation` animations cease on backgrounding.
+        NotificationCenter.default.addObserver(forName: UIApplication.didBecomeActiveNotification, object: nil, queue: nil, using: { [weak self] _ in
+            self?.redrawSpinners()
+        })
     }
     
     private func highlight(spinner: Spinner?) -> Void {
