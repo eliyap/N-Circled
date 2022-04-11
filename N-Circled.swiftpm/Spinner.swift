@@ -40,6 +40,16 @@ struct Spinner {
             y: amplitude * sin(angle)
         )
     }
+    
+    /// Returns the velocity from a [0, 1] proportion.
+    /// The full [0, 1] range will show increments through `frequency` full turns.
+    func velocity(proportion: Double) -> CGPoint {
+        let angle: CGFloat = self.radians(proportion: proportion)
+        return CGPoint(
+            x: CGFloat(frequency) * amplitude * -sin(angle),
+            y: CGFloat(frequency) * amplitude * +cos(angle)
+        )
+    }
 }
 
 extension Spinner: Identifiable { }
@@ -67,6 +77,20 @@ extension Collection where Element == Spinner {
         self
             .map { (spinner) in
                 return spinner.unitOffset(proportion: proportion)
+            }
+            .reduce(CGPoint.zero, {
+                return CGPoint(
+                    x: $0.x + $1.x,
+                    y: $0.y + $1.y
+                )
+            })
+    }
+    
+    /// Combines the velocities for all spinners at the same proportion.
+    func velocityFor(proportion: Double) -> CGPoint {
+        self
+            .map { (spinner) in
+                return spinner.velocity(proportion: proportion)
             }
             .reduce(CGPoint.zero, {
                 return CGPoint(
