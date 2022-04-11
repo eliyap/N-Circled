@@ -34,11 +34,10 @@ struct Spinner {
         (proportion * 2 * .pi * CGFloat(frequency)) + phase
     }
     
-    func offset(at date: Date) -> CGPoint {
-        let angle: CGFloat = (date.timeIntervalSince1970 * TimeInterval(frequency)) + phase
+    func unitVector(radians: CGFloat) -> CGPoint {
         return CGPoint(
-            x: amplitude * cos(angle),
-            y: amplitude * sin(angle)
+            x: amplitude * cos(radians),
+            y: amplitude * sin(radians)
         )
     }
     
