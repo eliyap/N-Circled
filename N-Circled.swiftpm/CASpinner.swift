@@ -94,7 +94,7 @@ final class CASpinnerView: UIView {
         func point(at proportion: CGFloat) -> CGPoint {
             var offset: CGPoint = .zero
             for spinner in spinners {
-                let spinnerOffset = spinner.offset(proportion: proportion)
+                let spinnerOffset = spinner.unitOffset(proportion: proportion)
                 offset.x += spinnerOffset.x * baseRadius
                 offset.y += spinnerOffset.y * baseRadius
             }
