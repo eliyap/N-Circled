@@ -28,7 +28,7 @@ struct DialView: View {
     var body: some View {
         ZStack(alignment: .topLeading) {
             Circle()
-                .foregroundColor(.red)
+                .stroke(.blue)
                 .frame(
                     width: size.width * Self.proportion * spinner.amplitude,
                     height: size.width * Self.proportion * spinner.amplitude
@@ -100,8 +100,8 @@ struct HandleView: View {
     var body: some View {
         Circle()
             .frame(width: handleRadius, height: handleRadius)
-            .foregroundColor(Color(uiColor: .systemBackground))
-            .shadow(color: .primary.opacity(0.5), radius: 3, x: 0, y: 0)
+            .foregroundColor(.white)
+            .shadow(color: .black.opacity(0.5), radius: 3, x: 0, y: 0)
             .offset(x: -handleRadius/2, y: -handleRadius/2)
     }
 }
