@@ -122,8 +122,11 @@ final class CASpinnerView: UIView {
         
         let sl = CAShapeLayer()
         sl.path = path.cgPath
-        sl.strokeColor = UIColor.purple.cgColor
+        sl.strokeColor = UIColor.systemTeal.cgColor
         sl.fillColor = nil
+        sl.lineWidth = 3
+        
+        sl.add(makeStrokeAnimation(spinners: spinners), property: .strokeEnd)
         
         layer.addSublayer(sl)
     }
@@ -205,6 +208,7 @@ extension CALayer {
     enum AnimatableProperty: String {
         case transform
         case sublayerTransform
+        case strokeEnd
     }
     
     func add(_ animation: CAAnimation, property: AnimatableProperty) -> Void {
