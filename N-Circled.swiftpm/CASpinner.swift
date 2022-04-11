@@ -34,9 +34,19 @@ final class CASpinnerView: UIView {
     
     private let size: CGSize
     
+    /// Composed IDFT sublayers.
+    let strokeStartLayer: CAShapeLayer
+    let strokeEndLayer: CAShapeLayer
+    
     init(size: CGSize, spinnerHolder: SpinnerHolder) {
         self.size = size
+        self.strokeStartLayer = .init()
+        self.strokeEndLayer = .init()
         super.init(frame: .zero)
+        
+        layer.addSublayer(strokeStartLayer)
+        layer.addSublayer(strokeEndLayer)
+        
         addShape(size: size)
         addSpinners(size: size)
         
