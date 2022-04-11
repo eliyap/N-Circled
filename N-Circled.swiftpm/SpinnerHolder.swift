@@ -16,4 +16,6 @@ final class SpinnerHolder: ObservableObject {
         Spinner(amplitude: 0.2, frequency: +4, phase: .pi / 6, color: UIColor.purple.cgColor),
         Spinner(amplitude: 0.1, frequency: +5, phase: .pi / 4, color: UIColor.blue.cgColor),
     ]
+    
+    @Published var highlighted: Spinner? = nil
 }

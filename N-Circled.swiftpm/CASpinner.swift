@@ -29,7 +29,7 @@ final class CASpinnerView: UIView {
     
     private var spinners: [Spinner] = []
     
-    private var cancellable: AnyCancellable? = nil
+    private var observers: Set<AnyCancellable> = []
     
     private let size: CGSize
     
@@ -39,11 +39,12 @@ final class CASpinnerView: UIView {
         addShape(size: size)
         addSpinners(size: size)
         
-        self.cancellable = spinnerHolder.$spinners
+        let spinnersObserver = spinnerHolder.$spinners
             .sink(receiveValue: { [weak self] spinners in
                 self?.spinners = spinners
                 self?.redrawSpinners()
             })
+        spinnersObserver.store(in: &observers)
     }
     
     public func redrawSpinners() {
@@ -155,7 +156,9 @@ final class CASpinnerView: UIView {
     }
     
     deinit {
-        cancellable?.cancel()
+        for observer in observers {
+            observer.cancel()
+        }
     }
     
     required init?(coder: NSCoder) {
