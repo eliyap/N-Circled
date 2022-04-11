@@ -110,7 +110,7 @@ final class CASpinnerView: UIView {
             let layerFrame = CGRect(x: 0, y: 0, width: diameter, height: diameter)
             
             /// Create layers.
-            let gradientLayer = makeGradient()
+            let gradientLayer = makeGradient(color: spinner.color)
             gradientLayer.frame = layerFrame
             
             let newLayer = CALayer()
@@ -218,14 +218,14 @@ func makeAnimation(
     return animation
 }
 
-func makeGradient() -> CAGradientLayer {
+func makeGradient(color: CGColor) -> CAGradientLayer {
     let gl = CAGradientLayer()
     gl.startPoint = CGPoint(x: 0.5, y: 0.5)
     gl.endPoint = CGPoint(x: 0.5, y: 0)
     gl.type = .conic
     gl.colors = [
-        UIColor.clear.cgColor,
-        UIColor.label.cgColor,
+        UIColor.systemBackground.cgColor,
+        color,
     ]
     
     return gl

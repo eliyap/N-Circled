@@ -23,7 +23,7 @@ struct Spinner {
     /// Not bounded to `[0, 2pi]`.
     public var phase: CGFloat
     
-    public var color: SwiftUI.Color
+    public var color: CGColor
     
     func radians(at date: Date) -> CGFloat {
         return (date.timeIntervalSince1970 * TimeInterval(frequency)) + phase
