@@ -266,3 +266,43 @@ func makeGradient(color: CGColor) -> CAGradientLayer {
     
     return gl
 }
+
+func makeStrokeAnimation(spinners: [Spinner]) -> CAAnimation {
+    
+    let animation = CAKeyframeAnimation(keyPath: CALayer.AnimatableProperty.strokeEnd.rawValue)
+
+    var values: [CGFloat] = []
+    var keyTimes: [NSNumber] = []
+
+    /// Due to `CoreAnimation`'s high performance, we can afford many keyframes.
+    let numSamples = 1000
+    
+    /// Estimated Cumulative Length.
+    var ecl: Double = .zero
+    
+    for sampleNo in 0..<numSamples {
+        let proportion = CGFloat(sampleNo) / CGFloat(numSamples)
+        
+        /// Leverage the fact that velocity is always perpendicular to offset.
+        let estVel = spinners.velocityFor(proportion: proportion)
+        
+        ecl += sqrt(estVel.squaredDistance(to: .zero))
+        values.append(ecl)
+        
+        keyTimes.append(proportion as NSNumber)
+    }
+    
+    /// Normalize all samples.
+    for sampleNo in 0..<numSamples {
+        values[sampleNo] /= ecl
+    }
+    
+    animation.values = values
+    animation.keyTimes = keyTimes
+    animation.duration = 4
+    animation.autoreverses = false
+    animation.repeatCount = .infinity
+
+    return animation
+}
+
