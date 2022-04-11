@@ -31,12 +31,6 @@ struct Spinner {
         (proportion * 2 * .pi * CGFloat(frequency)) + phase
     }
     
-    func unitVector(radians: CGFloat) -> CGPoint {
-        return CGPoint(
-            x: amplitude * cos(radians),
-            y: amplitude * sin(radians)
-        )
-    }
     
     func offset(proportion: Double) -> CGPoint {
         let angle: CGFloat = self.radians(proportion: proportion)
