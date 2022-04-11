@@ -45,6 +45,18 @@ final class CASpinnerView: UIView {
                 self?.redrawSpinners()
             })
         spinnersObserver.store(in: &observers)
+        
+        let highlightObserver = spinnerHolder.$highlighted
+            .sink(receiveValue: highlight)
+        highlightObserver.store(in: &observers)
+    }
+    
+    private func highlight(spinner: Spinner?) -> Void {
+        if let spinner = spinner {
+            
+        } else {
+            
+        }
     }
     
     private func redrawSpinners() {
