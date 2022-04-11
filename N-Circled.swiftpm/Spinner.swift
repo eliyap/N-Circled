@@ -53,6 +53,8 @@ struct Spinner {
 
 extension Spinner: Identifiable { }
 
+extension Spinner: Equatable { }
+
 extension Spinner: CustomStringConvertible {
     var description: String {
         String(
