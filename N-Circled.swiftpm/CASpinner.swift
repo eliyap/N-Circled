@@ -59,10 +59,22 @@ final class CASpinnerView: UIView {
     }
     
     private func highlight(spinner: Spinner?) -> Void {
+        for sl in layers {
+            sl.opacity = 0.5
+            sl.lineWidth = 2
+        }
+        
         if let spinner = spinner {
-            
-        } else {
-            
+            guard let idx = spinners.firstIndex(of: spinner) else {
+                assert(false, "Could not find spinner \(spinner)")
+                return
+            }
+            guard layers.indices ~= idx else {
+                assert(false, "Could not match spinner index \(idx)")
+                return
+            }
+            layers[idx].opacity = 1
+            layers[idx].lineWidth = 5
         }
     }
     
