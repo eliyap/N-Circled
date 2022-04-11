@@ -28,6 +28,7 @@ struct CASpinner: UIViewRepresentable {
 final class CASpinnerView: UIView {
     
     private var spinners: [Spinner] = []
+    private var layers: [CAShapeLayer] = []
     
     private var observers: Set<AnyCancellable> = []
     
@@ -42,6 +43,7 @@ final class CASpinnerView: UIView {
         let spinnersObserver = spinnerHolder.$spinners
             .sink(receiveValue: { [weak self] spinners in
                 self?.spinners = spinners
+                self?.layers = []
                 self?.redrawSpinners()
             })
         spinnersObserver.store(in: &observers)
@@ -169,6 +171,8 @@ final class CASpinnerView: UIView {
             prevLayer = newLayer
             prevFrameSize = layerFrame.size
             prevSpinner = spinner
+            
+            layers.append(shapeLayer)
         }
     }
     
