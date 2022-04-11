@@ -25,10 +25,6 @@ struct Spinner {
     
     public var color: CGColor
     
-    func radians(at date: Date) -> CGFloat {
-        return (date.timeIntervalSince1970 * TimeInterval(frequency)) + phase
-    }
-    
     /// Unit: radians.
     func radians(proportion: Double) -> Double {
         (proportion * 2 * .pi * CGFloat(frequency)) + phase
