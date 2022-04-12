@@ -6,11 +6,19 @@ struct ContentView: View {
     
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, WWDC!")
-            Text("\(spinnerHolder.spinners.count)")
+            HStack {
+                Image(systemName: "globe")
+                    .imageScale(.large)
+                    .foregroundColor(.accentColor)
+                Text("Hello, WWDC!")
+                Text("\(spinnerHolder.spinners.count)")
+                Button(action: {
+                    #warning("TODO")
+                    print("play...")
+                }, label: {
+                    Text("Play!")
+                })
+            }
             GeometryReader { geo in
                 CASpinner.init(size: geo.size, spinnerHolder: spinnerHolder)
             }
