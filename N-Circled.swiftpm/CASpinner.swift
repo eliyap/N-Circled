@@ -44,9 +44,6 @@ final class CASpinnerView: UIView {
         self.strokeEndLayer = .init()
         super.init(frame: .zero)
         
-        layer.addSublayer(strokeStartLayer)
-        layer.addSublayer(strokeEndLayer)
-        
         addShape(size: size)
         addSpinners(size: size)
         
@@ -135,9 +132,71 @@ final class CASpinnerView: UIView {
         strokeStartLayer.fillColor = nil
         strokeStartLayer.lineWidth = 3
         
-        strokeStartLayer.add(makeStrokeAnimation(spinners: spinners), property: .strokeEnd)
+        strokeEndLayer.path = path.cgPath
+        strokeEndLayer.strokeColor = UIColor.systemTeal.cgColor
+        strokeEndLayer.fillColor = nil
+        strokeEndLayer.lineWidth = 3
+        
+        let animationValues = interpolateIdftLength(spinners: spinners)
+        let previewLength: CGFloat = 0.1
+                
+        let unmodified = animationValues
+        var flooredReduced = animationValues
+        
+        var dipped = animationValues
+        var wrappedReduced = animationValues
+        
+        /// Adjust values.
+        for idx in 0..<animationValues.count {
+            /// Advance `strokeStrart` by length.
+            flooredReduced[idx].length -= previewLength
+            wrappedReduced[idx].length -= previewLength
+            
+            if flooredReduced[idx].length < 0 {
+                flooredReduced[idx].length = 0
+            }
+            if wrappedReduced[idx].length < 0 {
+                wrappedReduced[idx].length += 1
+                dipped[idx].length = 1
+            }
+        }
+        
+        let sslStartAnim = CAKeyframeAnimation(keyPath: CALayer.AnimatableProperty.strokeStart.rawValue)
+        sslStartAnim.values = flooredReduced.map(\.length)
+        sslStartAnim.keyTimes = flooredReduced.map(\.time)
+        sslStartAnim.duration = 4
+        sslStartAnim.autoreverses = false
+        sslStartAnim.repeatCount = .infinity
+        
+        let sslEndAnim = CAKeyframeAnimation(keyPath: CALayer.AnimatableProperty.strokeEnd.rawValue)
+        sslEndAnim.values = unmodified.map(\.length)
+        sslEndAnim.keyTimes = unmodified.map(\.time)
+        sslEndAnim.duration = 4
+        sslEndAnim.autoreverses = false
+        sslEndAnim.repeatCount = .infinity
+
+        strokeStartLayer.add(sslStartAnim, property: .strokeStart)
+        strokeStartLayer.add(sslEndAnim, property: .strokeEnd)
+        
+        let selStartAnim = CAKeyframeAnimation(keyPath: CALayer.AnimatableProperty.strokeStart.rawValue)
+        selStartAnim.values = wrappedReduced.map(\.length)
+        selStartAnim.keyTimes = wrappedReduced.map(\.time)
+        selStartAnim.duration = 4
+        selStartAnim.autoreverses = false
+        selStartAnim.repeatCount = .infinity
+
+        let selEndAnim = CAKeyframeAnimation(keyPath: CALayer.AnimatableProperty.strokeEnd.rawValue)
+        selEndAnim.values = dipped.map(\.length)
+        selEndAnim.keyTimes = dipped.map(\.time)
+        selEndAnim.duration = 4
+        selEndAnim.autoreverses = false
+        selEndAnim.repeatCount = .infinity
+        
+        strokeEndLayer.add(selStartAnim, property: .strokeStart)
+        strokeEndLayer.add(selEndAnim, property: .strokeEnd)
         
         layer.addSublayer(strokeStartLayer)
+        layer.addSublayer(strokeEndLayer)
     }
     
     private func addSpinners(size: CGSize) -> Void {
