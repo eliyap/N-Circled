@@ -135,7 +135,7 @@ final class CASpinnerView: UIView {
         strokeStartLayer.fillColor = nil
         strokeStartLayer.lineWidth = 3
         
-        sl.add(makeStrokeAnimation(spinners: spinners), property: .strokeEnd)
+        strokeStartLayer.add(makeStrokeAnimation(spinners: spinners), property: .strokeEnd)
         
         layer.addSublayer(strokeStartLayer)
     }
