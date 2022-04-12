@@ -217,6 +217,7 @@ extension CALayer {
     enum AnimatableProperty: String {
         case transform
         case sublayerTransform
+        case strokeStart
         case strokeEnd
     }
     
