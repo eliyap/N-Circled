@@ -319,3 +319,31 @@ func makeStrokeAnimation(spinners: [Spinner]) -> CAAnimation {
     return animation
 }
 
+func interpolateIdftLength(
+    spinners: [Spinner],
+    numSamples: Int = 1000
+) -> [(length: CGFloat, time: NSNumber)] {
+    
+    var result: [(CGFloat, NSNumber)] = []
+    
+    /// Estimated Cumulative Length.
+    var ecl: CGFloat = .zero
+    
+    for sampleNo in 0..<numSamples {
+        let proportion = CGFloat(sampleNo) / CGFloat(numSamples)
+        let estVel = spinners.velocityFor(proportion: proportion)
+        ecl += sqrt(estVel.squaredDistance(to: .zero))
+        result.append((
+            length: ecl,
+            time: proportion as NSNumber
+        ))
+    }
+    
+    /// Normalize lengths.
+    for sampleNo in 0..<numSamples {
+        result[sampleNo].0 /= ecl
+    }
+    
+    return result
+}
+
