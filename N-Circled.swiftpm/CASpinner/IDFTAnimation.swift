@@ -102,7 +102,7 @@ func addIdftAnimation(
         anim.values = steps.map(\.length)
         anim.keyTimes = steps.map(\.time)
         
-        anim.duration = 4
+        anim.duration = CASpinnerView.animationDuration
         anim.autoreverses = false
         anim.repeatCount = .infinity
     }

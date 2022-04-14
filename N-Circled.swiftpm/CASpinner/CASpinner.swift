@@ -27,6 +27,8 @@ struct CASpinner: UIViewRepresentable {
 
 final class CASpinnerView: UIView {
     
+    public static let animationDuration: TimeInterval = 4.0
+    
     private var spinners: [Spinner] = []
     private var layers: [CAShapeLayer] = []
     
@@ -221,7 +223,7 @@ func makeAnimation(
     }
     animation.values = transforms
     animation.keyTimes = keyTimes
-    animation.duration = 4
+    animation.duration = CASpinnerView.animationDuration
     animation.autoreverses = false
     animation.repeatCount = .infinity
     
