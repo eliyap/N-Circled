@@ -107,6 +107,9 @@ func addIdftAnimation(
         anim.repeatCount = .infinity
     }
     
+    startLayer.lineCap = .round
+    endLayer.lineCap = .round
+    
     startLayer.add(sslStartAnim, property: .strokeStart)
     startLayer.add(sslEndAnim, property: .strokeEnd)
     
