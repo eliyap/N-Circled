@@ -25,8 +25,9 @@ struct Spinner {
     
     public var color: CGColor
     
-    /// Finds the angle of the spinner from a [0, 1] proportion.
-    /// The full [0, 1] range will show increments through `frequency` full turns, in radians.
+    /// Given a proportion in the `[0, 1]` range, returns the angle in radians
+    /// that the `Spinner` points to at that proportion of the way through `frequency`
+    /// complete turns (starting at `phase`).
     func radians(proportion: Double) -> Double {
         (proportion * 2 * .pi * CGFloat(frequency)) + phase
     }
