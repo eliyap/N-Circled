@@ -52,6 +52,8 @@ final class CASpinnerView: UIView {
                 self?.spinners = spinners
                 self?.layers = []
                 self?.redrawSpinners()
+                
+                print("score", Solution.Oval.score(attempt: spinners, samples: 1000))
             })
         spinnersObserver.store(in: &observers)
         
