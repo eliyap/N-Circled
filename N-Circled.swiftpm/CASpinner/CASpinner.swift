@@ -164,35 +164,29 @@ final class CASpinnerView: UIView {
         }
         
         let sslStartAnim = CAKeyframeAnimation(keyPath: CALayer.AnimatableProperty.strokeStart.rawValue)
-        sslStartAnim.values = flooredReduced.map(\.length)
-        sslStartAnim.keyTimes = flooredReduced.map(\.time)
-        sslStartAnim.duration = 4
-        sslStartAnim.autoreverses = false
-        sslStartAnim.repeatCount = .infinity
         
         let sslEndAnim = CAKeyframeAnimation(keyPath: CALayer.AnimatableProperty.strokeEnd.rawValue)
-        sslEndAnim.values = unmodified.map(\.length)
-        sslEndAnim.keyTimes = unmodified.map(\.time)
-        sslEndAnim.duration = 4
-        sslEndAnim.autoreverses = false
-        sslEndAnim.repeatCount = .infinity
-
-        strokeStartLayer.add(sslStartAnim, property: .strokeStart)
-        strokeStartLayer.add(sslEndAnim, property: .strokeEnd)
         
         let selStartAnim = CAKeyframeAnimation(keyPath: CALayer.AnimatableProperty.strokeStart.rawValue)
-        selStartAnim.values = wrappedReduced.map(\.length)
-        selStartAnim.keyTimes = wrappedReduced.map(\.time)
-        selStartAnim.duration = 4
-        selStartAnim.autoreverses = false
-        selStartAnim.repeatCount = .infinity
-
+        
         let selEndAnim = CAKeyframeAnimation(keyPath: CALayer.AnimatableProperty.strokeEnd.rawValue)
-        selEndAnim.values = dipped.map(\.length)
-        selEndAnim.keyTimes = dipped.map(\.time)
-        selEndAnim.duration = 4
-        selEndAnim.autoreverses = false
-        selEndAnim.repeatCount = .infinity
+        
+        for (steps, anim) in [
+            (flooredReduced, sslStartAnim),
+            (unmodified,     sslEndAnim),
+            (wrappedReduced, selStartAnim),
+            (dipped,         selEndAnim),
+        ] {
+            anim.values = steps.map(\.length)
+            anim.keyTimes = steps.map(\.time)
+            
+            anim.duration = 4
+            anim.autoreverses = false
+            anim.repeatCount = .infinity
+        }
+        
+        strokeStartLayer.add(sslStartAnim, property: .strokeStart)
+        strokeStartLayer.add(sslEndAnim, property: .strokeEnd)
         
         strokeEndLayer.add(selStartAnim, property: .strokeStart)
         strokeEndLayer.add(selEndAnim, property: .strokeEnd)
