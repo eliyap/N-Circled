@@ -7,6 +7,16 @@
 
 import UIKit
 
+/// Adds a smooth animation tracing the Inverse Discrete Fourier Transform
+/// defined by `spinners`.
+///
+/// - Note: In `CAShapeLayer`, `stokeEnd` must follow `strokeStart`.
+///         Hence to render a line segment from proportion 0.9 to 0.1,
+///         we must render 
+///         - a "start" segment (0.9 to 1.0) 
+///         - an "end" segment (0.0 to 0.1)
+///        `startLayer` is the start segment, 
+///        `endLayer` is the end segment.
 func addIdftAnimation(
     spinners: [Spinner],
     startLayer: CAShapeLayer,
