@@ -47,7 +47,7 @@ func interpolateIdftProgress(
     
     for sampleNo in 0..<numSamples {
         let proportion = CGFloat(sampleNo) / CGFloat(numSamples)
-        let estVel = spinners.velocityFor(proportion: proportion)
+        let estVel = velocity(of: spinners, at: proportion)
         ecl += sqrt(estVel.squaredDistance(to: .zero))
         result.append((
             length: ecl,
