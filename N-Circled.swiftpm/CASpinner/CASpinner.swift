@@ -30,14 +30,19 @@ final class CASpinnerView: UIView {
     
     public static let animationDuration: TimeInterval = 4.0
     
+    /// Reflects `ObservableObject` `SpinnerHolder` value.
     private var spinners: [Spinner] = []
+    
+    /// Contains the conic gradient sublayers, in the same order as the corresponding spinners.
     private var layers: [CAShapeLayer] = []
+    
+    /// Solution to the current puzzle.
+    private let solution: Solution
     
     private var observers: Set<AnyCancellable> = []
     
+    /// View size as measured by `GeometryReader`.
     private let size: CGSize
-    
-    private let solution: Solution
     
     /// Composed IDFT sublayers.
     let strokeStartLayer: CAShapeLayer

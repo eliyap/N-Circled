@@ -19,8 +19,7 @@ struct ContentView: View {
                     PuzzleView(solution: .Oval)
                 }, label: {
                     Text("Puzzle 3")
-                })
-                
+                })   
             }
         }
     }
