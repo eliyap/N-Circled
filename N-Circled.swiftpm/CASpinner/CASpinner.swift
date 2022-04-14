@@ -14,9 +14,10 @@ struct CASpinner: UIViewRepresentable {
     
     public let size: CGSize
     public let spinnerHolder: SpinnerHolder
+    public let solution: Solution
     
     func makeUIView(context: Context) -> CASpinnerView {
-        let view: UIViewType = .init(size: size, spinnerHolder: spinnerHolder)
+        let view: UIViewType = .init(size: size, spinnerHolder: spinnerHolder, solution: solution)
         return view
     }
     
@@ -36,14 +37,17 @@ final class CASpinnerView: UIView {
     
     private let size: CGSize
     
+    private let solution: Solution
+    
     /// Composed IDFT sublayers.
     let strokeStartLayer: CAShapeLayer
     let strokeEndLayer: CAShapeLayer
     
-    init(size: CGSize, spinnerHolder: SpinnerHolder) {
+    init(size: CGSize, spinnerHolder: SpinnerHolder, solution: Solution) {
         self.size = size
         self.strokeStartLayer = .init()
         self.strokeEndLayer = .init()
+        self.solution = solution
         super.init(frame: .zero)
         
         addShape(size: size)
@@ -55,7 +59,7 @@ final class CASpinnerView: UIView {
                 self?.layers = []
                 self?.redrawSpinners()
                 
-                print("score", Solution.Oval.score(attempt: spinners, samples: 1000))
+                print("score", solution.score(attempt: spinners, samples: 1000))
             })
         spinnersObserver.store(in: &observers)
         

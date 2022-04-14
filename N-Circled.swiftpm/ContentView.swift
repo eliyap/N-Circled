@@ -47,7 +47,7 @@ struct PuzzleView: View {
                 })
             }
             GeometryReader { geo in
-                CASpinner.init(size: geo.size, spinnerHolder: spinnerHolder)
+                CASpinner.init(size: geo.size, spinnerHolder: spinnerHolder, solution: solution)
             }
                 .border(Color.red)
             TwiddlerCollectionView(spinnerHolder: spinnerHolder)
