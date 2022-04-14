@@ -18,6 +18,10 @@ extension CALayer {
     }
     
     func add(_ animation: CAAnimation, property: AnimatableProperty) -> Void {
-        self.add(animation, forKey: property.rawValue)
+        /// `async` solves an issue where embedding in `NavigationView` stops the animation on appearance.
+        /// Source: https://developer.apple.com/forums/thread/682779
+        DispatchQueue.main.async { [weak self] in
+            self?.add(animation, forKey: property.rawValue)
+        }
     }
 }

@@ -3,12 +3,32 @@ import SwiftUI
 struct ContentView: View {
     
     var body: some View {
-        PuzzleView()
+        NavigationView {
+            List {
+                NavigationLink(destination: {
+                    PuzzleView(solution: .Oval)
+                }, label: {
+                    Text("Puzzle 1")
+                })
+                NavigationLink(destination: {
+                    PuzzleView(solution: .Oval)
+                }, label: {
+                    Text("Puzzle 2")
+                })
+                NavigationLink(destination: {
+                    PuzzleView(solution: .Oval)
+                }, label: {
+                    Text("Puzzle 3")
+                })
+                
+            }
+        }
     }
 }
 
 struct PuzzleView: View {
     
+    public let solution: Solution
     @StateObject private var spinnerHolder: SpinnerHolder = .init()
     
     var body: some View {
