@@ -137,7 +137,7 @@ final class CASpinnerView: UIView {
         strokeEndLayer.fillColor = nil
         strokeEndLayer.lineWidth = 3
         
-        let animationValues = interpolateIdftLength(spinners: spinners)
+        let animationValues = interpolateIdftProgress(spinners: spinners)
         let previewLength: CGFloat = 0.1
                 
         let unmodified = animationValues
@@ -325,7 +325,7 @@ func makeGradient(color: CGColor) -> CAGradientLayer {
     return gl
 }
 
-func interpolateIdftLength(
+func interpolateIdftProgress(
     spinners: [Spinner],
     numSamples: Int = 1000
 ) -> [(length: CGFloat, time: NSNumber)] {
