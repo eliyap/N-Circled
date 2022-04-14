@@ -97,44 +97,14 @@ final class CASpinnerView: UIView {
     }
     
     private func addShape(size: CGSize) -> Void {
-        let path = UIBezierPath()
-        let baseRadius: CGFloat = 200
+        let approxPath: CGPath = getIdftPath(spinners: spinners, frameSize: self.size)
         
-        func point(at proportion: CGFloat) -> CGPoint {
-            var offset: CGPoint = .zero
-            for spinner in spinners {
-                let spinnerOffset = spinner.unitOffset(proportion: proportion)
-                offset.x += spinnerOffset.x * baseRadius
-                offset.y += spinnerOffset.y * baseRadius
-            }
-            
-            /// Rotate point 90 degrees.
-            (offset.x, offset.y) = (offset.y, -offset.x)
-            
-            /// Apply scaling and offset.
-            offset.x /= 2
-            offset.y /= 2
-            offset.x += size.width/2
-            offset.y += size.height/2
-            
-            assert(!offset.x.isNaN)
-            assert(!offset.y.isNaN)
-            
-            return offset
-        }
-        
-        path.move(to: point(at: .zero))
-        for val in stride(from: 0.0, through: 1.0, by: 0.0001) {
-            path.addLine(to: point(at: val))
-        }
-        path.close()
-        
-        strokeStartLayer.path = path.cgPath
+        strokeStartLayer.path = approxPath
         strokeStartLayer.strokeColor = UIColor.systemTeal.cgColor
         strokeStartLayer.fillColor = nil
         strokeStartLayer.lineWidth = 3
         
-        strokeEndLayer.path = path.cgPath
+        strokeEndLayer.path = approxPath
         strokeEndLayer.strokeColor = UIColor.systemTeal.cgColor
         strokeEndLayer.fillColor = nil
         strokeEndLayer.lineWidth = 3

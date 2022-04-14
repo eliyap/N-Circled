@@ -7,6 +7,49 @@
 
 import UIKit
 
+let baseRadius: CGFloat = 200
+/// Approximate the path traced by taking the Inverse Discrete Fourier Transform
+/// of `spinners`, by sampling points of a complete rotation in steps of size `stepSize`.
+func getIdftPath(
+    spinners: [Spinner],
+    frameSize: CGSize,
+    stepSize: Double = 0.0001
+) -> CGPath {
+    let path = UIBezierPath()
+    
+    func point(at proportion: CGFloat) -> CGPoint {
+        var offset: CGPoint = .zero
+        for spinner in spinners {
+            let spinnerOffset = spinner.unitOffset(proportion: proportion)
+            offset.x += spinnerOffset.x * baseRadius
+            offset.y += spinnerOffset.y * baseRadius
+        }
+        
+        /// Rotate point 90 degrees.
+        (offset.x, offset.y) = (offset.y, -offset.x)
+        
+        /// Apply scaling and offset.
+        offset.x /= 2
+        offset.y /= 2
+        offset.x += frameSize.width/2
+        offset.y += frameSize.height/2
+        
+        assert(!offset.x.isNaN)
+        assert(!offset.y.isNaN)
+        
+        return offset
+    }
+    
+    path.move(to: point(at: .zero))
+    for val in stride(from: 0.0, through: 1.0, by: stepSize) {
+        path.addLine(to: point(at: val))
+    }
+    path.close()
+    
+    return path.cgPath
+}
+
+let previewLength: CGFloat = 0.1
 /// Adds a smooth animation tracing the Inverse Discrete Fourier Transform
 /// defined by `spinners`.
 ///
@@ -23,7 +66,6 @@ func addIdftAnimation(
     endLayer: CAShapeLayer
 ) {
     let animationValues = interpolateIdftProgress(spinners: spinners)
-    let previewLength: CGFloat = 0.1
             
     let unmodified = animationValues
     var flooredReduced = animationValues
