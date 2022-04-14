@@ -2,6 +2,13 @@ import SwiftUI
 
 struct ContentView: View {
     
+    var body: some View {
+        PuzzleView()
+    }
+}
+
+struct PuzzleView: View {
+    
     @StateObject private var spinnerHolder: SpinnerHolder = .init()
     
     var body: some View {
