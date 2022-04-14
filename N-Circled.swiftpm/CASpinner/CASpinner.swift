@@ -139,57 +139,7 @@ final class CASpinnerView: UIView {
         strokeEndLayer.fillColor = nil
         strokeEndLayer.lineWidth = 3
         
-        let animationValues = interpolateIdftProgress(spinners: spinners)
-        let previewLength: CGFloat = 0.1
-                
-        let unmodified = animationValues
-        var flooredReduced = animationValues
-        
-        var dipped = animationValues
-        var wrappedReduced = animationValues
-        
-        /// Adjust values.
-        for idx in 0..<animationValues.count {
-            /// Advance `strokeStrart` by length.
-            flooredReduced[idx].length -= previewLength
-            wrappedReduced[idx].length -= previewLength
-            
-            if flooredReduced[idx].length < 0 {
-                flooredReduced[idx].length = 0
-            }
-            if wrappedReduced[idx].length < 0 {
-                wrappedReduced[idx].length += 1
-                dipped[idx].length = 1
-            }
-        }
-        
-        let sslStartAnim = CAKeyframeAnimation(keyPath: CALayer.AnimatableProperty.strokeStart.rawValue)
-        
-        let sslEndAnim = CAKeyframeAnimation(keyPath: CALayer.AnimatableProperty.strokeEnd.rawValue)
-        
-        let selStartAnim = CAKeyframeAnimation(keyPath: CALayer.AnimatableProperty.strokeStart.rawValue)
-        
-        let selEndAnim = CAKeyframeAnimation(keyPath: CALayer.AnimatableProperty.strokeEnd.rawValue)
-        
-        for (steps, anim) in [
-            (flooredReduced, sslStartAnim),
-            (unmodified,     sslEndAnim),
-            (wrappedReduced, selStartAnim),
-            (dipped,         selEndAnim),
-        ] {
-            anim.values = steps.map(\.length)
-            anim.keyTimes = steps.map(\.time)
-            
-            anim.duration = 4
-            anim.autoreverses = false
-            anim.repeatCount = .infinity
-        }
-        
-        strokeStartLayer.add(sslStartAnim, property: .strokeStart)
-        strokeStartLayer.add(sslEndAnim, property: .strokeEnd)
-        
-        strokeEndLayer.add(selStartAnim, property: .strokeStart)
-        strokeEndLayer.add(selEndAnim, property: .strokeEnd)
+        addIdftAnimation(spinners: spinners, startLayer: strokeStartLayer, endLayer: strokeEndLayer)
         
         layer.addSublayer(strokeStartLayer)
         layer.addSublayer(strokeEndLayer)
