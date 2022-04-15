@@ -76,15 +76,6 @@ final class CASpinnerView: UIView {
         NotificationCenter.default.addObserver(forName: UIApplication.didBecomeActiveNotification, object: nil, queue: nil, using: { [weak self] _ in
             self?.redrawSpinners()
         })
-        
-        let solutionLayer: CAShapeLayer = .init()
-        solutionLayer.path = getIdftPath(spinners: solution.spinners, frameSize: size)
-        solutionLayer.fillColor = nil
-        solutionLayer.strokeColor = UIColor.label.cgColor
-        solutionLayer.opacity = 0.5
-        solutionLayer.lineWidth = 3
-        solutionLayer.lineDashPattern = [10, 10]
-        layer.addSublayer(solutionLayer)
     }
     
     private func highlight(spinner: Spinner?) -> Void {
@@ -105,6 +96,17 @@ final class CASpinnerView: UIView {
             layers[idx].opacity = 1
             layers[idx].lineWidth = 5
         }
+    }
+    
+    private func drawSolutionLayer() {
+        let solutionLayer: CAShapeLayer = .init()
+        solutionLayer.path = getIdftPath(spinners: solution.spinners, frameSize: size)
+        solutionLayer.fillColor = nil
+        solutionLayer.strokeColor = UIColor.label.cgColor
+        solutionLayer.opacity = 0.5
+        solutionLayer.lineWidth = 3
+        solutionLayer.lineDashPattern = [10, 10]
+        layer.addSublayer(solutionLayer)
     }
     
     private func redrawSpinners() {
