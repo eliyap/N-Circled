@@ -105,9 +105,9 @@ public class SwiftConfettiView: UIView {
             let data = try Data(contentsOf: url)
             return UIImage(data: data)
         } catch {
-            print(error)
+            assert(false, "\(error)")
+            return nil
         }
-        return nil
     }
 
     func confettiWithColor(color: UIColor) -> CAEmitterCell {
