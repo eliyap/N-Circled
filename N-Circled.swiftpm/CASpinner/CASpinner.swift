@@ -33,8 +33,8 @@ final class CASpinnerView: UIView {
     /// Reflects `ObservableObject` `SpinnerHolder` value.
     private var spinners: [Spinner] = []
     
-    /// Contains the conic gradient sublayers, in the same order as the corresponding spinners.
-    private var layers: [CAShapeLayer] = []
+    /// Contains the circle mask sublayers, in the same order as the corresponding spinners.
+    private var circleLayers: [CAShapeLayer] = []
     
     /// Solution to the current puzzle.
     private let solution: Solution
@@ -61,7 +61,7 @@ final class CASpinnerView: UIView {
         let spinnersObserver = spinnerHolder.$spinners
             .sink(receiveValue: { [weak self] spinners in
                 self?.spinners = spinners
-                self?.layers = []
+                self?.circleLayers = []
                 self?.redrawSpinners()
                 
                 print("score", solution.score(attempt: spinners, samples: 1000))
@@ -79,7 +79,7 @@ final class CASpinnerView: UIView {
     }
     
     private func highlight(spinner: Spinner?) -> Void {
-        for sl in layers {
+        for sl in circleLayers {
             sl.opacity = 0.5
             sl.lineWidth = 2
         }
@@ -89,12 +89,12 @@ final class CASpinnerView: UIView {
                 assert(false, "Could not find spinner \(spinner)")
                 return
             }
-            guard layers.indices ~= idx else {
+            guard circleLayers.indices ~= idx else {
                 assert(false, "Could not match spinner index \(idx)")
                 return
             }
-            layers[idx].opacity = 1
-            layers[idx].lineWidth = 5
+            circleLayers[idx].opacity = 1
+            circleLayers[idx].lineWidth = 5
         }
     }
     
@@ -193,7 +193,7 @@ final class CASpinnerView: UIView {
             prevFrameSize = layerFrame.size
             prevSpinner = spinner
             
-            layers.append(shapeLayer)
+            circleLayers.append(shapeLayer)
         }
     }
     
