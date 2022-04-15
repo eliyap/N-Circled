@@ -78,19 +78,22 @@ public class ConfettiView: UIView {
     }
 
     func imageForType(type: ConfettiType) -> UIImage? {
-
-        let fileName = type.rawValue
-
-        guard let url = Bundle.main.url(forResource: fileName, withExtension: "png") else {
-            assert(false, "Missing from bundle: \(fileName)")
+        guard let image = UIImage(named: type.rawValue) else {
+            assert(false, "No image with name: \(type.rawValue)")
         }
-        do {
-            let data = try Data(contentsOf: url)
-            return UIImage(data: data)
-        } catch {
-            assert(false, "\(error)")
-            return nil
-        }
+        return image
+//        let fileName = type.rawValue
+//
+//        guard let url = Bundle.main.url(forResource: fileName, withExtension: "png") else {
+//            assert(false, "Missing from bundle: \(fileName)")
+//        }
+//        do {
+//            let data = try Data(contentsOf: url)
+//            return UIImage(data: data)
+//        } catch {
+//            assert(false, "\(error)")
+//            return nil
+//        }
     }
 
     func confettiWithColor(color: UIColor) -> CAEmitterCell {
