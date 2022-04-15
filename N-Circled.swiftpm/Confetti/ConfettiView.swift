@@ -24,12 +24,11 @@
 //  
 //  Created by Uğur Ethem AYDIN on 2019
 //
-//
 
 import UIKit
 import QuartzCore
 
-public class SwiftConfettiView: UIView {
+public class ConfettiView: UIView {
 
     public enum ConfettiType {
         case confetti
