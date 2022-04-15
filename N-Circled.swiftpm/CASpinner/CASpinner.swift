@@ -36,6 +36,9 @@ final class CASpinnerView: UIView {
     /// Contains the circle mask sublayers, in the same order as the corresponding spinners.
     private var circleLayers: [CAShapeLayer] = []
     
+    /// Sublayers we have added, and may wish to discard.
+    private var sublayers: [CALayer] = []
+    
     /// Solution to the current puzzle.
     private let solution: Solution
     
@@ -107,6 +110,7 @@ final class CASpinnerView: UIView {
         solutionLayer.lineWidth = 3
         solutionLayer.lineDashPattern = [10, 10]
         layer.addSublayer(solutionLayer)
+        sublayers.append(solutionLayer)
     }
     
     private func redrawSpinners() {
@@ -135,6 +139,7 @@ final class CASpinnerView: UIView {
         
         layer.addSublayer(strokeStartLayer)
         layer.addSublayer(strokeEndLayer)
+        sublayers.append(contentsOf: [strokeStartLayer, strokeEndLayer])
     }
     
     private func addSpinners(size: CGSize) -> Void {
@@ -168,6 +173,7 @@ final class CASpinnerView: UIView {
             /// Assemble layers.
             newLayer.addSublayer(gradientLayer)
             prevLayer.addSublayer(newLayer)
+            sublayers.append(contentsOf: [gradientLayer, newLayer])
             
             /// https://developer.apple.com/documentation/quartzcore/calayer/1410861-mask
             /// > The layer you assign to this property **must not have a superlayer.**
