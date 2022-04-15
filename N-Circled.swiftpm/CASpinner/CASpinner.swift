@@ -114,10 +114,9 @@ final class CASpinnerView: UIView {
     }
     
     private func redrawSpinners() {
-        for sublayer in layer.sublayers ?? [] {
+        for sublayer in sublayers {
             sublayer.removeFromSuperlayer()
         }
-        print(frame.size)
         addShape(size: size)
         addSpinners(size: size)
     }
