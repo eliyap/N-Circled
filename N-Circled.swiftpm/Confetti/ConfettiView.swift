@@ -79,26 +79,11 @@ public class ConfettiView: UIView {
 
     func imageForType(type: ConfettiType) -> UIImage? {
 
-        var fileName: String!
+        let fileName = type.rawValue
 
-        switch type {
-        case .confetti:
-            fileName = "confetti"
-        case .triangle:
-            fileName = "triangle"
-        case .star:
-            fileName = "star"
-        case .diamond:
-            fileName = "diamond"
-        case let .image(customImage):
-            return customImage
+        guard let url = Bundle.main.url(forResource: fileName, withExtension: "png") else {
+            assert(false, "Missing from bundle: \(fileName)")
         }
-
-        let path = Bundle(for: SwiftConfettiView.self).path(forResource: "SwiftConfettiView", ofType: "bundle")
-        
-        let bundle = Bundle(path: path!)
-        let imagePath = bundle?.path(forResource: fileName, ofType: "png")
-        let url = URL(fileURLWithPath: imagePath!)
         do {
             let data = try Data(contentsOf: url)
             return UIImage(data: data)
