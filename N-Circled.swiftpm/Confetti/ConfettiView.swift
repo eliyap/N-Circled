@@ -77,25 +77,6 @@ public class ConfettiView: UIView {
         active = false
     }
 
-    func imageForType(type: ConfettiType) -> UIImage? {
-        guard let image = UIImage(named: type.rawValue) else {
-            assert(false, "No image with name: \(type.rawValue)")
-        }
-        return image
-//        let fileName = type.rawValue
-//
-//        guard let url = Bundle.main.url(forResource: fileName, withExtension: "png") else {
-//            assert(false, "Missing from bundle: \(fileName)")
-//        }
-//        do {
-//            let data = try Data(contentsOf: url)
-//            return UIImage(data: data)
-//        } catch {
-//            assert(false, "\(error)")
-//            return nil
-//        }
-    }
-
     func confettiWithColor(color: UIColor) -> CAEmitterCell {
         let confetti = CAEmitterCell()
         confetti.birthRate = 6.0 * intensity
@@ -110,7 +91,13 @@ public class ConfettiView: UIView {
         confetti.spinRange = CGFloat(4.0 * intensity)
         confetti.scaleRange = CGFloat(intensity)
         confetti.scaleSpeed = CGFloat(-0.1 * intensity)
-        confetti.contents = imageForType(type: type)!.cgImage
+        
+        if let image = UIImage(named: type.rawValue) {
+            confetti.contents = image.cgImage
+        } else {
+            assert(false, "No image with name: \(type.rawValue)")
+        }
+        
         return confetti
     }
 
