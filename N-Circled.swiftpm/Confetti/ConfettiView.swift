@@ -37,16 +37,16 @@ public class ConfettiView: UIView {
         case diamond
     }
 
-    var emitter: CAEmitterLayer = .init()
-    public var colors: [UIColor] = [
+    let emitter: CAEmitterLayer = .init()
+    public let colors: [UIColor] = [
         UIColor(red:0.95, green:0.40, blue:0.27, alpha:1.0),
         UIColor(red:1.00, green:0.78, blue:0.36, alpha:1.0),
         UIColor(red:0.48, green:0.78, blue:0.64, alpha:1.0),
         UIColor(red:0.30, green:0.76, blue:0.85, alpha:1.0),
         UIColor(red:0.58, green:0.39, blue:0.55, alpha:1.0),
     ]
-    public var intensity: Float = 0.5
-    public var type: ConfettiType = .confetti
+    public let intensity: Float = 0.5
+    public let type: ConfettiType = .confetti
     public private(set) var active: Bool = false
 
     required init?(coder: NSCoder) {
@@ -77,7 +77,7 @@ public class ConfettiView: UIView {
         active = false
     }
 
-    func confettiWithColor(color: UIColor) -> CAEmitterCell {
+    private func confettiWithColor(color: UIColor) -> CAEmitterCell {
         let confetti = CAEmitterCell()
         confetti.birthRate = 6.0 * intensity
         confetti.lifetime = 14.0 * intensity
