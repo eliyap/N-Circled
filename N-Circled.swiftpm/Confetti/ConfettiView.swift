@@ -30,7 +30,7 @@ import QuartzCore
 
 public class ConfettiView: UIView {
 
-    public enum ConfettiType {
+    public enum ConfettiType: String {
         case confetti
         case triangle
         case star
