@@ -35,7 +35,6 @@ public class ConfettiView: UIView {
         case triangle
         case star
         case diamond
-        case image(UIImage)
     }
 
     var emitter: CAEmitterLayer = .init()
