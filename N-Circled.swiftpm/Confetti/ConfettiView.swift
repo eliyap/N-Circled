@@ -47,7 +47,7 @@ public class ConfettiView: UIView {
     ]
     public var intensity: Float = 0.5
     public var type: ConfettiType = .confetti
-    private var active: Bool = false
+    public private(set) var active: Bool = false
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -99,9 +99,5 @@ public class ConfettiView: UIView {
         }
         
         return confetti
-    }
-
-    public func isActive() -> Bool {
-        return self.active
     }
 }
