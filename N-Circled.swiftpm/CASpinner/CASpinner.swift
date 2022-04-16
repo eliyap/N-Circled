@@ -63,9 +63,10 @@ final class CASpinnerView: UIView {
         
         let spinnersObserver = spinnerHolder.$spinners
             .sink(receiveValue: { [weak self] spinners in
-                self?.spinners = spinners
-                self?.circleLayers = []
-                self?.redrawSpinners()
+                guard let self = self else { return }
+                self.spinners = spinners
+                self.circleLayers = []
+                self.redrawSpinners()
                 
                 print("score", solution.score(attempt: spinners, samples: 1000))
             })
