@@ -46,7 +46,15 @@ struct PuzzleView: View {
                 })
             }
             GeometryReader { geo in
-                CASpinner.init(size: geo.size, spinnerHolder: spinnerHolder, solution: solution)
+                if spinnerHolder.isGrading {
+                    CASpinner.init(size: geo.size, spinnerHolder: spinnerHolder, solution: solution)
+                        .border(.red)
+                        .transition(.scale)
+                } else {
+                    CASpinner.init(size: geo.size, spinnerHolder: spinnerHolder, solution: solution)
+                        .border(.purple)
+                        .transition(.scale)
+                }
             }
                 .border(Color.red)
             TwiddlerCollectionView(spinnerHolder: spinnerHolder)
