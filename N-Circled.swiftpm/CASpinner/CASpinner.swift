@@ -120,6 +120,7 @@ final class CASpinnerView: UIView {
         }
         addShape(size: size)
         addSpinners(size: size)
+        drawSolutionLayer()
     }
     
     private func addShape(size: CGSize) -> Void {
