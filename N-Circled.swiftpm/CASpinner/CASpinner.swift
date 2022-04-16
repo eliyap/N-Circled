@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  CASpinner.swift
 //  N-Circled
 //
 //  Created by Secret Asian Man Dev on 6/4/22.
