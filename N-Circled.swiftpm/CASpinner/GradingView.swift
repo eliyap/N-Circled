@@ -142,23 +142,18 @@ final class UIGradingView: UIView {
         
         let animationValues = interpolateIdftProgress(spinners: spinners)
                 
-        let unmodified = animationValues
-        let sslEndAnim = CAKeyframeAnimation(keyPath: CALayer.AnimatableProperty.strokeEnd.rawValue)
+        let anim = CAKeyframeAnimation(keyPath: CALayer.AnimatableProperty.strokeEnd.rawValue)
         
-        for (steps, anim) in [
-            (unmodified,     sslEndAnim),
-        ] {
-            anim.values = steps.map(\.length)
-            anim.keyTimes = steps.map(\.time)
-            
-            anim.duration = CASpinnerView.animationDuration
-            anim.autoreverses = false
-            anim.repeatCount = .infinity
-        }
+        anim.values = animationValues.map(\.length)
+        anim.keyTimes = animationValues.map(\.time)
+        
+        anim.duration = CASpinnerView.animationDuration
+        anim.autoreverses = false
+        anim.repeatCount = .infinity
         
         strokeStartLayer.lineCap = .round
         
-        strokeStartLayer.add(sslEndAnim, property: .strokeEnd)
+        strokeStartLayer.add(anim, property: .strokeEnd)
         
         layer.addSublayer(strokeStartLayer)
         layer.addSublayer(strokeEndLayer)
