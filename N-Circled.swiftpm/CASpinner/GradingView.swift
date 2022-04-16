@@ -67,6 +67,11 @@ final class UIGradingView: UIView {
         addShape(size: size)
         addSpinners(size: size)
         drawSolutionLayer()
+    
+    private func delayAnimation(layer: CALayer, animation: CAAnimation, property: CALayer.AnimatableProperty) -> Void {
+        DispatchQueue.main.asyncAfter(deadline: .now() + PuzzleView.transitionDuration, execute: {
+            layer.add(animation, property: property)
+        })
     }
     
     private func drawSolutionLayer() {
