@@ -76,6 +76,11 @@ final class CASpinnerView: UIView {
             .sink(receiveValue: highlight)
         highlightObserver.store(in: &observers)
         
+        let gradingObserver = spinnerHolder.$isGrading
+            .sink(receiveValue: { [weak self] isGrading in
+                #warning("TODO")
+            })
+        
         /// Addresses an issue where `CoreAnimation` animations cease on backgrounding.
         NotificationCenter.default.addObserver(forName: UIApplication.didBecomeActiveNotification, object: nil, queue: nil, using: { [weak self] _ in
             self?.redrawSpinners()
