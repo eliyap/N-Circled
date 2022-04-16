@@ -100,7 +100,7 @@ final class UIGradingView: UIView {
         anim.values = animationValues.map(\.length)
         anim.keyTimes = animationValues.map(\.time)
         anim.duration = CASpinnerView.animationDuration
-        strokeStartLayer.add(anim, property: .strokeEnd)
+        self.delayAnimation(layer: strokeStartLayer, animation: anim, property: .strokeEnd)
         
         layer.addSublayer(strokeStartLayer)
         sublayers.append(strokeStartLayer)
@@ -157,7 +157,7 @@ final class UIGradingView: UIView {
                 counterSpinner: prevSpinner,
                 loopAnimation: false
             )
-            newLayer.add(animation, property: .transform)
+            self.delayAnimation(layer: newLayer, animation: animation, property: .transform)
             
             /// Additionally set the "resting" transform.
             newLayer.transform = getInitialTransform(offset: offset, spinner: spinner, counterSpinner: prevSpinner)
