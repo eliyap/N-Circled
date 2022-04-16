@@ -140,12 +140,25 @@ final class UIGradingView: UIView {
         strokeStartLayer.fillColor = nil
         strokeStartLayer.lineWidth = 3
         
-        strokeEndLayer.path = approxPath
-        strokeEndLayer.strokeColor = UIColor.systemTeal.cgColor
-        strokeEndLayer.fillColor = nil
-        strokeEndLayer.lineWidth = 3
+        let animationValues = interpolateIdftProgress(spinners: spinners)
+                
+        let unmodified = animationValues
+        let sslEndAnim = CAKeyframeAnimation(keyPath: CALayer.AnimatableProperty.strokeEnd.rawValue)
         
-        addIdftAnimation(spinners: spinners, startLayer: strokeStartLayer, endLayer: strokeEndLayer)
+        for (steps, anim) in [
+            (unmodified,     sslEndAnim),
+        ] {
+            anim.values = steps.map(\.length)
+            anim.keyTimes = steps.map(\.time)
+            
+            anim.duration = CASpinnerView.animationDuration
+            anim.autoreverses = false
+            anim.repeatCount = .infinity
+        }
+        
+        strokeStartLayer.lineCap = .round
+        
+        strokeStartLayer.add(sslEndAnim, property: .strokeEnd)
         
         layer.addSublayer(strokeStartLayer)
         layer.addSublayer(strokeEndLayer)

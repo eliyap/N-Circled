@@ -121,7 +121,7 @@ func addIdftAnimation(
 /// Inverse Discrete Fourier Transform, estimate the proportion of length
 /// covered at the proportion of rotation at each of `numSamples` evenly
 /// spaced steps.
-fileprivate func interpolateIdftProgress(
+internal func interpolateIdftProgress(
     spinners: [Spinner],
     numSamples: Int = 1000
 ) -> [(length: CGFloat, time: NSNumber)] {
