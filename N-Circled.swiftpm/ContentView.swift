@@ -19,7 +19,7 @@ struct ContentView: View {
                     PuzzleView(solution: .Oval)
                 }, label: {
                     Text("Puzzle 3")
-                })   
+                })
             }
         }
     }
@@ -39,8 +39,7 @@ struct PuzzleView: View {
                 Text("Hello, WWDC!")
                 Text("\(spinnerHolder.spinners.count)")
                 Button(action: {
-                    #warning("TODO")
-                    print("play...")
+                    spinnerHolder.isGrading = true
                 }, label: {
                     Text("Play!")
                 })
