@@ -154,6 +154,9 @@ final class UIGradingView: UIView {
             )
             newLayer.add(animation, property: .transform)
             
+            /// Additionally set the "resting" transform.
+            newLayer.transform = getInitialTransform(offset: offset, spinner: spinner, counterSpinner: prevSpinner)
+            
             /// Prepare for next iteration.
             prevLayer = newLayer
             prevFrameSize = layerFrame.size
