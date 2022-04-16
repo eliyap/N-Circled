@@ -61,30 +61,14 @@ final class UIGradingView: UIView {
         addShape(size: size)
         addSpinners(size: size)
         
-        let spinnersObserver = spinnerHolder.$spinners
-            .sink(receiveValue: { [weak self] spinners in
-                guard let self = self else { return }
-                self.spinners = spinners
-                self.circleLayers = []
-                self.redrawSpinners()
-                
-                print("score", solution.score(attempt: spinners, samples: 1000))
-            })
-        spinnersObserver.store(in: &observers)
+        let spinners = spinnerHolder.spinners
         
-        let gradingObserver = spinnerHolder.$isGrading
-            .sink(receiveValue: { [weak self] isGrading in
-                #warning("TODO")
-            })
+        self.spinners = spinners
+        self.circleLayers = []
         
-        /// Addresses an issue where `CoreAnimation` animations cease on backgrounding.
-        NotificationCenter.default.addObserver(forName: UIApplication.didBecomeActiveNotification, object: nil, queue: nil, using: { [weak self] _ in
-            self?.redrawSpinners()
-        })
-        
-        layer.borderColor = UIColor.green.cgColor
-        layer.borderWidth = 2
-        print("size \(size)")
+        addShape(size: size)
+        addSpinners(size: size)
+        drawSolutionLayer()
     }
     
     private func drawSolutionLayer() {
@@ -97,15 +81,6 @@ final class UIGradingView: UIView {
         solutionLayer.lineDashPattern = [10, 10]
         layer.addSublayer(solutionLayer)
         sublayers.append(solutionLayer)
-    }
-    
-    private func redrawSpinners() {
-        for sublayer in sublayers {
-            sublayer.removeFromSuperlayer()
-        }
-        addShape(size: size)
-        addSpinners(size: size)
-        drawSolutionLayer()
     }
     
     private func addShape(size: CGSize) -> Void {
