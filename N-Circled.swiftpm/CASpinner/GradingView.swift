@@ -49,12 +49,10 @@ final class UIGradingView: UIView {
     
     /// Composed IDFT sublayers.
     let strokeStartLayer: CAShapeLayer
-    let strokeEndLayer: CAShapeLayer
     
     init(size: CGSize, spinnerHolder: SpinnerHolder, solution: Solution) {
         self.size = size
         self.strokeStartLayer = .init()
-        self.strokeEndLayer = .init()
         self.solution = solution
         super.init(frame: .zero)
         
@@ -90,25 +88,17 @@ final class UIGradingView: UIView {
         strokeStartLayer.strokeColor = UIColor.systemTeal.cgColor
         strokeStartLayer.fillColor = nil
         strokeStartLayer.lineWidth = 3
-        
-        let animationValues = interpolateIdftProgress(spinners: spinners)
-                
-        let anim = CAKeyframeAnimation(keyPath: CALayer.AnimatableProperty.strokeEnd.rawValue)
-        
-        anim.values = animationValues.map(\.length)
-        anim.keyTimes = animationValues.map(\.time)
-        
-        anim.duration = CASpinnerView.animationDuration
-        anim.autoreverses = false
-        anim.repeatCount = .infinity
-        
         strokeStartLayer.lineCap = .round
         
+        let animationValues = interpolateIdftProgress(spinners: spinners)
+        let anim = CAKeyframeAnimation(keyPath: CALayer.AnimatableProperty.strokeEnd.rawValue)
+        anim.values = animationValues.map(\.length)
+        anim.keyTimes = animationValues.map(\.time)
+        anim.duration = CASpinnerView.animationDuration
         strokeStartLayer.add(anim, property: .strokeEnd)
         
         layer.addSublayer(strokeStartLayer)
-        layer.addSublayer(strokeEndLayer)
-        sublayers.append(contentsOf: [strokeStartLayer, strokeEndLayer])
+        sublayers.append(strokeStartLayer)
     }
     
     private func addSpinners(size: CGSize) -> Void {
@@ -159,7 +149,8 @@ final class UIGradingView: UIView {
             let animation = makeAnimation(
                 offset: offset,
                 spinner: spinner,
-                counterSpinner: prevSpinner
+                counterSpinner: prevSpinner,
+                loopAnimation: false
             )
             newLayer.add(animation, property: .transform)
             

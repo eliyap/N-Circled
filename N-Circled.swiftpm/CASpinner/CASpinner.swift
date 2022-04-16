@@ -196,7 +196,8 @@ final class CASpinnerView: UIView {
             let animation = makeAnimation(
                 offset: offset,
                 spinner: spinner,
-                counterSpinner: prevSpinner
+                counterSpinner: prevSpinner,
+                loopAnimation: true
             )
             newLayer.add(animation, property: .transform)
             
@@ -234,7 +235,8 @@ func makePath(diameter: CGFloat, lineWidth: CGFloat) -> CGPath {
 func makeAnimation(
     offset: CGPoint,
     spinner: Spinner,
-    counterSpinner: Spinner?
+    counterSpinner: Spinner?,
+    loopAnimation: Bool
 ) -> CAAnimation {
     let animation = CAKeyframeAnimation(keyPath: CALayer.AnimatableProperty.transform.rawValue)
 
@@ -256,8 +258,10 @@ func makeAnimation(
     animation.values = transforms
     animation.keyTimes = keyTimes
     animation.duration = CASpinnerView.animationDuration
-    animation.autoreverses = false
-    animation.repeatCount = .infinity
+    if loopAnimation {
+        animation.autoreverses = false
+        animation.repeatCount = .infinity
+    }
     
     return animation
 }
