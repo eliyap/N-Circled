@@ -30,6 +30,8 @@ struct PuzzleView: View {
     public let solution: Solution
     @StateObject private var spinnerHolder: SpinnerHolder = .init()
     
+    public static let transitionDuration: TimeInterval = 0.5
+    
     var body: some View {
         VStack {
             HStack {
@@ -39,8 +41,9 @@ struct PuzzleView: View {
                 Text("Hello, WWDC!")
                 Text("\(spinnerHolder.spinners.count)")
                 Button(action: {
-                    #warning("TODO")
-                    print("play...")
+                    withAnimation(.easeInOut(duration: PuzzleView.transitionDuration)) {
+                        spinnerHolder.isGrading.toggle()
+                    }
                 }, label: {
                     Text("Play!")
                 })
