@@ -72,10 +72,6 @@ final class UIGradingView: UIView {
             })
         spinnersObserver.store(in: &observers)
         
-        let highlightObserver = spinnerHolder.$highlighted
-            .sink(receiveValue: highlight)
-        highlightObserver.store(in: &observers)
-        
         let gradingObserver = spinnerHolder.$isGrading
             .sink(receiveValue: { [weak self] isGrading in
                 #warning("TODO")
@@ -89,26 +85,6 @@ final class UIGradingView: UIView {
         layer.borderColor = UIColor.green.cgColor
         layer.borderWidth = 2
         print("size \(size)")
-    }
-    
-    private func highlight(spinner: Spinner?) -> Void {
-        for sl in circleLayers {
-            sl.opacity = 0.5
-            sl.lineWidth = 2
-        }
-        
-        if let spinner = spinner {
-            guard let idx = spinners.firstIndex(of: spinner) else {
-                assert(false, "Could not find spinner \(spinner)")
-                return
-            }
-            guard circleLayers.indices ~= idx else {
-                assert(false, "Could not match spinner index \(idx)")
-                return
-            }
-            circleLayers[idx].opacity = 1
-            circleLayers[idx].lineWidth = 5
-        }
     }
     
     private func drawSolutionLayer() {
