@@ -62,11 +62,6 @@ final class SpinnerPreviewView: UIView {
         NotificationCenter.default.addObserver(forName: UIApplication.didBecomeActiveNotification, object: nil, queue: nil, using: { [weak self] _ in
             self?.redrawSpinners()
         })
-        
-        let confettiView = ConfettiView()
-        addSubview(confettiView)
-        confettiView.startConfetti()
-
     }
     
     private func highlight(spinner: Spinner?) -> Void {
