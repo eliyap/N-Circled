@@ -266,6 +266,17 @@ func makeAnimation(
     return animation
 }
 
+func getInitialTransform(
+    offset: CGPoint,
+    spinner: Spinner,
+    counterSpinner: Spinner?
+) -> CATransform3D {
+    let radians = spinner.radians(proportion: 0) - (counterSpinner?.radians(proportion: 0) ?? 0)
+    let affineTransform = CGAffineTransform(rotationAngle: radians)
+        .concatenating(CGAffineTransform(translationX: offset.x, y: offset.y))
+    return CATransform3DMakeAffineTransform(affineTransform)
+}
+
 func makeGradient(color: CGColor) -> CAGradientLayer {
     let gl = CAGradientLayer()
     gl.startPoint = CGPoint(x: 0.5, y: 0.5)
