@@ -18,4 +18,6 @@ final class SpinnerHolder: ObservableObject {
     ]
     
     @Published var highlighted: Spinner? = nil
+    
+    @Published var isGrading: Bool = false
 }
