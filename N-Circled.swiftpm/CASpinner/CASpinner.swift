@@ -44,8 +44,24 @@ final class CASpinnerView: UIView {
         
         let gradingObserver = spinnerHolder.$isGrading
             .sink(receiveValue: { [weak self] isGrading in
-                #warning("TODO")
+                guard let self = self else { return }
+                if isGrading {
+                    let animation = CABasicAnimation(keyPath: CALayer.AnimatableProperty.transform.rawValue)
+                    
+                    let fromTransform = CGAffineTransform(scaleX: 1, y: 1)
+                        .concatenating(CGAffineTransform(translationX: 0, y: 0))
+                    animation.fromValue = CATransform3DMakeAffineTransform(fromTransform)
+                    
+                    let toTransform = CGAffineTransform(scaleX: 0, y: 0)
+                        .concatenating(CGAffineTransform(translationX: size.width / 2, y: size.height / 2))
+                    animation.toValue = CATransform3DMakeAffineTransform(toTransform)
+                    animation.duration = 5
+                    self.previewView.layer.add(animation, property: .transform)
+                } else {
+                    #warning("TODO")
+                }
             })
+        gradingObserver.store(in: &observers)
         
         addSubview(previewView)
         
