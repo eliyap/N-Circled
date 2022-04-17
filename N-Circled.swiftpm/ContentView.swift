@@ -52,11 +52,11 @@ struct PuzzleView: View {
                 if spinnerHolder.isGrading {
                     GradingView.init(size: geo.size, spinnerHolder: spinnerHolder, solution: solution)
                         .border(.red)
-                        .transition(.scale)
+                        .transition(.opacity.combined(with: .scale))
                 } else {
                     CASpinner.init(size: geo.size, spinnerHolder: spinnerHolder, solution: solution)
                         .border(.purple)
-                        .transition(.scale)
+                        .transition(.opacity.combined(with: .scale))
                 }
             }
                 /// Custom sizing fixes issue where view below was not factored into `GeometryReader`'s `size` on first appearance.
