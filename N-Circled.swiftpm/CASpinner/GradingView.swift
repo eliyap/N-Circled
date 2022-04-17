@@ -85,9 +85,9 @@ final class UIGradingView: UIView {
     }
     
     /// - Note: `completion` is called after the delay, not the end of the animation.
-    private func delayAnimation(layer: CALayer, animation: CAAnimation, property: CALayer.AnimatableProperty, completion: @escaping () -> ()) -> Void {
+    private func delayAnimation(layer: CALayer?, animation: CAAnimation, property: CALayer.AnimatableProperty, completion: @escaping () -> ()) -> Void {
         DispatchQueue.main.asyncAfter(deadline: .now() + PuzzleView.transitionDuration, execute: {
-            layer.add(animation, property: property)
+            layer?.add(animation, property: property)
             completion()
         })
     }
