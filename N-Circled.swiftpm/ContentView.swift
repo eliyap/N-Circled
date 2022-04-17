@@ -59,9 +59,6 @@ struct PuzzleView: View {
                         .transition(.opacity.combined(with: .scale))
                 }
             }
-                /// Custom sizing fixes issue where view below was not factored into `GeometryReader`'s `size` on first appearance.
-                .aspectRatio(1, contentMode: .fit)
-                .frame(maxHeight: .infinity)
             TwiddlerCollectionView(spinnerHolder: spinnerHolder)
                 .frame(height: TwiddlerCollectionView.viewHeight)
         }
