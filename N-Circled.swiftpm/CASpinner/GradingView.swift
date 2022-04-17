@@ -50,13 +50,13 @@ final class UIGradingView: UIView {
     /// Composed IDFT sublayers.
     let idftLayer: CAShapeLayer
     
-    let scoreLayer: CAShapeLayer
+    /// Shows the player's score.
+    weak var scoreStrokeLayer: CAShapeLayer? = nil
     
     init(size: CGSize, spinnerHolder: SpinnerHolder, solution: Solution) {
         self.size = size
         self.idftLayer = .init()
         self.solution = solution
-        self.scoreLayer = .init()
         super.init(frame: .zero)
         
         addShape(size: size)
