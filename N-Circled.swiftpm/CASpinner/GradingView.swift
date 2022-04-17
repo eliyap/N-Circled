@@ -69,9 +69,11 @@ final class UIGradingView: UIView {
         drawSolutionLayer()
     }
     
-    private func delayAnimation(layer: CALayer, animation: CAAnimation, property: CALayer.AnimatableProperty) -> Void {
+    /// - Note: `completion` is called after the delay, not the end of the animation.
+    private func delayAnimation(layer: CALayer, animation: CAAnimation, property: CALayer.AnimatableProperty, completion: @escaping () -> ()) -> Void {
         DispatchQueue.main.asyncAfter(deadline: .now() + PuzzleView.transitionDuration, execute: {
             layer.add(animation, property: property)
+            completion()
         })
     }
     
@@ -101,7 +103,15 @@ final class UIGradingView: UIView {
         anim.values = animationValues.map(\.length)
         anim.keyTimes = animationValues.map(\.time)
         anim.duration = CASpinnerView.animationDuration
-        self.delayAnimation(layer: strokeStartLayer, animation: anim, property: .strokeEnd)
+        
+        /// Hide stroke when transitioning in.
+        strokeStartLayer.strokeEnd = 0
+        self.delayAnimation(layer: strokeStartLayer, animation: anim, property: .strokeEnd, completion: { [weak self] in
+            guard let self = self else { return }
+            
+            /// Show stroke after animation completes.
+            self.strokeStartLayer.strokeEnd = 1
+        })
         
         layer.addSublayer(strokeStartLayer)
         sublayers.append(strokeStartLayer)
@@ -158,7 +168,7 @@ final class UIGradingView: UIView {
                 counterSpinner: prevSpinner,
                 loopAnimation: false
             )
-            self.delayAnimation(layer: newLayer, animation: animation, property: .transform)
+            self.delayAnimation(layer: newLayer, animation: animation, property: .transform, completion: { })
             
             /// Additionally set the "resting" transform.
             newLayer.transform = getInitialTransform(offset: offset, spinner: spinner, counterSpinner: prevSpinner)
