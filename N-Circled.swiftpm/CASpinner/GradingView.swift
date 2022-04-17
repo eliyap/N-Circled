@@ -22,7 +22,7 @@ struct GradingView: UIViewRepresentable {
     }
     
     func updateUIView(_ uiView: UIGradingView, context: Context) {
-        /// Nothing.
+        uiView.redraw(in: size)
     }
 }
 
@@ -45,15 +45,18 @@ final class UIGradingView: UIView {
     private var observers: Set<AnyCancellable> = []
     
     /// View size as measured by `GeometryReader`.
-    private let size: CGSize
+    private var size: CGSize
     
     /// Composed IDFT sublayers.
     let idftLayer: CAShapeLayer
+    
+    let scoreLayer: CAShapeLayer
     
     init(size: CGSize, spinnerHolder: SpinnerHolder, solution: Solution) {
         self.size = size
         self.idftLayer = .init()
         self.solution = solution
+        self.scoreLayer = .init()
         super.init(frame: .zero)
         
         addShape(size: size)
@@ -67,6 +70,18 @@ final class UIGradingView: UIView {
         addShape(size: size)
         addSpinners(size: size)
         drawSolutionLayer()
+        drawScoreBar()
+    }
+    
+    public func redraw(in size: CGSize) -> Void {
+        self.size = size
+        for sublayer in sublayers {
+            sublayer.removeFromSuperlayer()
+        }
+        addShape(size: size)
+        addSpinners(size: size)
+        drawSolutionLayer()
+        drawScoreBar()
     }
     
     /// - Note: `completion` is called after the delay, not the end of the animation.
@@ -180,6 +195,22 @@ final class UIGradingView: UIView {
             
             circleLayers.append(shapeLayer)
         }
+    }
+    
+    private func drawScoreBar() -> Void {
+        let scoreSuperLayer = CALayer()
+        layer.addSublayer(scoreSuperLayer)
+        let scoreBackgroundLayer = CAShapeLayer()
+        let scorePath = UIBezierPath()
+        scorePath.move(to: CGPoint(x: size.width * 0.1, y: size.height * 0.9))
+        scorePath.addLine(to: CGPoint(x: size.width * 0.9, y: size.height * 0.9))
+        scoreBackgroundLayer.path = scorePath.cgPath
+        scoreBackgroundLayer.lineCap = .round
+        scoreBackgroundLayer.lineWidth = 10
+        scoreBackgroundLayer.strokeColor = UIColor.secondarySystemFill.cgColor
+        scoreSuperLayer.addSublayer(scoreBackgroundLayer)
+        
+        sublayers.append(scoreSuperLayer)
     }
     
     deinit {
