@@ -51,6 +51,41 @@ struct Solution {
     
     func score(attempt: [Spinner], samples: Int) -> Double {
         
+        let distances = distances(attempt: attempt, samples: samples)
+        
+        let scorer = Scorer()
+        var score: Double = .zero
+        
+        for distance in distances {
+            score += scorer.normalizedScore(distance: distance)
+        }
+        
+        /// Normalize score.
+        score /= Double(samples)
+        
+        return score
+    }
+    
+    static func score(upTo index: Int, of distances: [Double]) -> Double {
+        guard 0 <= index && index <= distances.count else {
+            assert(false, "Invalid index \(index) ")
+        }
+        
+        let scorer = Scorer()
+        var score: Double = .zero
+        
+        for distance in distances[0..<index] {
+            score += scorer.normalizedScore(distance: distance)
+        }
+        
+        /// Normalize score.
+        score /= Double(distances.count)
+        
+        return score
+    }
+    
+    func distances(attempt: [Spinner], samples: Int) -> [Double] {
+        
         let attemptSamples: [CGPoint] = (0..<samples).map { (sampleNo) in
             return attempt.vectorFor(proportion: CGFloat(sampleNo) / CGFloat(samples))
         }
@@ -60,8 +95,7 @@ struct Solution {
         }
         let solutionTree = KDTree(values: solutionSamples)
         
-        let scorer = Scorer()
-        var score: Double = .zero
+        var distances: [Double] = []
         
         for attemptSample in attemptSamples {
             guard let closest = solutionTree.nearest(to: attemptSample) else {
@@ -69,13 +103,10 @@ struct Solution {
                 continue
             }
             let distance = attemptSample.squaredDistance(to: closest)
-            score += scorer.normalizedScore(distance: distance)
+            distances.append(distance)
         }
         
-        /// Normalize score.
-        score /= Double(samples)
-        
-        return score
+        return distances
     }
 }
 
