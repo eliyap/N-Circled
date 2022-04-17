@@ -13,7 +13,7 @@ let baseRadius: CGFloat = 200
 func getIdftPath(
     spinners: [Spinner],
     frameSize: CGSize,
-    stepSize: Double = 0.0001
+    stepSize: Double = 0.001
 ) -> CGPath {
     let path = UIBezierPath()
     
