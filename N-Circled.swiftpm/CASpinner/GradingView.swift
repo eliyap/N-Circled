@@ -48,11 +48,11 @@ final class UIGradingView: UIView {
     private let size: CGSize
     
     /// Composed IDFT sublayers.
-    let strokeStartLayer: CAShapeLayer
+    let idftLayer: CAShapeLayer
     
     init(size: CGSize, spinnerHolder: SpinnerHolder, solution: Solution) {
         self.size = size
-        self.strokeStartLayer = .init()
+        self.idftLayer = .init()
         self.solution = solution
         super.init(frame: .zero)
         
@@ -92,11 +92,11 @@ final class UIGradingView: UIView {
     private func addShape(size: CGSize) -> Void {
         let approxPath: CGPath = getIdftPath(spinners: spinners, frameSize: self.size)
         
-        strokeStartLayer.path = approxPath
-        strokeStartLayer.strokeColor = UIColor.systemTeal.cgColor
-        strokeStartLayer.fillColor = nil
-        strokeStartLayer.lineWidth = 3
-        strokeStartLayer.lineCap = .round
+        idftLayer.path = approxPath
+        idftLayer.strokeColor = UIColor.systemTeal.cgColor
+        idftLayer.fillColor = nil
+        idftLayer.lineWidth = 3
+        idftLayer.lineCap = .round
         
         let animationValues = interpolateIdftProgress(spinners: spinners)
         let anim = CAKeyframeAnimation(keyPath: CALayer.AnimatableProperty.strokeEnd.rawValue)
@@ -105,16 +105,16 @@ final class UIGradingView: UIView {
         anim.duration = CASpinnerView.animationDuration
         
         /// Hide stroke when transitioning in.
-        strokeStartLayer.strokeEnd = 0
-        self.delayAnimation(layer: strokeStartLayer, animation: anim, property: .strokeEnd, completion: { [weak self] in
+        idftLayer.strokeEnd = 0
+        self.delayAnimation(layer: idftLayer, animation: anim, property: .strokeEnd, completion: { [weak self] in
             guard let self = self else { return }
             
             /// Show stroke after animation completes.
-            self.strokeStartLayer.strokeEnd = 1
+            self.idftLayer.strokeEnd = 1
         })
         
-        layer.addSublayer(strokeStartLayer)
-        sublayers.append(strokeStartLayer)
+        layer.addSublayer(idftLayer)
+        sublayers.append(idftLayer)
     }
     
     private func addSpinners(size: CGSize) -> Void {
