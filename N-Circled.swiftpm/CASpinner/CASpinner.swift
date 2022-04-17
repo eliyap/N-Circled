@@ -22,7 +22,8 @@ struct CASpinner: UIViewRepresentable {
     }
     
     func updateUIView(_ uiView: CASpinnerView, context: Context) {
-        /// Nothing.
+        uiView.size = size
+        uiView.redrawSpinners()
     }
 }
 
@@ -45,7 +46,7 @@ final class CASpinnerView: UIView {
     private var observers: Set<AnyCancellable> = []
     
     /// View size as measured by `GeometryReader`.
-    private let size: CGSize
+    public var size: CGSize 
     
     /// Composed IDFT sublayers.
     let strokeStartLayer: CAShapeLayer
@@ -68,7 +69,7 @@ final class CASpinnerView: UIView {
                 self.circleLayers = []
                 self.redrawSpinners()
                 
-                print("score", solution.score(attempt: spinners, samples: 1000))
+//                print("score", solution.score(attempt: spinners, samples: 1000))
             })
         spinnersObserver.store(in: &observers)
         
@@ -119,7 +120,7 @@ final class CASpinnerView: UIView {
         sublayers.append(solutionLayer)
     }
     
-    private func redrawSpinners() {
+    public func redrawSpinners() {
         for sublayer in sublayers {
             sublayer.removeFromSuperlayer()
         }
