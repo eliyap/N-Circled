@@ -82,6 +82,7 @@ final class UIGradingView: UIView {
         addSpinners(size: size)
         drawSolutionLayer()
         drawScoreBar()
+        animateScore()
     }
     
     /// - Note: `completion` is called after the delay, not the end of the animation.
@@ -200,17 +201,54 @@ final class UIGradingView: UIView {
     private func drawScoreBar() -> Void {
         let scoreSuperLayer = CALayer()
         layer.addSublayer(scoreSuperLayer)
-        let scoreBackgroundLayer = CAShapeLayer()
+        
         let scorePath = UIBezierPath()
         scorePath.move(to: CGPoint(x: size.width * 0.1, y: size.height * 0.9))
         scorePath.addLine(to: CGPoint(x: size.width * 0.9, y: size.height * 0.9))
-        scoreBackgroundLayer.path = scorePath.cgPath
+        
+        let scoreBackgroundLayer = CAShapeLayer()
         scoreBackgroundLayer.lineCap = .round
         scoreBackgroundLayer.lineWidth = 10
         scoreBackgroundLayer.strokeColor = UIColor.secondarySystemFill.cgColor
+        scoreBackgroundLayer.path = scorePath.cgPath
         scoreSuperLayer.addSublayer(scoreBackgroundLayer)
         
-        sublayers.append(scoreSuperLayer)
+        let scoreStrokeLayer = CAShapeLayer()
+        scoreStrokeLayer.lineCap = .round
+        scoreStrokeLayer.lineWidth = 10
+        scoreStrokeLayer.strokeColor = UIColor.systemPink.cgColor
+        scoreStrokeLayer.strokeEnd = 0.01
+        scoreStrokeLayer.path = scorePath.cgPath
+        scoreSuperLayer.addSublayer(scoreStrokeLayer)
+        self.scoreStrokeLayer = scoreStrokeLayer
+        
+        sublayers.append(contentsOf: [scoreSuperLayer, scoreBackgroundLayer, scoreStrokeLayer])
+    }
+    
+    func animateScore() -> Void {
+        let sampleCount = 200
+        
+        let animation = CAKeyframeAnimation()
+        var times: [NSNumber] = []
+        var values: [Double] = []
+        
+        let distances = solution.distances(attempt: spinners, samples: sampleCount)
+        
+        for sampleNo in 0...sampleCount {
+            let proportion: Double = Double(sampleNo) / Double(sampleCount)
+            let score = Solution.score(upTo: sampleNo, of: distances)
+            times.append(proportion as NSNumber)
+            values.append(score)
+        }
+        
+        animation.values = values
+        animation.keyTimes = times
+        animation.duration = CASpinnerView.animationDuration
+        
+        self.delayAnimation(layer: scoreStrokeLayer, animation: animation, property: .strokeEnd, completion: { [weak self] in
+            guard let self = self else { return }
+            self.scoreStrokeLayer?.strokeEnd = Solution.score(upTo: distances.count, of: distances)
+        })
     }
     
     deinit {
