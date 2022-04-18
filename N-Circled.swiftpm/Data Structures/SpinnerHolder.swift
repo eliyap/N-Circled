@@ -22,6 +22,7 @@ final class SpinnerHolder: ObservableObject {
     @Published var isGrading: Bool = false
 }
 
+/// A wrapper object that allows `nil` `Optional`s to be identified in `SwiftUI.ForEach`.
 internal struct SpinnerSlot: Identifiable {
     public let id: UUID = .init()
     
