@@ -60,7 +60,7 @@ struct PuzzleView: View {
                         .border(.purple)
                         .transition(.opacity.combined(with: .scale))
                 } else {
-                    GradingView.init(size: geo.size, spinnerHolder: spinnerHolder, solution: solution)
+                    GradingView.init(size: geo.size, spinnerHolder: spinnerHolder, solution: solution, gradingCompletionCallback: didFinishGrading(didWin:))
                         .border(.red)
                         .transition(.opacity.combined(with: .scale))
                 }
@@ -68,5 +68,9 @@ struct PuzzleView: View {
             TwiddlerCollectionView(spinnerHolder: spinnerHolder)
                 .frame(height: TwiddlerCollectionView.viewHeight)
         }
+    }
+    
+    private func didFinishGrading(didWin: Bool) -> Void {
+        print("Done!")
     }
 }

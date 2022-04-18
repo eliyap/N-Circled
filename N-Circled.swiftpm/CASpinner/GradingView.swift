@@ -14,9 +14,10 @@ struct GradingView: UIViewRepresentable {
     public let size: CGSize
     public let spinnerHolder: SpinnerHolder
     public let solution: Solution
+    public let gradingCompletionCallback: (Bool) -> Void
     
     func makeUIView(context: Context) -> UIGradingView {
-        let view: UIViewType = .init(size: size, spinnerHolder: spinnerHolder, solution: solution)
+        let view: UIViewType = .init(size: size, spinnerHolder: spinnerHolder, solution: solution, onGradingCompletion: gradingCompletionCallback)
         return view
     }
     
@@ -50,12 +51,13 @@ final class UIGradingView: UIView {
     /// Shows the player's score.
     private weak var scoreStrokeLayer: CAShapeLayer? = nil
     
-    private var gradingCompletionCallback: (Bool) -> Void = { _ in }
+    private var gradingCompletionCallback: (Bool) -> Void
     
-    init(size: CGSize, spinnerHolder: SpinnerHolder, solution: Solution) {
+    init(size: CGSize, spinnerHolder: SpinnerHolder, solution: Solution, onGradingCompletion gradingCompletionCallback: @escaping (Bool) -> Void) {
         self.size = size
         self.idftLayer = .init()
         self.solution = solution
+        self.gradingCompletionCallback = gradingCompletionCallback
         super.init(frame: .zero)
         
         let spinners = spinnerHolder.spinnerSlots.compactMap(\.spinner)
