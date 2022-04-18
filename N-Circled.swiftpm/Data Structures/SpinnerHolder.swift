@@ -10,11 +10,10 @@ import UIKit.UIColor
 
 final class SpinnerHolder: ObservableObject {
     @Published var spinnerSlots: [SpinnerSlot] = [
-        SpinnerSlot(Spinner(amplitude: 0.23, frequency: -3, phase: .pi, color: UIColor.green.cgColor)),
-        SpinnerSlot(Spinner(amplitude: 0.20, frequency: -2, phase: .pi, color: UIColor.green.cgColor)),
-        SpinnerSlot(Spinner(amplitude: 0.97, frequency: -1, phase: .zero, color: UIColor.yellow.cgColor)),
-        SpinnerSlot(Spinner(amplitude: 0.20, frequency: +2, phase: .pi, color: UIColor.yellow.cgColor)),
-        SpinnerSlot(Spinner(amplitude: 0.08, frequency: +3, phase: .zero, color: UIColor.yellow.cgColor)),
+        SpinnerSlot(.defaultNew),
+        SpinnerSlot(nil),
+        SpinnerSlot(nil),
+        SpinnerSlot(nil),
     ]
     
     @Published var highlighted: Spinner? = nil
