@@ -121,4 +121,10 @@ extension Solution {
         Spinner(amplitude: 1, frequency: -1, phase: .zero, color: UIColor.green.cgColor),
         Spinner(amplitude: 0.2, frequency: +4, phase: .zero, color: UIColor.yellow.cgColor),
     ])
+    
+    static let BowTie: Solution = Solution(spinners: [
+        Spinner(amplitude: 0.76, frequency: -1, phase: .pi, color: UIColor.green.cgColor),
+        Spinner(amplitude: 0.58, frequency: +1, phase: .zero, color: UIColor.yellow.cgColor),
+        Spinner(amplitude: 0.18, frequency: +3, phase: .zero, color: UIColor.yellow.cgColor),
+    ])
 }

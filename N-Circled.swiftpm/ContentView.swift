@@ -16,7 +16,7 @@ struct ContentView: View {
                     Text("Puzzle 2")
                 })
                 NavigationLink(destination: {
-                    PuzzleView(solution: .Oval)
+                    PuzzleView(solution: .BowTie)
                 }, label: {
                     Text("Puzzle 3")
                 })   
