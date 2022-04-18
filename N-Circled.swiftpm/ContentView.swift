@@ -56,12 +56,12 @@ struct PuzzleView: View {
             }
             GeometryReader { geo in
                 if spinnerHolder.gameState == .thinking {
-                    GradingView.init(size: geo.size, spinnerHolder: spinnerHolder, solution: solution)
-                        .border(.red)
-                        .transition(.opacity.combined(with: .scale))
-                } else {
                     CASpinner.init(size: geo.size, spinnerHolder: spinnerHolder, solution: solution)
                         .border(.purple)
+                        .transition(.opacity.combined(with: .scale))
+                } else {
+                    GradingView.init(size: geo.size, spinnerHolder: spinnerHolder, solution: solution)
+                        .border(.red)
                         .transition(.opacity.combined(with: .scale))
                 }
             }
