@@ -28,7 +28,7 @@ struct GradingView: UIViewRepresentable {
 
 final class UIGradingView: UIView {
     
-    public static let animationDuration: TimeInterval = 4.0
+    public static let animationDuration: TimeInterval = 3.0
     
     /// Reflects `ObservableObject` `SpinnerHolder` value.
     private var spinners: [Spinner] = []
@@ -110,7 +110,7 @@ final class UIGradingView: UIView {
         let anim = CAKeyframeAnimation(keyPath: CALayer.AnimatableProperty.strokeEnd.rawValue)
         anim.values = animationValues.map(\.length)
         anim.keyTimes = animationValues.map(\.time)
-        anim.duration = CASpinnerView.animationDuration
+        anim.duration = UIGradingView.animationDuration
         
         /// Hide stroke when transitioning in.
         idftLayer.strokeEnd = 0
@@ -174,7 +174,8 @@ final class UIGradingView: UIView {
                 offset: offset,
                 spinner: spinner,
                 counterSpinner: prevSpinner,
-                loopAnimation: false
+                loopAnimation: false,
+                animationDuration: UIGradingView.animationDuration
             )
             self.delayAnimation(layer: newLayer, animation: animation, property: .transform, completion: { })
             
@@ -235,7 +236,7 @@ final class UIGradingView: UIView {
         
         animation.values = values
         animation.keyTimes = times
-        animation.duration = CASpinnerView.animationDuration
+        animation.duration = UIGradingView.animationDuration
         
         self.delayAnimation(layer: scoreStrokeLayer, animation: animation, property: .strokeEnd, completion: { [weak self] in
             guard let self = self else { return }

@@ -193,7 +193,8 @@ final class CASpinnerView: UIView {
                 offset: offset,
                 spinner: spinner,
                 counterSpinner: prevSpinner,
-                loopAnimation: true
+                loopAnimation: true,
+                animationDuration: CASpinnerView.animationDuration
             )
             newLayer.add(animation, property: .transform)
             
@@ -232,7 +233,8 @@ func makeAnimation(
     offset: CGPoint,
     spinner: Spinner,
     counterSpinner: Spinner?,
-    loopAnimation: Bool
+    loopAnimation: Bool,
+    animationDuration: TimeInterval
 ) -> CAAnimation {
     let animation = CAKeyframeAnimation(keyPath: CALayer.AnimatableProperty.transform.rawValue)
 
@@ -253,7 +255,7 @@ func makeAnimation(
     }
     animation.values = transforms
     animation.keyTimes = keyTimes
-    animation.duration = CASpinnerView.animationDuration
+    animation.duration = animationDuration
     if loopAnimation {
         animation.autoreverses = false
         animation.repeatCount = .infinity
