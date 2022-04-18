@@ -113,7 +113,12 @@ struct Solution {
 import UIKit.UIColor
 extension Solution {
     static let Oval: Solution = Solution(spinners: [
-        Spinner(amplitude: 0.2, frequency: -1, phase: .pi / 10, color: UIColor.green.cgColor),
-        Spinner(amplitude: 0.6, frequency: +1, phase: .pi / 17, color: UIColor.yellow.cgColor),
+        Spinner(amplitude: 0.2, frequency: -1, phase: .zero, color: UIColor.green.cgColor),
+        Spinner(amplitude: 0.6, frequency: +1, phase: .pi / 2, color: UIColor.yellow.cgColor),
+    ])
+    
+    static let Star: Solution = Solution(spinners: [
+        Spinner(amplitude: 1, frequency: -1, phase: .zero, color: UIColor.green.cgColor),
+        Spinner(amplitude: 0.2, frequency: +4, phase: .zero, color: UIColor.yellow.cgColor),
     ])
 }
