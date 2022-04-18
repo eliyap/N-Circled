@@ -25,6 +25,8 @@ struct TwiddlerCollectionView: View {
             }
                 .padding(SpinnerThumbnailView.shadowRadius)
         }
+            /// Don't allow user interaction while grading.
+            .disabled(spinnerHolder.gameState != .thinking)
     }
 }
 
