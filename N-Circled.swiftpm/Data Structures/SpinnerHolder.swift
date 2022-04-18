@@ -18,7 +18,7 @@ final class SpinnerHolder: ObservableObject {
     
     @Published var highlighted: Spinner? = nil
     
-    @Published var isGrading: Bool = false
+    @Published var gameState: GameState = .thinking
 }
 
 /// A wrapper object that allows `nil` `Optional`s to be identified in `SwiftUI.ForEach`.
@@ -30,4 +30,15 @@ internal struct SpinnerSlot: Identifiable {
     init(_ spinner: Spinner?) {
         self.spinner = spinner
     }
+}
+
+internal enum GameState: Int {
+    /// Player is adjusting their Spinners in the Preview.
+    case thinking
+    
+    /// Player is watching grading animation in progress.
+    case grading
+    
+    /// Grading animation has completed playing.
+    case completed
 }

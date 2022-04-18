@@ -47,14 +47,15 @@ struct PuzzleView: View {
                 Text("\(spinnerHolder.spinnerSlots.count)")
                 Button(action: {
                     withAnimation(.easeInOut(duration: PuzzleView.transitionDuration)) {
-                        spinnerHolder.isGrading.toggle()
+                        assert(spinnerHolder.gameState == .thinking, "Unexpected game state: \(spinnerHolder.gameState)")
+                        spinnerHolder.gameState = .grading
                     }
                 }, label: {
                     Text("Play!")
                 })
             }
             GeometryReader { geo in
-                if spinnerHolder.isGrading {
+                if spinnerHolder.gameState == .thinking {
                     GradingView.init(size: geo.size, spinnerHolder: spinnerHolder, solution: solution)
                         .border(.red)
                         .transition(.opacity.combined(with: .scale))
