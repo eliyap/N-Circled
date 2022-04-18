@@ -25,9 +25,9 @@ final class SpinnerHolder: ObservableObject {
 internal struct SpinnerSlot: Identifiable {
     public let id: UUID = .init()
     
-    var spinner: Spinner
+    var spinner: Spinner?
     
-    init(_ spinner: Spinner) {
+    init(_ spinner: Spinner?) {
         self.spinner = spinner
     }
 }

@@ -77,3 +77,8 @@ extension Collection where Element == Spinner {
             })
     }
 }
+
+extension Spinner {
+    /// New spinner if one is not available.
+    public static let defaultNew: Spinner = .init(amplitude: 0.5, frequency: 1, phase: .zero, color: UIColor.red.cgColor)
+}

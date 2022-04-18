@@ -62,7 +62,7 @@ final class UIGradingView: UIView {
         addShape(size: size)
         addSpinners(size: size)
         
-        let spinners = spinnerHolder.spinnerSlots.map(\.spinner)
+        let spinners = spinnerHolder.spinnerSlots.compactMap(\.spinner)
         
         self.spinners = spinners
         self.circleLayers = []

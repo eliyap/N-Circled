@@ -10,13 +10,15 @@ import SwiftUI
 struct SpinnerEditView: View {
     
     @Binding public var bound: SpinnerSlot
-    @State public var modified: SpinnerSlot
+    @State public var modified: Spinner
     @Environment(\.presentationMode) private var presentationMode
     @Environment(\.colorScheme) private var colorScheme
     
     init(spinnerSlot: Binding<SpinnerSlot>) {
         self._bound = spinnerSlot
-        self._modified = .init(initialValue: spinnerSlot.wrappedValue)
+        
+        /// Create new spinner if one is not available.
+        self._modified = .init(initialValue: spinnerSlot.wrappedValue.spinner ?? Spinner.defaultNew)
     }
     
     var body: some View {
@@ -27,15 +29,15 @@ struct SpinnerEditView: View {
                 DoneButton
             }
             
-            Stepper(value: $modified.spinner.frequency, in: (-5)...(+5), step: 1, label: {
+            Stepper(value: $modified.frequency, in: (-5)...(+5), step: 1, label: {
                 Text(Image(systemName: "tornado"))
                 + Text(" ")
-                + Text("Do \(modified.spinner.frequency) \(modified.spinner.frequency == 1 ? "rotation" : "rotations")")
+                + Text("Do \(modified.frequency) \(modified.frequency == 1 ? "rotation" : "rotations")")
             })
                 .padding(SpinnerEditView.buttonPadding)
                 .modifier(TwiddleBackground())
             
-            AmplitudeSliderView(spinner: $modified.spinner)
+            AmplitudeSliderView(spinner: $modified)
                 .padding(SpinnerEditView.buttonPadding)
                 .modifier(TwiddleBackground())
             
@@ -50,7 +52,7 @@ struct SpinnerEditView: View {
                     .padding(SpinnerEditView.buttonPadding)
                 
                 GeometryReader { geo in
-                    DialView(size: geo.size, spinner: $modified.spinner)
+                    DialView(size: geo.size, spinner: $modified)
                 }
                     .aspectRatio(1, contentMode: .fit)
             }
@@ -93,7 +95,7 @@ struct SpinnerEditView: View {
     private var DoneButton: some View {
         Button(action: {
             /// Commit changes.
-            bound = modified
+            bound.spinner = modified
             
             presentationMode.wrappedValue.dismiss()
         }, label: {
