@@ -8,18 +8,23 @@ struct ContentView: View {
                 NavigationLink(destination: {
                     PuzzleView(solution: .Oval)
                 }, label: {
-                    Text("Puzzle 1")
+                    Text("Puzzle 1 🥚")
                 })
                 NavigationLink(destination: {
                     PuzzleView(solution: .Star)
                 }, label: {
-                    Text("Puzzle 2")
+                    Text("Puzzle 2 ⭐️")
                 })
                 NavigationLink(destination: {
                     PuzzleView(solution: .BowTie)
                 }, label: {
-                    Text("Puzzle 3")
-                })   
+                    Text("Puzzle 3 🎀")
+                })
+                NavigationLink(destination: {
+                    PuzzleView(solution: .Heart)
+                }, label: {
+                    Text("Puzzle 4 ❤️")
+                })
             }
         }
     }

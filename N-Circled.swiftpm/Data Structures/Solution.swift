@@ -127,4 +127,12 @@ extension Solution {
         Spinner(amplitude: 0.58, frequency: +1, phase: .zero, color: UIColor.yellow.cgColor),
         Spinner(amplitude: 0.18, frequency: +3, phase: .zero, color: UIColor.yellow.cgColor),
     ])
+    
+    static let Heart: Solution = Solution(spinners: [
+        Spinner(amplitude: 0.23, frequency: -3, phase: .pi, color: UIColor.green.cgColor),
+        Spinner(amplitude: 0.20, frequency: -2, phase: .pi, color: UIColor.green.cgColor),
+        Spinner(amplitude: 0.97, frequency: -1, phase: .zero, color: UIColor.yellow.cgColor),
+        Spinner(amplitude: 0.20, frequency: +2, phase: .pi, color: UIColor.yellow.cgColor),
+        Spinner(amplitude: 0.08, frequency: +3, phase: .zero, color: UIColor.yellow.cgColor),
+    ])
 }
