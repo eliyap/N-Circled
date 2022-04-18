@@ -59,18 +59,10 @@ final class UIGradingView: UIView {
         self.solution = solution
         super.init(frame: .zero)
         
-        addShape(size: size)
-        addSpinners(size: size)
-        
         let spinners = spinnerHolder.spinnerSlots.compactMap(\.spinner)
-        
         self.spinners = spinners
-        self.circleLayers = []
         
-        addShape(size: size)
-        addSpinners(size: size)
-        drawSolutionLayer()
-        drawScoreBar()
+        redraw(in: size)
     }
     
     public func redraw(in size: CGSize) -> Void {
