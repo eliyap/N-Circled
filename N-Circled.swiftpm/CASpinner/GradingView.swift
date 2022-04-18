@@ -50,6 +50,8 @@ final class UIGradingView: UIView {
     /// Shows the player's score.
     private weak var scoreStrokeLayer: CAShapeLayer? = nil
     
+    private var gradingCompletionCallback: (Bool) -> Void = { _ in }
+    
     init(size: CGSize, spinnerHolder: SpinnerHolder, solution: Solution) {
         self.size = size
         self.idftLayer = .init()
@@ -235,9 +237,18 @@ final class UIGradingView: UIView {
         animation.keyTimes = times
         animation.duration = UIGradingView.animationDuration
         
+        let finalScore = Solution.score(upTo: distances.count, of: distances)
         self.delayAnimation(layer: scoreStrokeLayer, animation: animation, property: .strokeEnd, completion: { [weak self] in
             guard let self = self else { return }
-            self.scoreStrokeLayer?.strokeEnd = Solution.score(upTo: distances.count, of: distances)
+            self.scoreStrokeLayer?.strokeEnd = finalScore
+        })
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + PuzzleView.transitionDuration + UIGradingView.animationDuration, execute: { [weak self] in
+            if let self = self {
+                let threshold = 0.9
+                let state = finalScore > threshold
+                self.gradingCompletionCallback(state)
+            }
         })
     }
     
