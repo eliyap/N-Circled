@@ -9,15 +9,25 @@ import Combine
 import UIKit.UIColor
 
 final class SpinnerHolder: ObservableObject {
-    @Published var spinners: [Spinner] = [
-        Spinner(amplitude: 0.2, frequency: -1, phase: .pi / 10, color: UIColor.green.cgColor),
-        Spinner(amplitude: 0.6, frequency: +1, phase: .pi / 17, color: UIColor.yellow.cgColor),
-        Spinner(amplitude: 0.3, frequency: +3, phase: .pi / 20, color: UIColor.orange.cgColor),
-        Spinner(amplitude: 0.2, frequency: +4, phase: .pi / 6, color: UIColor.purple.cgColor),
-        Spinner(amplitude: 0.1, frequency: +5, phase: .pi / 4, color: UIColor.blue.cgColor),
+    @Published var spinnerSlots: [SpinnerSlot] = [
+        SpinnerSlot(Spinner(amplitude: 0.23, frequency: -3, phase: .pi, color: UIColor.green.cgColor)),
+        SpinnerSlot(Spinner(amplitude: 0.20, frequency: -2, phase: .pi, color: UIColor.green.cgColor)),
+        SpinnerSlot(Spinner(amplitude: 0.97, frequency: -1, phase: .zero, color: UIColor.yellow.cgColor)),
+        SpinnerSlot(Spinner(amplitude: 0.20, frequency: +2, phase: .pi, color: UIColor.yellow.cgColor)),
+        SpinnerSlot(Spinner(amplitude: 0.08, frequency: +3, phase: .zero, color: UIColor.yellow.cgColor)),
     ]
     
     @Published var highlighted: Spinner? = nil
     
     @Published var isGrading: Bool = false
+}
+
+internal struct SpinnerSlot: Identifiable {
+    public let id: UUID = .init()
+    
+    var spinner: Spinner
+    
+    init(_ spinner: Spinner) {
+        self.spinner = spinner
+    }
 }

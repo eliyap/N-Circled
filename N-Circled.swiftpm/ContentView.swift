@@ -39,7 +39,7 @@ struct PuzzleView: View {
                     .imageScale(.large)
                     .foregroundColor(.accentColor)
                 Text("Hello, WWDC!")
-                Text("\(spinnerHolder.spinners.count)")
+                Text("\(spinnerHolder.spinnerSlots.count)")
                 Button(action: {
                     withAnimation(.easeInOut(duration: PuzzleView.transitionDuration)) {
                         spinnerHolder.isGrading.toggle()

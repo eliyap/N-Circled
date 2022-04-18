@@ -16,10 +16,10 @@ struct TwiddlerCollectionView: View {
     var body: some View {
         ScrollView(.horizontal) {
             HStack {
-                ForEach($spinnerHolder.spinners) { $spinner in
-                    SpinnerThumbnailView(spinner: $spinner)
+                ForEach($spinnerHolder.spinnerSlots) { $spinnerSlot in
+                    SpinnerThumbnailView(spinnerSlot: $spinnerSlot)
                         .onTapGesture(perform: {
-                            spinnerHolder.highlighted = spinner
+                            spinnerHolder.highlighted = spinnerSlot.spinner
                         })
                 }
             }
@@ -30,7 +30,7 @@ struct TwiddlerCollectionView: View {
 
 struct SpinnerThumbnailView: View {
     
-    @Binding public var spinner: Spinner
+    @Binding public var spinnerSlot: SpinnerSlot
     
     @State private var isEditing: Bool = false
     
@@ -59,7 +59,7 @@ struct SpinnerThumbnailView: View {
             })
             .onTapGesture(count: 2, perform: { isEditing = true })
             .fullScreenCover(isPresented: $isEditing, content: {
-                SpinnerEditView.init(spinner: $spinner)
+                SpinnerEditView.init(spinnerSlot: $spinnerSlot)
             })
     }
 }

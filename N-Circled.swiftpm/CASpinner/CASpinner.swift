@@ -62,10 +62,10 @@ final class CASpinnerView: UIView {
         addShape(size: size)
         addSpinners(size: size)
         
-        let spinnersObserver = spinnerHolder.$spinners
-            .sink(receiveValue: { [weak self] spinners in
+        let spinnersObserver = spinnerHolder.$spinnerSlots
+            .sink(receiveValue: { [weak self] spinnerSlots in
                 guard let self = self else { return }
-                self.spinners = spinners
+                self.spinners = spinnerSlots.map(\.spinner)
                 self.circleLayers = []
                 self.redrawSpinners()
                 

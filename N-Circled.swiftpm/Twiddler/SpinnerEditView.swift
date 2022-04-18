@@ -9,14 +9,14 @@ import SwiftUI
 
 struct SpinnerEditView: View {
     
-    @Binding public var bound: Spinner
-    @State public var modified: Spinner
+    @Binding public var bound: SpinnerSlot
+    @State public var modified: SpinnerSlot
     @Environment(\.presentationMode) private var presentationMode
     @Environment(\.colorScheme) private var colorScheme
     
-    init(spinner: Binding<Spinner>) {
-        self._bound = spinner
-        self._modified = .init(initialValue: spinner.wrappedValue)
+    init(spinnerSlot: Binding<SpinnerSlot>) {
+        self._bound = spinnerSlot
+        self._modified = .init(initialValue: spinnerSlot.wrappedValue)
     }
     
     var body: some View {
@@ -27,15 +27,15 @@ struct SpinnerEditView: View {
                 DoneButton
             }
             
-            Stepper(value: $modified.frequency, in: (-5)...(+5), step: 1, label: {
+            Stepper(value: $modified.spinner.frequency, in: (-5)...(+5), step: 1, label: {
                 Text(Image(systemName: "tornado"))
                 + Text(" ")
-                + Text("Do \(modified.frequency) \(modified.frequency == 1 ? "rotation" : "rotations")")
+                + Text("Do \(modified.spinner.frequency) \(modified.spinner.frequency == 1 ? "rotation" : "rotations")")
             })
                 .padding(SpinnerEditView.buttonPadding)
                 .modifier(TwiddleBackground())
             
-            AmplitudeSliderView(spinner: $modified)
+            AmplitudeSliderView(spinner: $modified.spinner)
                 .padding(SpinnerEditView.buttonPadding)
                 .modifier(TwiddleBackground())
             
@@ -50,7 +50,7 @@ struct SpinnerEditView: View {
                     .padding(SpinnerEditView.buttonPadding)
                 
                 GeometryReader { geo in
-                    DialView(size: geo.size, spinner: $modified)
+                    DialView(size: geo.size, spinner: $modified.spinner)
                 }
                     .aspectRatio(1, contentMode: .fit)
             }
