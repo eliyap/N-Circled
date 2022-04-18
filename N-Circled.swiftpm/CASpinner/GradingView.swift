@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import Combine
 
 /// A `CoreAnimation` powered view for displaying `Spinner`s.
 struct GradingView: UIViewRepresentable {
@@ -42,16 +41,14 @@ final class UIGradingView: UIView {
     /// Solution to the current puzzle.
     private let solution: Solution
     
-    private var observers: Set<AnyCancellable> = []
-    
     /// View size as measured by `GeometryReader`.
     private var size: CGSize
     
     /// Composed IDFT sublayers.
-    let idftLayer: CAShapeLayer
+    private let idftLayer: CAShapeLayer
     
     /// Shows the player's score.
-    weak var scoreStrokeLayer: CAShapeLayer? = nil
+    private weak var scoreStrokeLayer: CAShapeLayer? = nil
     
     init(size: CGSize, spinnerHolder: SpinnerHolder, solution: Solution) {
         self.size = size
@@ -242,12 +239,6 @@ final class UIGradingView: UIView {
             guard let self = self else { return }
             self.scoreStrokeLayer?.strokeEnd = Solution.score(upTo: distances.count, of: distances)
         })
-    }
-    
-    deinit {
-        for observer in observers {
-            observer.cancel()
-        }
     }
     
     required init?(coder: NSCoder) {
