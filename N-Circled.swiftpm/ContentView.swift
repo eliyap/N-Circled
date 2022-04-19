@@ -7,26 +7,13 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             List {
-                NavigationLink(destination: {
-                    OldPuzzleView(solution: .Oval)
-                }, label: {
-                    Text("Puzzle 1 🥚")
-                })
-                NavigationLink(destination: {
-                    OldPuzzleView(solution: .Star)
-                }, label: {
-                    Text("Puzzle 2 ⭐️")
-                })
-                NavigationLink(destination: {
-                    OldPuzzleView(solution: .BowTie)
-                }, label: {
-                    Text("Puzzle 3 🎀")
-                })
-                NavigationLink(destination: {
-                    OldPuzzleView(solution: .Heart)
-                }, label: {
-                    Text("Puzzle 4 ❤️")
-                })
+                ForEach($puzzleManager.puzzles) { $puzzle in
+                    NavigationLink(destination: {
+                        PuzzleView(puzzle: $puzzle)
+                    }, label: {
+                        Text("Puzzle 1 🥚")
+                    })
+                }
             }
         }
     }
