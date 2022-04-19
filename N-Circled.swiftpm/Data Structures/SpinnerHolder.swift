@@ -23,7 +23,9 @@ final class SpinnerHolder: ObservableObject {
 
 /// A wrapper object that allows `nil` `Optional`s to be identified in `SwiftUI.ForEach`.
 internal struct SpinnerSlot: Identifiable {
-    public let id: UUID = .init()
+    
+    /// Allow private modification for automatic `Codable` synthesis.
+    internal private(set) var id: UUID = .init()
     
     var spinner: Spinner?
     
@@ -31,6 +33,8 @@ internal struct SpinnerSlot: Identifiable {
         self.spinner = spinner
     }
 }
+
+extension SpinnerSlot: Codable { /** Automatically synthesized. **/ }
 
 extension SpinnerSlot: Equatable { /** Automatically synthesized. **/ }
 
