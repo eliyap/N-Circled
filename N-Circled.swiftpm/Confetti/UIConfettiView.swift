@@ -58,10 +58,13 @@ public class UIConfettiView: UIView {
         super.init(frame: frame)
     }
     
+    /// Create a strong, short "burst" of confetti to simulate a celebratory explosion.
     public func burstConfetti() {
+        let burstDuration: TimeInterval = 0.3
+        let intensityMultiplier: Float = 5.0
         
         let cells: [CAEmitterCell] = colors.map { color in
-            UIConfettiView.confettiWithColor(color: color, intensity: self.intensity * 5, type: self.type)
+            UIConfettiView.confettiWithColor(color: color, intensity: self.intensity * intensityMultiplier, type: self.type)
         }
         let lifetime = TimeInterval(cells[0].lifetime)
         
@@ -72,11 +75,12 @@ public class UIConfettiView: UIView {
         burstLayer.emitterCells = cells
         layer.addSublayer(burstLayer)
         
-        let burstDuration = 0.3
+        /// Stop emission after a short time.
         DispatchQueue.main.asyncAfter(deadline: .now() + burstDuration, execute: { [weak burstLayer] in
             burstLayer?.birthRate = 0
         })
         
+        /// Remove layer when all particles reach end of life.
         DispatchQueue.main.asyncAfter(deadline: .now() + burstDuration + lifetime, execute: { [weak burstLayer] in
             burstLayer?.removeFromSuperlayer()
         })
