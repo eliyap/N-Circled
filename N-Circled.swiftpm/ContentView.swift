@@ -45,16 +45,7 @@ struct PuzzleView: View {
                     .foregroundColor(.accentColor)
                 Text("Hello, WWDC!")
                 Text("\(spinnerHolder.spinnerSlots.count)")
-                Button(action: {
-                    withAnimation(.easeInOut(duration: PuzzleView.transitionDuration)) {
-                        assert(spinnerHolder.gameState == .thinking, "Unexpected game state: \(spinnerHolder.gameState)")
-                        spinnerHolder.gameState = .grading
-                    }
-                }, label: {
-                    Text("Play!")
-                })
-                    /// Don't allow user interaction while grading.
-                    .disabled(spinnerHolder.gameState == .grading)
+                ActionButton
             }
             GeometryReader { geo in
                 if spinnerHolder.gameState == .thinking {
@@ -73,6 +64,30 @@ struct PuzzleView: View {
     }
     
     private func didFinishGrading(didWin: Bool) -> Void {
-        print("Done!")
+        spinnerHolder.gameState = .completed
+    }
+    
+    @ViewBuilder
+    private var ActionButton: some View {
+        switch spinnerHolder.gameState {
+        case .thinking, .grading:
+            Button(action: {
+                withAnimation(.easeInOut(duration: PuzzleView.transitionDuration)) {
+                    spinnerHolder.gameState = .grading
+                }
+            }, label: {
+                Text("Play!")
+            })
+                /// Don't allow user interaction while grading.
+                .disabled(spinnerHolder.gameState == .grading)
+        case .completed:
+            Button(action: {
+                withAnimation(.easeInOut(duration: PuzzleView.transitionDuration)) {
+                    spinnerHolder.gameState = .thinking
+                }
+            }, label: {
+                Text("Try Again")
+            })
+        }
     }
 }
