@@ -37,7 +37,9 @@ public class UIConfettiView: UIView {
         case diamond
     }
 
-    let emitter: CAEmitterLayer = .init()
+    public var size: CGSize = .zero
+    
+    private let emitter: CAEmitterLayer = .init()
     public let colors: [UIColor] = [
         UIColor(red:0.95, green:0.40, blue:0.27, alpha:1.0),
         UIColor(red:1.00, green:0.78, blue:0.36, alpha:1.0),
@@ -45,10 +47,9 @@ public class UIConfettiView: UIView {
         UIColor(red:0.30, green:0.76, blue:0.85, alpha:1.0),
         UIColor(red:0.58, green:0.39, blue:0.55, alpha:1.0),
     ]
-    public let intensity: Float = 0.5
-    public let type: ConfettiType = .confetti
-    public private(set) var active: Bool = false
-
+    private let intensity: Float = 0.5
+    private let type: ConfettiType = .confetti
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -58,9 +59,9 @@ public class UIConfettiView: UIView {
     }
 
     public func startConfetti() {
-        emitter.emitterPosition = CGPoint(x: frame.size.width / 2.0, y: 0)
+        emitter.emitterPosition = CGPoint(x: size.width / 2.0, y: 0)
         emitter.emitterShape = CAEmitterLayerEmitterShape.line
-        emitter.emitterSize = CGSize(width: frame.size.width, height: 1)
+        emitter.emitterSize = CGSize(width: size.width, height: 1)
 
         var cells = [CAEmitterCell]()
         for color in colors {
@@ -69,12 +70,10 @@ public class UIConfettiView: UIView {
 
         emitter.emitterCells = cells
         layer.addSublayer(emitter)
-        active = true
     }
 
     public func stopConfetti() {
         emitter.birthRate = 0
-        active = false
     }
 
     private func confettiWithColor(color: UIColor) -> CAEmitterCell {
