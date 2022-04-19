@@ -22,7 +22,6 @@ struct PuzzleView: View {
     
     var body: some View {
         VStack {
-            ActionButton
             GeometryReader { geo in
                 if spinnerHolder.gameState == .thinking {
                     CASpinner.init(size: geo.size, spinnerHolder: spinnerHolder, solution: puzzle.solution)
@@ -42,6 +41,9 @@ struct PuzzleView: View {
             /// Pass any changes upwards.
             .onReceive(spinnerHolder.$spinnerSlots, perform: { spinnerSlots in
                 puzzle.attempt = spinnerSlots
+            })
+            .toolbar(content: {
+                ActionButton
             })
     }
     
