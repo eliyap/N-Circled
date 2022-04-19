@@ -8,13 +8,16 @@
 import Foundation
 
 struct Puzzle {
+    internal private(set) var id: UUID = .init()
     public var name: String
     public let solution: Solution
     public var attempt: [SpinnerSlot]
     public var unlocked: Bool
 }
 
-extension Puzzle: Codable { }
+extension Puzzle: Codable { /** Automatically synthesized. **/ }
+
+extension Puzzle: Identifiable { /** Automatically synthesized. **/ }
 
 #if DEBUG
 fileprivate let __DEBUG_UNLOCK_ALL__ = true
