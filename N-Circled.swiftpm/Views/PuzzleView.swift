@@ -61,7 +61,7 @@ struct PuzzleView: View {
                     spinnerHolder.gameState = .grading
                 }
             }, label: {
-                Text("Play!")
+                Text("▶️ Play!")
             })
                 /// Don't allow user interaction while grading.
                 .disabled(spinnerHolder.gameState == .grading)
@@ -71,7 +71,7 @@ struct PuzzleView: View {
                     spinnerHolder.gameState = .thinking
                 }
             }, label: {
-                Text("Try Again")
+                Text("🔄 Try Again")
             })
         }
     }
