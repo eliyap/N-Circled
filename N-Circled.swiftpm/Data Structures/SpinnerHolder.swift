@@ -19,6 +19,10 @@ final class SpinnerHolder: ObservableObject {
     @Published var highlighted: Spinner? = nil
     
     @Published var gameState: GameState = .thinking
+    
+    init(spinnerSlots: [SpinnerSlot]) {
+        self.spinnerSlots = spinnerSlots
+    }
 }
 
 /// A wrapper object that allows `nil` `Optional`s to be identified in `SwiftUI.ForEach`.
