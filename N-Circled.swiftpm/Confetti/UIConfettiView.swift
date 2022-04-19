@@ -65,7 +65,7 @@ public class UIConfettiView: UIView {
 
         var cells = [CAEmitterCell]()
         for color in colors {
-            cells.append(confettiWithColor(color: color))
+            cells.append(UIConfettiView.confettiWithColor(color: color, intensity: self.intensity, type: self.type))
         }
 
         emitter.emitterCells = cells
@@ -76,7 +76,7 @@ public class UIConfettiView: UIView {
         emitter.birthRate = 0
     }
 
-    private func confettiWithColor(color: UIColor) -> CAEmitterCell {
+    private static func confettiWithColor(color: UIColor, intensity: Float, type: ConfettiType) -> CAEmitterCell {
         let confetti = CAEmitterCell()
         confetti.birthRate = 6.0 * intensity
         confetti.lifetime = 14.0 * intensity
