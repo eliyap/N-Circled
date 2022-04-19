@@ -57,6 +57,30 @@ public class UIConfettiView: UIView {
     public override init(frame: CGRect) {
         super.init(frame: frame)
     }
+    
+    public func burstConfetti() {
+        
+        let cells: [CAEmitterCell] = colors.map { color in
+            UIConfettiView.confettiWithColor(color: color, intensity: self.intensity * 5, type: self.type)
+        }
+        let lifetime = TimeInterval(cells[0].lifetime)
+        
+        let burstLayer: CAEmitterLayer = .init()
+        burstLayer.emitterPosition = CGPoint(x: size.width / 2.0, y: 0)
+        burstLayer.emitterShape = CAEmitterLayerEmitterShape.line
+        burstLayer.emitterSize = CGSize(width: size.width, height: 1)
+        burstLayer.emitterCells = cells
+        layer.addSublayer(burstLayer)
+        
+        let burstDuration = 0.3
+        DispatchQueue.main.asyncAfter(deadline: .now() + burstDuration, execute: { [weak burstLayer] in
+            burstLayer?.birthRate = 0
+        })
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + burstDuration + lifetime, execute: { [weak burstLayer] in
+            burstLayer?.removeFromSuperlayer()
+        })
+    }
 
     public func startConfetti() {
         emitter.emitterPosition = CGPoint(x: size.width / 2.0, y: 0)

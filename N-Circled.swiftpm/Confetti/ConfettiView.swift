@@ -15,6 +15,7 @@ struct ConfettiView: UIViewRepresentable {
         let view = UIConfettiView()
         view.size = size
         view.startConfetti()
+        view.burstConfetti()
         return view
     }
     
