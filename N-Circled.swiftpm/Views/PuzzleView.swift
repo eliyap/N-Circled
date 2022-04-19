@@ -39,7 +39,9 @@ struct PuzzleView: View {
                     .frame(height: TwiddlerCollectionView.viewHeight)
             }
             if showConfetti {
-                
+                GeometryReader { geo in
+                    ConfettiView(size: geo.size)
+                }
             }
         }
             .navigationTitle(puzzle.name)

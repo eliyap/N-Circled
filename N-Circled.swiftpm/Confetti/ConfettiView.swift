@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct ConfettiView: UIViewRepresentable {
+    
+    public let size: CGSize
+    
     func makeUIView(context: Context) -> UIConfettiView {
         let view = UIConfettiView()
         return view
