@@ -80,11 +80,27 @@ extension Collection where Element == Spinner {
 
 extension Spinner {
     /// New spinner if one is not available.
-    public static let defaultNew: Spinner = .init(amplitude: 0.5, frequency: 1, phase: .zero, color: .red)
+    public static func defaultNew(index: Int) -> Spinner {
+        let rawValue = index % SpinnerColor.allCases.count
+        let color: SpinnerColor = {
+            if let color = SpinnerColor(rawValue: rawValue) {
+                return color
+            } else {
+                assert(false, "Invalid rawValue: \(rawValue)")
+                return SpinnerColor.red
+            }
+        }()
+        return Spinner(amplitude: 0.5, frequency: 1, phase: .zero, color: color)
+    }
 }
 
-public enum SpinnerColor: Int {
-    case green, yellow, orange, red, purple, blue
+public enum SpinnerColor: Int, CaseIterable {
+    case green
+    case yellow
+    case orange
+    case red
+    case purple
+    case blue
     
     var cgColor: CGColor {
         switch self {

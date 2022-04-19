@@ -14,11 +14,21 @@ struct SpinnerEditView: View {
     @Environment(\.presentationMode) private var presentationMode
     @Environment(\.colorScheme) private var colorScheme
     
-    init(spinnerSlot: Binding<SpinnerSlot>) {
+    init(spinnerSlot: Binding<SpinnerSlot>, spinnerIndex: Int?) {
         self._bound = spinnerSlot
         
+        /// Resolve optional.
+        let index: Int = {
+            if let spinnerIndex = spinnerIndex {
+                return spinnerIndex
+            } else {
+                assert(false, "Could not find spinner index")
+                return 0
+            }
+        }()
+        
         /// Create new spinner if one is not available.
-        self._modified = .init(initialValue: spinnerSlot.wrappedValue.spinner ?? Spinner.defaultNew)
+        self._modified = .init(initialValue: spinnerSlot.wrappedValue.spinner ?? Spinner.defaultNew(index: index))
     }
     
     var body: some View {

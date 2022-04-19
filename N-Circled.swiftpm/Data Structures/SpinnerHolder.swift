@@ -10,7 +10,7 @@ import UIKit.UIColor
 
 final class SpinnerHolder: ObservableObject {
     @Published var spinnerSlots: [SpinnerSlot] = [
-        SpinnerSlot(.defaultNew),
+        SpinnerSlot(.defaultNew(index: 0)),
         SpinnerSlot(nil),
         SpinnerSlot(nil),
         SpinnerSlot(nil),
@@ -31,6 +31,8 @@ internal struct SpinnerSlot: Identifiable {
         self.spinner = spinner
     }
 }
+
+extension SpinnerSlot: Equatable { /** Automatically synthesized. **/ }
 
 internal enum GameState: Int {
     /// Player is adjusting their Spinners in the Preview.
