@@ -15,3 +15,58 @@ struct Puzzle {
 }
 
 extension Puzzle: Codable { }
+
+#if DEBUG
+fileprivate let __DEBUG_UNLOCK_ALL__ = true
+#else
+fileprivate let __DEBUG_UNLOCK_ALL__ = false
+#endif
+
+extension Puzzle {
+    /// Default puzzle state when players first open the app.
+    internal static let initialSet: [Puzzle] = [.Oval, .Star, .BowTie, .Heart]
+    
+    internal static let Oval = Puzzle(
+        name: "Puzzle 1 🥚",
+        solution: Solution.Oval,
+        attempt: [
+            SpinnerSlot(.defaultNew(index: 0)),
+            SpinnerSlot(nil),
+        ],
+        unlocked: true
+    )
+    
+    internal static let Star = Puzzle(
+        name: "Puzzle 2 ⭐️",
+        solution: Solution.Star,
+        attempt: [
+            SpinnerSlot(.defaultNew(index: 0)),
+            SpinnerSlot(nil),
+            SpinnerSlot(nil),
+        ],
+        unlocked: __DEBUG_UNLOCK_ALL__
+    )
+    
+    internal static let BowTie = Puzzle(
+        name: "Puzzle 3 🎀",
+        solution: Solution.BowTie,
+        attempt: [
+            SpinnerSlot(.defaultNew(index: 0)),
+            SpinnerSlot(nil),
+            SpinnerSlot(nil),
+        ],
+        unlocked: __DEBUG_UNLOCK_ALL__
+    )
+    
+    internal static let Heart = Puzzle(
+        name: "Puzzle 4 ❤️",
+        solution: .Heart,
+        attempt: [
+            SpinnerSlot(.defaultNew(index: 0)),
+            SpinnerSlot(nil),
+            SpinnerSlot(nil),
+            SpinnerSlot(nil),
+        ],
+        unlocked: __DEBUG_UNLOCK_ALL__
+    )
+}
