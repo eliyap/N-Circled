@@ -210,6 +210,14 @@ final class UIGradingView: UIView {
         scoreBackgroundLayer.path = scorePath.cgPath
         scoreSuperLayer.addSublayer(scoreBackgroundLayer)
         
+        let scoreThresholdLayer = CAShapeLayer()
+        scoreThresholdLayer.lineCap = .round
+        scoreThresholdLayer.lineWidth = 10
+        scoreThresholdLayer.strokeColor = UIColor.secondarySystemFill.cgColor
+        scoreThresholdLayer.strokeEnd = Puzzle.scoreThreshold
+        scoreThresholdLayer.path = scorePath.cgPath
+        scoreSuperLayer.addSublayer(scoreThresholdLayer)
+        
         let scoreStrokeLayer = CAShapeLayer()
         scoreStrokeLayer.lineCap = .round
         scoreStrokeLayer.lineWidth = 10
@@ -219,7 +227,7 @@ final class UIGradingView: UIView {
         scoreSuperLayer.addSublayer(scoreStrokeLayer)
         self.scoreStrokeLayer = scoreStrokeLayer
         
-        sublayers.append(contentsOf: [scoreSuperLayer, scoreBackgroundLayer, scoreStrokeLayer])
+        sublayers.append(contentsOf: [scoreSuperLayer, scoreBackgroundLayer, scoreThresholdLayer, scoreStrokeLayer])
     }
     
     func animateScore() -> Void {
