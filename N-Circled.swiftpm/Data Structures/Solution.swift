@@ -47,6 +47,9 @@ struct Solution {
         let solutionSamples: [CGPoint] = (0..<samples).map { (sampleNo) in
             return spinners.vectorFor(proportion: CGFloat(sampleNo) / CGFloat(samples))
         }
+        
+        /// Construct 2D binary space partitioning tree to facilitate fast 
+        /// calculation of "closest point".
         let solutionTree = KDTree(values: solutionSamples)
         
         var distances: [Double] = []
@@ -56,7 +59,7 @@ struct Solution {
                 assert(false, "Could not find closest point to \(attemptSample)")
                 continue
             }
-            let distance = attemptSample.squaredDistance(to: closest)
+            let distance = sqrt(attemptSample.squaredDistance(to: closest))
             distances.append(distance)
         }
         
