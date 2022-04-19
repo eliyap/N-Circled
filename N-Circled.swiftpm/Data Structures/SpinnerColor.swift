@@ -30,6 +30,11 @@ public enum SpinnerColor: Int, CaseIterable {
     }
 }
 
+extension SpinnerColor: Codable { /** Automatically synthesized. **/ }
+
+extension SpinnerColor: Equatable { /** Automatically synthesized. **/ }
+
+extension SpinnerColor: Hashable { /** Automatically synthesized. **/ }
 
 extension UIColor {
     /// SC could be https://sixcolors.com/

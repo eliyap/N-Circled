@@ -10,7 +10,7 @@ import SwiftUI
 /// Represents a uniformly rotating circle with some size, at some phase.
 struct Spinner {
     
-    public let id: UUID = .init()
+    internal var id: UUID = .init()
     
     /// Non-negative by convention.
     /// Normalized to `[0, 1]`.
@@ -46,6 +46,10 @@ struct Spinner {
 extension Spinner: Identifiable { /** Automatically synthesized. **/ }
 
 extension Spinner: Equatable { /** Automatically synthesized. **/ }
+
+extension Spinner: Codable { /** Automatically synthesized. **/ }
+
+extension Spinner: Hashable { /** Automatically synthesized. **/ }
 
 extension Spinner: CustomStringConvertible {
     var description: String {
