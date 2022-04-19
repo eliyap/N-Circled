@@ -23,7 +23,7 @@ struct Spinner {
     /// Not bounded to `[0, 2pi]`.
     public var phase: CGFloat
     
-    public var color: CGColor
+    public var color: SpinnerColor
     
     /// Given a proportion in the `[0, 1]` range, returns the angle in radians
     /// that the `Spinner` points to at that proportion of the way through `frequency`
@@ -80,5 +80,48 @@ extension Collection where Element == Spinner {
 
 extension Spinner {
     /// New spinner if one is not available.
-    public static let defaultNew: Spinner = .init(amplitude: 0.5, frequency: 1, phase: .zero, color: UIColor.red.cgColor)
+    public static let defaultNew: Spinner = .init(amplitude: 0.5, frequency: 1, phase: .zero, color: .red)
 }
+
+public enum SpinnerColor: Int {
+    case green, yellow, orange, red, purple, blue
+    
+    var cgColor: CGColor {
+        switch self {
+            case .green: 
+                return UIColor.SCGreen.cgColor
+            case .yellow: 
+                return UIColor.SCYellow.cgColor
+            case .orange: 
+                return UIColor.SCOrange.cgColor
+            case .red: 
+                return UIColor.SCRed.cgColor
+            case .purple: 
+                return UIColor.SCPurple.cgColor
+            case .blue: 
+                return UIColor.SCBlue.cgColor
+        }
+    }
+}
+
+
+extension UIColor {
+    /// SC could be https://sixcolors.com/
+    /// or Southern California, or SpinnerColor. Pick one.
+    /// Permission obtained from Jason Snell via email.
+    static let SCGreen = UIColor(named: "SC_Green")!
+    static let SCYellow = UIColor(named: "SC_Yellow")!
+    static let SCOrange = UIColor(named: "SC_Orange")!
+    static let SCRed = UIColor(named: "SC_Red")!
+    static let SCPurple = UIColor(named: "SC_Purple")!
+    static let SCBlue = UIColor(named: "SC_Blue")!
+}
+
+let SCColors: [UIColor] = [
+    .SCGreen,
+    .SCYellow,
+    .SCOrange,
+    .SCRed,
+    .SCPurple,
+    .SCBlue,
+]

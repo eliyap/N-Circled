@@ -275,14 +275,14 @@ func getInitialTransform(
     return CATransform3DMakeAffineTransform(affineTransform)
 }
 
-func makeGradient(color: CGColor) -> CAGradientLayer {
+func makeGradient(color: SpinnerColor) -> CAGradientLayer {
     let gl = CAGradientLayer()
     gl.startPoint = CGPoint(x: 0.5, y: 0.5)
     gl.endPoint = CGPoint(x: 0.5, y: 0)
     gl.type = .conic
     gl.colors = [
         UIColor.systemBackground.cgColor,
-        color,
+        color.cgColor,
     ]
     
     return gl

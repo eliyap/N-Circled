@@ -70,26 +70,26 @@ struct Solution {
 import UIKit.UIColor
 extension Solution {
     static let Oval: Solution = Solution(spinners: [
-        Spinner(amplitude: 0.2, frequency: -1, phase: .zero, color: UIColor.green.cgColor),
-        Spinner(amplitude: 0.6, frequency: +1, phase: .pi / 2, color: UIColor.yellow.cgColor),
+        Spinner(amplitude: 0.2, frequency: -1, phase: .zero, color: .green),
+        Spinner(amplitude: 0.6, frequency: +1, phase: .pi / 2, color: .yellow),
     ])
     
     static let Star: Solution = Solution(spinners: [
-        Spinner(amplitude: 1, frequency: -1, phase: .zero, color: UIColor.green.cgColor),
-        Spinner(amplitude: 0.2, frequency: +4, phase: .zero, color: UIColor.yellow.cgColor),
+        Spinner(amplitude: 1, frequency: -1, phase: .zero, color: .green),
+        Spinner(amplitude: 0.2, frequency: +4, phase: .zero, color: .yellow),
     ])
     
     static let BowTie: Solution = Solution(spinners: [
-        Spinner(amplitude: 0.76, frequency: -1, phase: .pi, color: UIColor.green.cgColor),
-        Spinner(amplitude: 0.58, frequency: +1, phase: .zero, color: UIColor.yellow.cgColor),
-        Spinner(amplitude: 0.18, frequency: +3, phase: .zero, color: UIColor.yellow.cgColor),
+        Spinner(amplitude: 0.76, frequency: -1, phase: .pi, color: .green),
+        Spinner(amplitude: 0.58, frequency: +1, phase: .zero, color: .yellow),
+        Spinner(amplitude: 0.18, frequency: +3, phase: .zero, color: .yellow),
     ])
     
     static let Heart: Solution = Solution(spinners: [
-        Spinner(amplitude: 0.23, frequency: -3, phase: .pi, color: UIColor.green.cgColor),
-        Spinner(amplitude: 0.20, frequency: -2, phase: .pi, color: UIColor.green.cgColor),
-        Spinner(amplitude: 0.97, frequency: -1, phase: .zero, color: UIColor.yellow.cgColor),
-        Spinner(amplitude: 0.20, frequency: +2, phase: .pi, color: UIColor.yellow.cgColor),
-        Spinner(amplitude: 0.08, frequency: +3, phase: .zero, color: UIColor.yellow.cgColor),
+        Spinner(amplitude: 0.23, frequency: -3, phase: .pi, color: .green),
+        Spinner(amplitude: 0.20, frequency: -2, phase: .pi, color: .green),
+        Spinner(amplitude: 0.97, frequency: -1, phase: .zero, color: .yellow),
+        Spinner(amplitude: 0.20, frequency: +2, phase: .pi, color: .yellow),
+        Spinner(amplitude: 0.08, frequency: +3, phase: .zero, color: .yellow),
     ])
 }
