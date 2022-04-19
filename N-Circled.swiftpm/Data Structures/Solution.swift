@@ -67,7 +67,8 @@ struct Solution {
     }
 }
 
-import UIKit.UIColor
+extension Solution: Codable { /** Automatically synthesized. **/ }
+
 extension Solution {
     static let Oval: Solution = Solution(spinners: [
         Spinner(amplitude: 0.2, frequency: -1, phase: .zero, color: .green),
