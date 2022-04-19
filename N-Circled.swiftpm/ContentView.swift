@@ -53,6 +53,8 @@ struct PuzzleView: View {
                 }, label: {
                     Text("Play!")
                 })
+                    /// Don't allow user interaction while grading.
+                    .disabled(spinnerHolder.gameState == .grading)
             }
             GeometryReader { geo in
                 if spinnerHolder.gameState == .thinking {
