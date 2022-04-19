@@ -13,6 +13,7 @@ struct PuzzleView: View {
     
     public static let transitionDuration: TimeInterval = 0.5
     @Binding private var puzzle: Puzzle
+    @State var showConfetti: Bool = false
     
     /// Wraps bound puzzle state with additional gamestate.
     init(puzzle: Binding<Puzzle>) {
@@ -21,20 +22,25 @@ struct PuzzleView: View {
     }
     
     var body: some View {
-        VStack {
-            GeometryReader { geo in
-                if spinnerHolder.gameState == .thinking {
-                    CASpinner.init(size: geo.size, spinnerHolder: spinnerHolder, solution: puzzle.solution)
-                        .border(.purple)
-                        .transition(.opacity.combined(with: .scale))
-                } else {
-                    GradingView.init(size: geo.size, spinnerHolder: spinnerHolder, solution: puzzle.solution, gradingCompletionCallback: didFinishGrading(didWin:))
-                        .border(.red)
-                        .transition(.opacity.combined(with: .scale))
+        ZStack {
+            VStack {
+                GeometryReader { geo in
+                    if spinnerHolder.gameState == .thinking {
+                        CASpinner.init(size: geo.size, spinnerHolder: spinnerHolder, solution: puzzle.solution)
+                            .border(.purple)
+                            .transition(.opacity.combined(with: .scale))
+                    } else {
+                        GradingView.init(size: geo.size, spinnerHolder: spinnerHolder, solution: puzzle.solution, gradingCompletionCallback: didFinishGrading(didWin:))
+                            .border(.red)
+                            .transition(.opacity.combined(with: .scale))
+                    }
                 }
+                TwiddlerCollectionView(spinnerHolder: spinnerHolder)
+                    .frame(height: TwiddlerCollectionView.viewHeight)
             }
-            TwiddlerCollectionView(spinnerHolder: spinnerHolder)
-                .frame(height: TwiddlerCollectionView.viewHeight)
+            if showConfetti {
+                
+            }
         }
             .navigationTitle(puzzle.name)
             .navigationBarTitleDisplayMode(.inline)
