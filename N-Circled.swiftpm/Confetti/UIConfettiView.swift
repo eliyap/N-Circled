@@ -28,7 +28,7 @@
 import UIKit
 import QuartzCore
 
-public class ConfettiView: UIView {
+public class UIConfettiView: UIView {
 
     public enum ConfettiType: String {
         case confetti
