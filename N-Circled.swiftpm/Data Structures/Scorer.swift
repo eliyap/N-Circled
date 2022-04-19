@@ -15,7 +15,7 @@ struct Scorer {
     init(
         base: Double = 2.0,
         maxExponent: Double = 2.0,
-        scalar: Double = 10.0
+        scalar: Double = 3.0
     ) {
         self.base = base
         self.maxExponent = maxExponent
