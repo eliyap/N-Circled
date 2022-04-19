@@ -10,7 +10,8 @@ import SwiftUI
 /// Represents a uniformly rotating circle with some size, at some phase.
 struct Spinner {
     
-    internal var id: UUID = .init()
+    /// Allow private modification for automatic `Codable` synthesis.
+    internal private(set) var id: UUID = .init()
     
     /// Non-negative by convention.
     /// Normalized to `[0, 1]`.
