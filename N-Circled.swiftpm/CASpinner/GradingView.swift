@@ -22,6 +22,9 @@ struct GradingView: UIViewRepresentable {
     }
     
     func updateUIView(_ uiView: UIGradingView, context: Context) {
+        guard size != uiView.size else {
+            return
+        }
         uiView.redraw(in: size)
     }
 }
@@ -43,7 +46,7 @@ final class UIGradingView: UIView {
     private let solution: Solution
     
     /// View size as measured by `GeometryReader`.
-    private var size: CGSize
+    public private(set) var size: CGSize
     
     /// Composed IDFT sublayers.
     private let idftLayer: CAShapeLayer
