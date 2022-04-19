@@ -200,8 +200,9 @@ final class UIGradingView: UIView {
         layer.addSublayer(scoreSuperLayer)
         
         let scorePath = UIBezierPath()
-        scorePath.move(to: CGPoint(x: size.width * 0.1, y: size.height * 0.9))
-        scorePath.addLine(to: CGPoint(x: size.width * 0.9, y: size.height * 0.9))
+        let margin = size.width * 0.07
+        scorePath.move(to: CGPoint(x: 0 + margin, y: size.height - margin))
+        scorePath.addLine(to: CGPoint(x: size.width - margin, y: size.height - margin))
         
         let scoreBackgroundLayer = CAShapeLayer()
         scoreBackgroundLayer.lineCap = .round
