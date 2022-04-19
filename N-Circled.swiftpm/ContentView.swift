@@ -2,7 +2,7 @@ import SwiftUI
 
 struct ContentView: View {
     
-    @State private var puzzleManager: PuzzleManager = .init()
+    @StateObject private var puzzleManager: PuzzleManager = .init()
     
     var body: some View {
         NavigationView {
