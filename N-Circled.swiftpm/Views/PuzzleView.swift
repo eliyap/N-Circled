@@ -58,6 +58,7 @@ struct PuzzleView: View {
     /// Callback for when the grading animation has completed.
     private func didFinishGrading(didWin: Bool) -> Void {
         spinnerHolder.gameState = .completed
+        showConfetti = didWin
     }
     
     @ViewBuilder
