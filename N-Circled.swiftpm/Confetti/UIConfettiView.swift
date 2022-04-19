@@ -88,8 +88,8 @@ public class UIConfettiView: UIView {
         confetti.emissionRange = CGFloat(Double.pi)
         confetti.spin = CGFloat(3.5 * intensity)
         confetti.spinRange = CGFloat(4.0 * intensity)
-        confetti.scaleRange = CGFloat(intensity)
-        confetti.scaleSpeed = CGFloat(-0.1 * intensity)
+        confetti.scaleRange = 0.5
+        confetti.scaleSpeed = -0.05
         
         if let image = UIImage(named: type.rawValue) {
             confetti.contents = image.cgImage
