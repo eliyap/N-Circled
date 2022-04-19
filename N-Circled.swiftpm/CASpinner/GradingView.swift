@@ -222,7 +222,7 @@ final class UIGradingView: UIView {
         scoreStrokeLayer.lineCap = .round
         scoreStrokeLayer.lineWidth = 10
         scoreStrokeLayer.strokeColor = UIColor.systemPink.cgColor
-        scoreStrokeLayer.strokeEnd = 0.01
+        scoreStrokeLayer.strokeEnd = 0
         scoreStrokeLayer.path = scorePath.cgPath
         scoreSuperLayer.addSublayer(scoreStrokeLayer)
         self.scoreStrokeLayer = scoreStrokeLayer
@@ -258,8 +258,7 @@ final class UIGradingView: UIView {
         
         DispatchQueue.main.asyncAfter(deadline: .now() + PuzzleView.transitionDuration + UIGradingView.animationDuration, execute: { [weak self] in
             if let self = self {
-                let threshold = 0.9
-                let state = finalScore > threshold
+                let state = finalScore > Puzzle.scoreThreshold
                 self.gradingCompletionCallback(state)
             }
         })
