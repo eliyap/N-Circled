@@ -43,9 +43,9 @@ struct Spinner {
     }
 }
 
-extension Spinner: Identifiable { }
+extension Spinner: Identifiable { /** Automatically synthesized. **/ }
 
-extension Spinner: Equatable { }
+extension Spinner: Equatable { /** Automatically synthesized. **/ }
 
 extension Spinner: CustomStringConvertible {
     var description: String {
