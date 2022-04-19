@@ -13,6 +13,8 @@ struct Puzzle {
     public let solution: Solution
     public var attempt: [SpinnerSlot]
     public var unlocked: Bool
+    
+    public static let scoreThreshold = 0.8
 }
 
 extension Puzzle: Codable { /** Automatically synthesized. **/ }
