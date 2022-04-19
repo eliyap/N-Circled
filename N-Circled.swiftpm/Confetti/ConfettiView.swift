@@ -13,10 +13,12 @@ struct ConfettiView: UIViewRepresentable {
     
     func makeUIView(context: Context) -> UIConfettiView {
         let view = UIConfettiView()
+        view.size = size
+        view.startConfetti()
         return view
     }
     
     func updateUIView(_ uiView: UIConfettiView, context: Context) {
-        /// Nothing.
+        uiView.size = size
     }
 }
