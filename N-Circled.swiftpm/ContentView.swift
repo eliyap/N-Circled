@@ -11,7 +11,7 @@ struct ContentView: View {
                     NavigationLink(destination: {
                         PuzzleView(puzzle: $puzzle)
                     }, label: {
-                        Text("Puzzle 1 🥚")
+                        Text(puzzle.name)
                     })
                 }
             }
