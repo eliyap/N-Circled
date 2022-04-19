@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  Scorer.swift
 //  
 //
 //  Created by Secret Asian Man Dev on 18/4/22.
