@@ -12,9 +12,12 @@ struct Solution {
     
     public let spinners: [Spinner]
     
+    /// Calculates the partial normalized score (within `[0, 1]`) by taking 
+    /// only the first `index` distances into account.
     public static func score(upTo index: Int, of distances: [Double]) -> Double {
         guard 0 <= index && index <= distances.count else {
             assert(false, "Invalid index \(index) ")
+            return 0
         }
         
         let scorer = Scorer()
@@ -30,6 +33,11 @@ struct Solution {
         return score
     }
     
+    /// Given a player's puzzle attempt, samples the resulting IDFT and finds 
+    /// the distance from each point to the closest point on the (sampled) 
+    /// solution.
+    /// 
+    /// Returns those distances.
     public func distances(attempt: [Spinner], samples: Int) -> [Double] {
         
         let attemptSamples: [CGPoint] = (0..<samples).map { (sampleNo) in
