@@ -8,22 +8,22 @@ struct ContentView: View {
         NavigationView {
             List {
                 NavigationLink(destination: {
-                    PuzzleView(solution: .Oval)
+                    OldPuzzleView(solution: .Oval)
                 }, label: {
                     Text("Puzzle 1 🥚")
                 })
                 NavigationLink(destination: {
-                    PuzzleView(solution: .Star)
+                    OldPuzzleView(solution: .Star)
                 }, label: {
                     Text("Puzzle 2 ⭐️")
                 })
                 NavigationLink(destination: {
-                    PuzzleView(solution: .BowTie)
+                    OldPuzzleView(solution: .BowTie)
                 }, label: {
                     Text("Puzzle 3 🎀")
                 })
                 NavigationLink(destination: {
-                    PuzzleView(solution: .Heart)
+                    OldPuzzleView(solution: .Heart)
                 }, label: {
                     Text("Puzzle 4 ❤️")
                 })
@@ -32,7 +32,7 @@ struct ContentView: View {
     }
 }
 
-struct PuzzleView: View {
+struct OldPuzzleView: View {
     
     public let solution: Solution
     @StateObject private var spinnerHolder: SpinnerHolder = .init()
@@ -74,7 +74,7 @@ struct PuzzleView: View {
         switch spinnerHolder.gameState {
         case .thinking, .grading:
             Button(action: {
-                withAnimation(.easeInOut(duration: PuzzleView.transitionDuration)) {
+                withAnimation(.easeInOut(duration: OldPuzzleView.transitionDuration)) {
                     spinnerHolder.gameState = .grading
                 }
             }, label: {
@@ -84,7 +84,7 @@ struct PuzzleView: View {
                 .disabled(spinnerHolder.gameState == .grading)
         case .completed:
             Button(action: {
-                withAnimation(.easeInOut(duration: PuzzleView.transitionDuration)) {
+                withAnimation(.easeInOut(duration: OldPuzzleView.transitionDuration)) {
                     spinnerHolder.gameState = .thinking
                 }
             }, label: {
