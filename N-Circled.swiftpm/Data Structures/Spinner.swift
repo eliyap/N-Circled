@@ -95,12 +95,11 @@ extension Spinner {
 }
 
 public enum SpinnerColor: Int, CaseIterable {
-    case green
-    case yellow
-    case orange
-    case red
-    case purple
     case blue
+    case purple
+    case red
+    case yellow
+    case green
     
     var cgColor: CGColor {
         switch self {
@@ -108,8 +107,6 @@ public enum SpinnerColor: Int, CaseIterable {
                 return UIColor.SCGreen.cgColor
             case .yellow: 
                 return UIColor.SCYellow.cgColor
-            case .orange: 
-                return UIColor.SCOrange.cgColor
             case .red: 
                 return UIColor.SCRed.cgColor
             case .purple: 
