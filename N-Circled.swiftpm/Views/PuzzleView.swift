@@ -22,14 +22,7 @@ struct PuzzleView: View {
     
     var body: some View {
         VStack {
-            HStack {
-                Image(systemName: "globe")
-                    .imageScale(.large)
-                    .foregroundColor(.accentColor)
-                Text("Hello, WWDC!")
-                Text("\(spinnerHolder.spinnerSlots.count)")
-                ActionButton
-            }
+            ActionButton
             GeometryReader { geo in
                 if spinnerHolder.gameState == .thinking {
                     CASpinner.init(size: geo.size, spinnerHolder: spinnerHolder, solution: puzzle.solution)
@@ -44,12 +37,15 @@ struct PuzzleView: View {
             TwiddlerCollectionView(spinnerHolder: spinnerHolder)
                 .frame(height: TwiddlerCollectionView.viewHeight)
         }
+            .navigationTitle(puzzle.name)
+            .navigationBarTitleDisplayMode(.inline)
             /// Pass any changes upwards.
             .onReceive(spinnerHolder.$spinnerSlots, perform: { spinnerSlots in
                 puzzle.attempt = spinnerSlots
             })
     }
     
+    /// Callback for when the grading animation has completed.
     private func didFinishGrading(didWin: Bool) -> Void {
         spinnerHolder.gameState = .completed
     }
