@@ -44,6 +44,11 @@ struct Spinner {
     }
 }
 
+extension Spinner {
+    /// Default line width for rendering.
+    public static let lineWidth: CGFloat = 4.0
+}
+
 extension Spinner: Identifiable { /** Automatically synthesized. **/ }
 
 extension Spinner: Equatable { /** Automatically synthesized. **/ }

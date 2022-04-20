@@ -164,7 +164,7 @@ final class CASpinnerView: UIView {
             let newLayer = CALayer()
             newLayer.frame = layerFrame
             
-            let lineWidth: CGFloat = 2
+            let lineWidth: CGFloat = Spinner.lineWidth
             let shapeLayer = CAShapeLayer()
             shapeLayer.frame = layerFrame
             shapeLayer.path = makePath(diameter: diameter, lineWidth: lineWidth)
