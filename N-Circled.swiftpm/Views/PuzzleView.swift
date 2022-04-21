@@ -13,7 +13,7 @@ struct PuzzleView: View {
     
     public static let transitionDuration: TimeInterval = 0.5
     @Binding private var puzzle: Puzzle
-    @State var showConfetti: Bool = false
+    @State private var showConfetti: Bool = false
     
     /// Wraps bound puzzle state with additional gamestate.
     init(puzzle: Binding<Puzzle>) {
