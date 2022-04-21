@@ -62,6 +62,7 @@ struct ContentView: View {
             return
         }
         
+        /// Unlock the next puzzle, if any.
         if index < puzzleManager.puzzles.count {
             puzzleManager.puzzles[index + 1].unlocked = true
         }

@@ -15,6 +15,7 @@ struct PuzzleView: View {
     @Binding private var puzzle: Puzzle
     @State private var showConfetti: Bool = false
     
+    /// Callback to call when the user wins this puzzle.
     private let didWinPuzzle: (Puzzle) -> Void
     
     /// Wraps bound puzzle state with additional gamestate.
