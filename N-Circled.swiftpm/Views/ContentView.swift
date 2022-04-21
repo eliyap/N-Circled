@@ -17,8 +17,9 @@ struct ContentView: View {
                     NavigationLink(destination: {
                         PuzzleView(puzzle: $puzzle)
                     }, label: {
-                        Text(puzzle.name)
+                        Text(puzzle.displayName)
                     })
+                        .disabled(puzzle.unlocked == false)
                 }
             }
                 #if DEBUG

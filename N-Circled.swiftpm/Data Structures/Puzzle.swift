@@ -15,6 +15,13 @@ struct Puzzle {
     public var unlocked: Bool
     
     public static let scoreThreshold = 0.8
+    internal var displayName: String {
+        var str = name
+        if unlocked == false {
+            str += " – 🔒"
+        }
+        return str
+    }
 }
 
 extension Puzzle: Codable { /** Automatically synthesized. **/ }
