@@ -62,6 +62,9 @@ struct PuzzleView: View {
     private func didFinishGrading(didWin: Bool) -> Void {
         spinnerHolder.gameState = .completed
         showConfetti = didWin
+        if didWin {
+            didWinPuzzle(puzzle)
+        }
     }
     
     @ViewBuilder

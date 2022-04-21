@@ -58,7 +58,12 @@ struct ContentView: View {
     
     private func didWinPuzzle(_ puzzle: Puzzle) -> Void {
         guard let index = puzzleManager.puzzles.firstIndex(of: puzzle) else {
+            assert(false, "Could not resolve index of \(puzzle)")
             return
+        }
+        
+        if index < puzzleManager.puzzles.count {
+            puzzleManager.puzzles[index + 1].unlocked = true
         }
     }
 }
