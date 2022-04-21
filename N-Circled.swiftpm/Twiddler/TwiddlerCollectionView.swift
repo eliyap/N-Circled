@@ -44,13 +44,11 @@ struct SpinnerThumbnailView: View {
         ZStack(alignment: .topTrailing) {
             Text("s")
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
-            Button(action: { isEditing = true }, label: {
-                Image(systemName: "square.and.pencil")
-                    .resizable()
-                    .frame(width: 20, height: 20)
-                    .padding(5)
-                    .contentShape(Rectangle())
-            })
+            Image(systemName: "square.and.pencil")
+                .resizable()
+                .frame(width: 20, height: 20)
+                .padding(5)
+                .contentShape(Rectangle())
         }
             .padding(3)
             .frame(width: TwiddlerCollectionView.viewHeight, height: TwiddlerCollectionView.viewHeight)
