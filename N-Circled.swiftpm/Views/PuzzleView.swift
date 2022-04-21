@@ -15,10 +15,13 @@ struct PuzzleView: View {
     @Binding private var puzzle: Puzzle
     @State private var showConfetti: Bool = false
     
+    private let didWinPuzzle: (Puzzle) -> Void
+    
     /// Wraps bound puzzle state with additional gamestate.
-    init(puzzle: Binding<Puzzle>) {
+    init(puzzle: Binding<Puzzle>, didWinPuzzle: @escaping (Puzzle) -> Void) {
         self._spinnerHolder = .init(wrappedValue: SpinnerHolder(spinnerSlots: puzzle.wrappedValue.attempt))
         self._puzzle = puzzle
+        self.didWinPuzzle = didWinPuzzle
     }
     
     var body: some View {

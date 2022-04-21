@@ -4,7 +4,6 @@ struct ContentView: View {
     
     @StateObject private var puzzleManager: PuzzleManager = .init()
     
-    
     #if DEBUG
     @State private var didResetPuzzles: Bool = false
     @State private var didUnlockPuzzles: Bool = false
@@ -15,7 +14,7 @@ struct ContentView: View {
             List {
                 ForEach($puzzleManager.puzzles) { $puzzle in
                     NavigationLink(destination: {
-                        PuzzleView(puzzle: $puzzle)
+                        PuzzleView(puzzle: $puzzle, didWinPuzzle: didWinPuzzle)
                     }, label: {
                         Text(puzzle.displayName)
                     })
@@ -54,6 +53,12 @@ struct ContentView: View {
                     })
                 })
                 #endif
+        }
+    }
+    
+    private func didWinPuzzle(_ puzzle: Puzzle) -> Void {
+        guard let index = puzzleManager.puzzles.firstIndex(of: puzzle) else {
+            return
         }
     }
 }
