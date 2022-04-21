@@ -15,6 +15,16 @@ struct ContentView: View {
                     })
                 }
             }
+                #if DEBUG
+                .toolbar(content: {
+                    /// Reset puzzle state.
+                    Button(action: {
+                        puzzleManager.puzzles = Puzzle.initialSet
+                    }, label: {
+                        Image(systemName: "circle.slash")
+                            .font(.body.bold())
+                    })
+                #endif
         }
     }
 }
