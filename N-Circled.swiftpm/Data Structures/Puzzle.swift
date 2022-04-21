@@ -28,6 +28,8 @@ extension Puzzle: Codable { /** Automatically synthesized. **/ }
 
 extension Puzzle: Identifiable { /** Automatically synthesized. **/ }
 
+extension Puzzle: Equatable { /** Automatically synthesized. **/ }
+
 extension Puzzle {
     /// Default puzzle state when players first open the app.
     internal static let initialSet: [Puzzle] = [.Oval, .Star, .BowTie, .Heart]
