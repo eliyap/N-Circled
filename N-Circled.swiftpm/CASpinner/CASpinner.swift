@@ -275,6 +275,7 @@ func getInitialTransform(
 
 func makeGradient(color: SpinnerColor) -> CAGradientLayer {
     let gl = CAGradientLayer()
+    gl.type = .conic
     
     /// The point (within a unit square) around which the cone is formed.
     /// We want this to be the center of the circle.
@@ -283,7 +284,6 @@ func makeGradient(color: SpinnerColor) -> CAGradientLayer {
     /// The point (within a unit square) at which the cone's line "begins".
     gl.endPoint = CGPoint(x: 0.5, y: 0)
     
-    gl.type = .conic
     gl.colors = [
         UIColor.systemBackground.cgColor,
         color.cgColor,
