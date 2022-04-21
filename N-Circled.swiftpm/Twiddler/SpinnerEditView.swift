@@ -39,7 +39,7 @@ struct SpinnerEditView: View {
                 DoneButton
             }
             
-            Stepper(value: $modified.frequency, in: (-5)...(+5), step: 1, label: {
+            Stepper(value: $modified.frequency, in: Spinner.allowedFrequencies, step: 1, label: {
                 Text(Image(systemName: "tornado"))
                 + Text(" ")
                 + Text("Do \(modified.frequency) \(modified.frequency == 1 ? "rotation" : "rotations")")

@@ -19,6 +19,7 @@ struct Spinner {
     
     /// Discrete frequency.
     public var frequency: Int
+    public static let allowedFrequencies = (-5)...(+5)
     
     /// Unit: radians.
     /// Not bounded to `[0, 2pi]`.
