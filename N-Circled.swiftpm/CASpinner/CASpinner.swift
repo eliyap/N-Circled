@@ -289,5 +289,10 @@ func makeGradient(spinner: Spinner) -> CAGradientLayer {
         spinner.color.cgColor,
     ]
     
+    /// Make sure gradient direction matches spin direction.
+    if spinner.frequency < 0 {
+        gl.colors?.reverse()
+    }
+    
     return gl
 }
