@@ -150,9 +150,24 @@ final class UIGradingView: UIView {
             newLayer.frame = layerFrame
             
             let lineWidth: CGFloat = Spinner.lineWidth
+            let path = CGMutablePath()
+            path.addPath(makePath(diameter: diameter, lineWidth: lineWidth))
+            
+            /// Adds a thin radial line to make the axis of rotation obvious.
+            let radialLine = UIBezierPath()
+            radialLine.move(to: CGPoint(
+                x: (diameter) / 2,
+                y: (diameter) / 2
+            ))
+            radialLine.addLine(to: CGPoint(
+                x: (diameter) / 2,
+                y: .zero
+            ))
+            path.addPath(radialLine.cgPath)
+            
             let shapeLayer = CAShapeLayer()
             shapeLayer.frame = layerFrame
-            shapeLayer.path = makePath(diameter: diameter, lineWidth: lineWidth)
+            shapeLayer.path = path
             shapeLayer.fillColor = nil
             shapeLayer.strokeColor = UIColor.black.cgColor
             shapeLayer.lineWidth = lineWidth
