@@ -68,8 +68,6 @@ final class CASpinnerView: UIView {
                 self.spinners = spinnerSlots.compactMap(\.spinner)
                 self.circleLayers = []
                 self.redrawSpinners()
-                
-//                print("score", solution.score(attempt: spinners, samples: 1000))
             })
         spinnersObserver.store(in: &observers)
         
