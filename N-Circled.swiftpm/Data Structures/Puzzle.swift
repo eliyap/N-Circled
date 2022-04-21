@@ -21,12 +21,6 @@ extension Puzzle: Codable { /** Automatically synthesized. **/ }
 
 extension Puzzle: Identifiable { /** Automatically synthesized. **/ }
 
-#if DEBUG
-fileprivate let __DEBUG_UNLOCK_ALL__ = true
-#else
-fileprivate let __DEBUG_UNLOCK_ALL__ = false
-#endif
-
 extension Puzzle {
     /// Default puzzle state when players first open the app.
     internal static let initialSet: [Puzzle] = [.Oval, .Star, .BowTie, .Heart]
@@ -49,7 +43,7 @@ extension Puzzle {
             SpinnerSlot(nil),
             SpinnerSlot(nil),
         ],
-        unlocked: __DEBUG_UNLOCK_ALL__
+        unlocked: false
     )
     
     internal static let BowTie = Puzzle(
@@ -60,7 +54,7 @@ extension Puzzle {
             SpinnerSlot(nil),
             SpinnerSlot(nil),
         ],
-        unlocked: __DEBUG_UNLOCK_ALL__
+        unlocked: false
     )
     
     internal static let Heart = Puzzle(
@@ -72,6 +66,6 @@ extension Puzzle {
             SpinnerSlot(nil),
             SpinnerSlot(nil),
         ],
-        unlocked: __DEBUG_UNLOCK_ALL__
+        unlocked: false
     )
 }
