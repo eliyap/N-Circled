@@ -60,7 +60,7 @@ struct SpinnerThumbnailView: View {
                     .foregroundColor(Color(uiColor: .secondarySystemBackground))
                     .shadow(color: Color.black.opacity(0.1), radius: Self.shadowRadius / 2, x: 0, y: 0)
             })
-            .onTapGesture(count: 2, perform: { isEditing = true })
+            .onTapGesture(perform: { isEditing = true })
             .fullScreenCover(isPresented: $isEditing, content: {
                 SpinnerEditView.init(spinnerSlot: $spinnerSlot, spinnerIndex: spinnerIndex)
             })
