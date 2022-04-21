@@ -156,7 +156,7 @@ final class CASpinnerView: UIView {
             let layerFrame = CGRect(x: 0, y: 0, width: diameter, height: diameter)
             
             /// Create layers.
-            let gradientLayer = makeGradient(color: spinner.color)
+            let gradientLayer = makeGradient(spinner: spinner)
             gradientLayer.frame = layerFrame
             
             let newLayer = CALayer()
@@ -273,7 +273,7 @@ func getInitialTransform(
     return CATransform3DMakeAffineTransform(affineTransform)
 }
 
-func makeGradient(color: SpinnerColor) -> CAGradientLayer {
+func makeGradient(spinner: Spinner) -> CAGradientLayer {
     let gl = CAGradientLayer()
     gl.type = .conic
     
@@ -286,7 +286,7 @@ func makeGradient(color: SpinnerColor) -> CAGradientLayer {
     
     gl.colors = [
         UIColor.systemBackground.cgColor,
-        color.cgColor,
+        spinner.color.cgColor,
     ]
     
     return gl

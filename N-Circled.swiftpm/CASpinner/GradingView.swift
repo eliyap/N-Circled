@@ -143,7 +143,7 @@ final class UIGradingView: UIView {
             let layerFrame = CGRect(x: 0, y: 0, width: diameter, height: diameter)
             
             /// Create layers.
-            let gradientLayer = makeGradient(color: spinner.color)
+            let gradientLayer = makeGradient(spinner: spinner)
             gradientLayer.frame = layerFrame
             
             let newLayer = CALayer()
