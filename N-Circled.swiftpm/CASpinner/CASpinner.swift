@@ -117,9 +117,11 @@ final class CASpinnerView: UIView {
         for sublayer in sublayers {
             sublayer.removeFromSuperlayer()
         }
-        addShape(size: size)
         addSpinners(size: size)
         drawSolutionLayer()
+        
+        /// Call last so that layer is frontmost.
+        addShape(size: size)
     }
     
     private func addShape(size: CGSize) -> Void {
