@@ -9,6 +9,8 @@ import SwiftUI
 
 struct PuzzleView: View {
     
+    @Environment(\.presentationMode) private var presentationMode
+    
     @StateObject private var spinnerHolder: SpinnerHolder
     
     public static let transitionDuration: TimeInterval = 0.5
@@ -46,6 +48,20 @@ struct PuzzleView: View {
                 GeometryReader { geo in
                     ConfettiView(size: geo.size)
                 }
+                Color(uiColor: .systemBackground)
+                    .opacity(0.3)
+                    .transition(.opacity)
+                VStack {
+                    Text("Nice!")
+                    Button(action: {
+                        presentationMode.wrappedValue.dismiss()
+                    }, label: {
+                        Text("Next Puzzle")
+                    })
+                }
+                    .padding()
+                    .background(Color(uiColor: .systemBackground))
+                    .transition(.opacity)
             }
         }
             .navigationTitle(puzzle.name)
@@ -62,7 +78,9 @@ struct PuzzleView: View {
     /// Callback for when the grading animation has completed.
     private func didFinishGrading(didWin: Bool) -> Void {
         spinnerHolder.gameState = .completed
-        showConfetti = didWin
+        withAnimation {
+            showConfetti = didWin
+        }
         if didWin {
             didWinPuzzle(puzzle)
         }
