@@ -49,6 +49,7 @@ struct SpinnerThumbnailView: View {
                 .frame(width: 20, height: 20)
                 .padding(5)
                 .contentShape(Rectangle())
+                .foregroundColor(.accentColor)
         }
             .padding(3)
             .frame(width: TwiddlerCollectionView.viewHeight, height: TwiddlerCollectionView.viewHeight)
