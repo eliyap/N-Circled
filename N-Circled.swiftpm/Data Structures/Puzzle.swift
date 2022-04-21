@@ -29,8 +29,8 @@ extension Puzzle {
         name: "Puzzle 1 🥚",
         solution: Solution.Oval,
         attempt: [
-            SpinnerSlot(.defaultNew(index: 0)),
-            SpinnerSlot(nil),
+            SpinnerSlot(Spinner(amplitude: 0.66, frequency: -1, phase: .zero, color: SpinnerColor(rawValue: 0)!)),
+            SpinnerSlot(Spinner(amplitude: 0.33, frequency: -3, phase: .zero, color: SpinnerColor(rawValue: 1)!)),
         ],
         unlocked: true
     )
@@ -39,8 +39,8 @@ extension Puzzle {
         name: "Puzzle 2 ⭐️",
         solution: Solution.Star,
         attempt: [
-            SpinnerSlot(.defaultNew(index: 0)),
-            SpinnerSlot(nil),
+            SpinnerSlot(Spinner(amplitude: 0.66, frequency: -1, phase: .zero, color: SpinnerColor(rawValue: 0)!)),
+            SpinnerSlot(Spinner(amplitude: 0.33, frequency: -3, phase: .zero, color: SpinnerColor(rawValue: 1)!)),
             SpinnerSlot(nil),
         ],
         unlocked: false
@@ -50,8 +50,8 @@ extension Puzzle {
         name: "Puzzle 3 🎀",
         solution: Solution.BowTie,
         attempt: [
-            SpinnerSlot(.defaultNew(index: 0)),
-            SpinnerSlot(nil),
+            SpinnerSlot(Spinner(amplitude: 0.66, frequency: -1, phase: .zero, color: SpinnerColor(rawValue: 0)!)),
+            SpinnerSlot(Spinner(amplitude: 0.33, frequency: -3, phase: .zero, color: SpinnerColor(rawValue: 1)!)),
             SpinnerSlot(nil),
         ],
         unlocked: false
@@ -61,8 +61,8 @@ extension Puzzle {
         name: "Puzzle 4 ❤️",
         solution: .Heart,
         attempt: [
-            SpinnerSlot(.defaultNew(index: 0)),
-            SpinnerSlot(nil),
+            SpinnerSlot(Spinner(amplitude: 0.66, frequency: -1, phase: .zero, color: SpinnerColor(rawValue: 0)!)),
+            SpinnerSlot(Spinner(amplitude: 0.33, frequency: -3, phase: .zero, color: SpinnerColor(rawValue: 1)!)),
             SpinnerSlot(nil),
             SpinnerSlot(nil),
         ],
