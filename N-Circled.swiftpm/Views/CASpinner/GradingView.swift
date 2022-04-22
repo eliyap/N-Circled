@@ -53,8 +53,11 @@ final class UIGradingView: UIView {
     
     /// Shows the player's score.
     private weak var scoreStrokeLayer: CAShapeLayer? = nil
+    private weak var scoreTextLayer: CATextLayer? = nil
     
     private var gradingCompletionCallback: (Bool) -> Void
+    
+    private let scoreLabel: UILabel = .init()
     
     init(size: CGSize, spinnerHolder: SpinnerHolder, solution: Solution, onGradingCompletion gradingCompletionCallback: @escaping (Bool) -> Void) {
         self.size = size
@@ -78,6 +81,7 @@ final class UIGradingView: UIView {
         addSpinners(size: size)
         drawSolutionLayer()
         drawScoreBar()
+        drawScoreText()
         animateScore()
     }
     
@@ -210,12 +214,13 @@ final class UIGradingView: UIView {
         }
     }
     
+    private static let marginSize = 0.07
     private func drawScoreBar() -> Void {
         let scoreSuperLayer = CALayer()
         layer.addSublayer(scoreSuperLayer)
         
         let scorePath = UIBezierPath()
-        let margin = size.width * 0.07
+        let margin = size.width * Self.marginSize
         scorePath.move(to: CGPoint(x: 0 + margin, y: size.height - margin))
         scorePath.addLine(to: CGPoint(x: size.width - margin, y: size.height - margin))
         
@@ -246,12 +251,43 @@ final class UIGradingView: UIView {
         sublayers.append(contentsOf: [scoreSuperLayer, scoreBackgroundLayer, scoreThresholdLayer, scoreStrokeLayer])
     }
     
+    func drawScoreText() -> Void {
+        let textLayer = CATextLayer()
+        textLayer.string = "Score: "
+        textLayer.foregroundColor = UIColor.label.cgColor
+        
+        let fontSize: CGFloat = 24
+        textLayer.frame = CGRect(
+            origin: CGPoint(
+                x: size.width * Self.marginSize,
+                y: size.height * (1 - Self.marginSize) - fontSize
+            ),
+            size: CGSize(
+                width: size.width,
+                height: fontSize
+            )
+        )
+        let fd = UIFont.systemFont(ofSize: fontSize * 2).fontDescriptor
+        textLayer.font = UIFont(descriptor: fd.withDesign(.rounded) ?? fd, size: fontSize * 2)
+        textLayer.fontSize = fontSize
+        textLayer.contentsScale = UIScreen.main.scale
+        
+        self.scoreTextLayer = textLayer
+        layer.addSublayer(textLayer)
+        sublayers.append(textLayer)
+    }
+    
+    /// Animate the scoring progress in the form of a filling bar,
+    /// and a text label ticking up.
+    /// Leave both at their final values on animation completion.
     func animateScore() -> Void {
         let sampleCount = 200
         
-        let animation = CAKeyframeAnimation()
+        let barAnim = CAKeyframeAnimation()
+        let textAnim = CAKeyframeAnimation(keyPath: "string")
         var times: [NSNumber] = []
-        var values: [Double] = []
+        var barValues: [Double] = []
+        var textValues: [String] = []
         
         let distances = solution.distances(attempt: spinners, samples: sampleCount)
         
@@ -259,17 +295,27 @@ final class UIGradingView: UIView {
             let proportion: Double = Double(sampleNo) / Double(sampleCount)
             let score = Solution.score(upTo: sampleNo, of: distances)
             times.append(proportion as NSNumber)
-            values.append(score)
+            barValues.append(score)
+            textValues.append("Score: \(Int(score * 100)) / \(Int(Puzzle.scoreThreshold * 100))")
         }
         
-        animation.values = values
-        animation.keyTimes = times
-        animation.duration = UIGradingView.animationDuration
+        barAnim.values = barValues
+        barAnim.keyTimes = times
+        barAnim.duration = UIGradingView.animationDuration
+        
+        textAnim.values = textValues
+        textAnim.keyTimes = times
+        textAnim.duration = UIGradingView.animationDuration
         
         let finalScore = Solution.score(upTo: distances.count, of: distances)
-        self.delayAnimation(layer: scoreStrokeLayer, animation: animation, property: .strokeEnd, completion: { [weak self] in
+        self.delayAnimation(layer: scoreStrokeLayer, animation: barAnim, property: .strokeEnd, completion: { [weak self] in
             guard let self = self else { return }
             self.scoreStrokeLayer?.strokeEnd = finalScore
+        })
+        
+        self.delayAnimation(layer: scoreTextLayer, animation: textAnim, property: .string, completion: { [weak self] in
+            guard let self = self else { return }
+            self.scoreTextLayer?.string = "Score: \(Int(finalScore * 100)) / \(Int(Puzzle.scoreThreshold * 100))"
         })
         
         DispatchQueue.main.asyncAfter(deadline: .now() + PuzzleView.transitionDuration + UIGradingView.animationDuration, execute: { [weak self] in

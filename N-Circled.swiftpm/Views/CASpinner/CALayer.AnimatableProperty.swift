@@ -15,6 +15,9 @@ extension CALayer {
         case sublayerTransform
         case strokeStart
         case strokeEnd
+        
+        /// For `CATextLayer`.
+        case string
     }
     
     func add(_ animation: CAAnimation, property: AnimatableProperty) -> Void {
