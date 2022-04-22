@@ -52,24 +52,7 @@ struct SpinnerEditView: View {
                 .padding(SpinnerEditView.buttonPadding)
                 .modifier(TwiddleBackground())
             
-            VStack(alignment: .center) {
-                HStack(alignment: .top )  {
-                    VStack(alignment: .leading, spacing: SpinnerEditView.buttonPadding) {
-                        (Text(Image(systemName: "dial.min.fill")) + Text(" ") + Text("Circle Start Angle (Phase)"))
-                        (Text(Image(systemName: "hand.draw.fill")) + Text(" ") + Text("Drag to Adjust"))
-                    }
-                    Spacer()
-                    Text("\(modified.phaseInDegrees)°")
-                }
-                    .padding(SpinnerEditView.buttonPadding)
-                
-                GeometryReader { geo in
-                    DialView(size: geo.size, spinner: $modified)
-                }
-                    .aspectRatio(1, contentMode: .fit)
-                    .frame(maxHeight: 250)
-            }
-                .modifier(TwiddleBackground())
+            DialComponent(modified: $modified)
             
             Spacer()
             
@@ -137,6 +120,32 @@ struct SpinnerEditView: View {
                 RoundedRectangle(cornerRadius: cornerRadius)
                     .stroke(buttonStroke)
             })
+    }
+}
+
+fileprivate struct DialComponent: View {
+    
+    @Binding public var modified: Spinner
+    
+    var body: some View {
+        VStack(alignment: .center) {
+            HStack(alignment: .top )  {
+                VStack(alignment: .leading, spacing: SpinnerEditView.buttonPadding) {
+                    (Text(Image(systemName: "dial.min.fill")) + Text(" ") + Text("Circle Start Angle (Phase)"))
+                    (Text(Image(systemName: "hand.draw.fill")) + Text(" ") + Text("Drag to Adjust"))
+                }
+                Spacer()
+                Text("\(modified.phaseInDegrees)°")
+            }
+                .padding(SpinnerEditView.buttonPadding)
+            
+            GeometryReader { geo in
+                DialView(size: geo.size, spinner: $modified)
+            }
+                .aspectRatio(1, contentMode: .fit)
+                .frame(maxHeight: 250)
+        }
+            .modifier(TwiddleBackground())
     }
 }
 
