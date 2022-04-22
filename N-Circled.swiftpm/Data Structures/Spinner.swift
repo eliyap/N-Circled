@@ -43,6 +43,12 @@ struct Spinner {
             y: amplitude * sin(angle)
         )
     }
+    
+    var phaseInDegrees: Int {
+        var phase = phase
+        if phase < 0 { phase += 2 * .pi }
+        return Int(phase * 360 / (2 * .pi))
+    }
 }
 
 extension Spinner {
