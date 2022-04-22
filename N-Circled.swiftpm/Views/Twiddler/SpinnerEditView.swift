@@ -51,7 +51,7 @@ struct SpinnerEditView: View {
                 .padding(SpinnerEditView.buttonPadding)
                 .modifier(TwiddleBackground())
             
-            VStack(alignment: .leading) {
+            VStack(alignment: .center) {
                 HStack(alignment: .top )  {
                     VStack(alignment: .leading, spacing: SpinnerEditView.buttonPadding) {
                         (Text(Image(systemName: "dial.min.fill")) + Text(" ") + Text("Circle Start Angle (Phase)"))
@@ -66,6 +66,7 @@ struct SpinnerEditView: View {
                     DialView(size: geo.size, spinner: $modified)
                 }
                     .aspectRatio(1, contentMode: .fit)
+                    .frame(maxHeight: 300)
             }
                 .modifier(TwiddleBackground())
             
