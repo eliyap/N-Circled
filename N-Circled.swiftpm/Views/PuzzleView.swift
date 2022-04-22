@@ -42,25 +42,7 @@ struct PuzzleView: View {
                 TwiddlerCollectionView(spinnerHolder: spinnerHolder)
                     .frame(height: TwiddlerCollectionView.viewHeight)
             }
-            if showConfetti {
-                GeometryReader { geo in
-                    ConfettiView(size: geo.size)
-                }
-                Color(uiColor: .systemBackground)
-                    .opacity(0.3)
-                    .transition(.opacity)
-                VStack {
-                    Text("Nice!")
-                    Button(action: {
-                        presentationMode.wrappedValue.dismiss()
-                    }, label: {
-                        Text("Next Puzzle")
-                    })
-                }
-                    .padding()
-                    .background(Color(uiColor: .systemBackground))
-                    .transition(.opacity)
-            }
+            ResultScreen
         }
             .navigationTitle(puzzle.name)
             .navigationBarTitleDisplayMode(.inline)
@@ -75,12 +57,14 @@ struct PuzzleView: View {
     
     /// Callback for when the grading animation has completed.
     private func didFinishGrading(didWin: Bool) -> Void {
-        spinnerHolder.gameState = .completed
         withAnimation {
             showConfetti = didWin
         }
         if didWin {
             didWinPuzzle(puzzle)
+            spinnerHolder.gameState = .won
+        } else {
+            spinnerHolder.gameState = .lost
         }
     }
     
@@ -97,7 +81,7 @@ struct PuzzleView: View {
             })
                 /// Don't allow user interaction while grading.
                 .disabled(spinnerHolder.gameState == .grading)
-        case .completed:
+        case .lost:
             Button(action: {
                 withAnimation(.easeInOut(duration: PuzzleView.transitionDuration)) {
                     spinnerHolder.gameState = .thinking
