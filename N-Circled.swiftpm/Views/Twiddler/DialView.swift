@@ -1,5 +1,5 @@
 //
-//  AngleAdjustmentView.swift
+//  DialView.swift
 //  N-Circled
 //
 //  Created by Secret Asian Man Dev on 10/4/22.
