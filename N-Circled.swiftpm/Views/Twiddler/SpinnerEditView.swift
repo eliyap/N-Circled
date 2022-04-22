@@ -11,6 +11,7 @@ struct SpinnerEditView: View {
     
     @Binding public var bound: SpinnerSlot
     @State public var modified: Spinner
+    @State private var showDeleteAlert: Bool = false
     @Environment(\.presentationMode) private var presentationMode
     @Environment(\.colorScheme) private var colorScheme
     
@@ -66,11 +67,27 @@ struct SpinnerEditView: View {
                     DialView(size: geo.size, spinner: $modified)
                 }
                     .aspectRatio(1, contentMode: .fit)
-                    .frame(maxHeight: 300)
+                    .frame(maxHeight: 250)
             }
                 .modifier(TwiddleBackground())
             
             Spacer()
+            
+            Button(role: .destructive, action: {
+                showDeleteAlert = true
+            }, label: {
+                Text("Delete Spinner?")
+            })
+                .alert("Delete Spinner", isPresented: $showDeleteAlert, actions: {
+                    Button(role: .destructive, action: {
+                        bound.spinner = nil
+                        presentationMode.wrappedValue.dismiss()
+                    }, label: { Text("Delete" )})
+                })
+                .padding(.vertical, SpinnerEditView.buttonPadding)
+                .padding(SpinnerEditView.buttonPadding)
+                .frame(maxWidth: .infinity)
+                .modifier(TwiddleBackground())
         }
             .padding(SpinnerEditView.buttonPadding * 2)
     }
