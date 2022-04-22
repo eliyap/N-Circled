@@ -122,20 +122,49 @@ struct SpinnerEditView: View {
 
 fileprivate struct FrequencyComponent: View {
     
-    @Binding public var modified: Spinner
+    @Binding private var modified: Spinner
+    @State var spinCount: Int
+    @State var clockwise: Bool
+    
+    public init(modified: Binding<Spinner>) {
+        self._modified = modified
+        self._spinCount = .init(initialValue: abs(modified.wrappedValue.frequency))
+        self._clockwise = .init(initialValue: modified.wrappedValue.frequency >= 0)
+    }
     
     var body: some View {
-        VStack(alignment: .leading) {
-            Text(Image(systemName: "tornado"))
-            + Text(" ")
-            + Text("Rotations (Frequency)")
-            
-            Stepper(value: $modified.frequency, in: Spinner.allowedFrequencies, step: 1, label: {
-                Text(direction(of: modified.frequency))
-            })
+        Group {
+            VStack(alignment: .leading) {
+                Text(Image(systemName: "tornado"))
+                + Text(" ")
+                + Text("Rotations (Frequency)")
+                
+                Stepper(value: $spinCount, in: 0...5, step: 1, label: {
+                    Text("\(spinCount) rotation\(spinCount == 1 ? "" : "s")")
+                })
+                
+                HStack {
+                    Text(Image(systemName: clockwise ? "arrow.clockwise" : "arrow.counterclockwise"))
+                    + Text(" ")
+                    + Text(clockwise ? "Clockwise" : "Counter-Clockwise")
+                    
+                    Spacer()
+                    Button(action: {
+                        clockwise.toggle()
+                    }, label: {
+                        Text("Switch")
+                    })
+                }
+            }
+                .padding(SpinnerEditView.buttonPadding)
+                .modifier(TwiddleBackground())
+                .onChange(of: spinCount, perform: { newCount in
+                    modified.frequency = (clockwise ? +1 : -1) * newCount
+                })
+                .onChange(of: clockwise, perform: { newDir in
+                    modified.frequency = (newDir ? +1 : -1) * spinCount
+                })
         }
-            .padding(SpinnerEditView.buttonPadding)
-            .modifier(TwiddleBackground())
     }
     
     private func direction(of spin: Int) -> String {
