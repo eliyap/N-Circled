@@ -148,7 +148,9 @@ struct PuzzleView: View {
                 Text("Not Quite...")
                     .font(.title)
                 Button(action: {
-                    spinnerHolder.gameState = .thinking
+                    withAnimation(.easeInOut(duration: PuzzleView.transitionDuration)) {
+                        spinnerHolder.gameState = .thinking
+                    }
                 }, label: {
                     Text("Try Again")
                 })
