@@ -45,7 +45,7 @@ struct DialView: View {
         }
     }
     
-    func simpleSuccess() {
+    private func sendHaptic() {
         let generator = UINotificationFeedbackGenerator()
         generator.notificationOccurred(.success)
     }
@@ -56,7 +56,7 @@ struct DialView: View {
         if (initialPos == nil) || (initialSpinner == nil) {
             initialPos = value.startLocation
             initialSpinner = spinner
-            simpleSuccess()
+            sendHaptic()
         }
         
         guard
