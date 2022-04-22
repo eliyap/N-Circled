@@ -39,8 +39,17 @@ struct SpinnerThumbnailView: View {
     
     var body: some View {
         ZStack(alignment: .topTrailing) {
-            Text("s")
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
+            if let spinner = spinnerSlot.spinner {
+                Circle()
+                    .fill(spinner.gradient)
+                    .rotationEffect(Angle(radians: spinner.phase))
+                    .scaleEffect(spinner.amplitude)
+            } else {
+                ZStack(alignment: .center) {
+                    Image(systemName: "plus")
+                    Color.clear
+                }
+            }
             Image(systemName: "square.and.pencil")
                 .resizable()
                 .frame(width: 20, height: 20)
@@ -61,5 +70,21 @@ struct SpinnerThumbnailView: View {
             .fullScreenCover(isPresented: $isEditing, content: {
                 SpinnerEditView.init(spinnerSlot: $spinnerSlot, spinnerIndex: spinnerIndex)
             })
+    }
+}
+
+fileprivate extension Spinner {
+    var gradient: SwiftUI.AngularGradient {
+        var colors = [
+            Color(uiColor: .systemBackground),
+            Color(uiColor: color.uiColor),
+        ]
+        if frequency < 0 {
+            colors.reverse()
+        }
+        return AngularGradient(
+            gradient: Gradient(colors: colors),
+            center: .center
+        )
     }
 }
