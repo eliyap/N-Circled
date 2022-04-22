@@ -166,27 +166,6 @@ fileprivate struct FrequencyComponent: View {
                 })
         }
     }
-    
-    private func direction(of spin: Int) -> String {
-        var str = "\(abs(modified.frequency))"
-        
-        switch spin {
-        case let x where x < 0:
-            str += " counter-clockwise"
-        case let x where x > 0:
-            str += " clockwise"
-        default:
-            break
-        }
-        
-        str += " "
-        str += "rotation"
-        if abs(modified.frequency) != 1 {
-            str += "s"
-        }
-        
-        return str
-    }
 }
 
 fileprivate struct DialComponent: View {
