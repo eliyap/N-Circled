@@ -50,5 +50,6 @@ internal enum GameState: Int {
     case grading
     
     /// Grading animation has completed playing.
-    case completed
+    case won
+    case lost
 }
