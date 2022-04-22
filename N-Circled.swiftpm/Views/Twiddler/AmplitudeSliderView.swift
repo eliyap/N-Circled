@@ -13,18 +13,21 @@ struct AmplitudeSliderView: View {
 
     var body: some View {
         VStack(alignment: .leading) {
+            HStack {
                 Text(Image(systemName: "person.fill.and.arrow.left.and.arrow.right"))
                 + Text(" ")
-                + Text("Size:")
-                + Text(" ")
-                + Text(String(format: "%.2f", spinner.amplitude))
+                + Text("Circle Size (Radius)")
                 
+                Spacer()
+                
+                Text("\(Int(spinner.amplitude * 100))%")
+            }
                 Slider(value: $spinner.amplitude, in: 0...1, label: {
                     Text("Amplitude")
                 }, minimumValueLabel: {
                     Text("0")
                 }, maximumValueLabel: {
-                    Text("1")
+                    Text("100")
                 }, onEditingChanged: { (changed: Bool) in
                     
                 })

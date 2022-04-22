@@ -28,7 +28,7 @@ struct DialView: View {
     var body: some View {
         ZStack(alignment: .topLeading) {
             Circle()
-                .stroke(.blue)
+                .stroke(Color.blue, lineWidth: Spinner.lineWidth)
                 .frame(
                     width: size.width * Self.proportion * spinner.amplitude,
                     height: size.width * Self.proportion * spinner.amplitude
