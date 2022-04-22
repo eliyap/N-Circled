@@ -18,9 +18,6 @@ struct TwiddlerCollectionView: View {
             HStack {
                 ForEach($spinnerHolder.spinnerSlots) { $spinnerSlot in
                     SpinnerThumbnailView(spinnerSlot: $spinnerSlot, spinnerIndex: spinnerHolder.spinnerSlots.firstIndex(of: spinnerSlot))
-                        .onTapGesture(perform: {
-                            spinnerHolder.highlighted = spinnerSlot.spinner
-                        })
                 }
             }
                 .padding(SpinnerThumbnailView.shadowRadius)
@@ -60,6 +57,7 @@ struct SpinnerThumbnailView: View {
                     .shadow(color: Color.black.opacity(0.1), radius: Self.shadowRadius / 2, x: 0, y: 0)
             })
             .onTapGesture(perform: { isEditing = true })
+            .contentShape(Rectangle())
             .fullScreenCover(isPresented: $isEditing, content: {
                 SpinnerEditView.init(spinnerSlot: $spinnerSlot, spinnerIndex: spinnerIndex)
             })
