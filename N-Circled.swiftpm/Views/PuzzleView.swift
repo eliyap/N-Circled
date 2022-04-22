@@ -105,6 +105,76 @@ struct PuzzleView: View {
             }, label: {
                 Text("🔄 Try Again")
             })
+        case .won:
+            Button(action: { }, label: {
+                Text("▶️ Play!")
+            })
+                .disabled(true)
+        }
+    }
+    
+    @ViewBuilder
+    private var ResultScreen: some View {
+        switch spinnerHolder.gameState {
+        case .thinking, .grading:
+            EmptyView()
+        case .won:
+            WinScreen
+        case .lost:
+            LossScreen
+        }
+    }
+    
+    private var WinScreen: some View {
+        Group {
+            GeometryReader { geo in
+                ConfettiView(size: geo.size)
+            }
+            Color(uiColor: .systemBackground)
+                .opacity(0.3)
+                .transition(.opacity)
+            VStack {
+                Text("🤩")
+                    .font(.largeTitle)
+                Text("Nice Work!")
+                    .font(.title)
+                Button(action: {
+                    presentationMode.wrappedValue.dismiss()
+                }, label: {
+                    Text("Next Puzzle")
+                })
+            }
+                .padding()
+                .background(content: {
+                    RoundedRectangle(cornerRadius: 15)
+                        .foregroundColor(Color(uiColor: .secondarySystemBackground))
+                })
+                .transition(.opacity)
+        }
+    }
+    
+    private var LossScreen: some View {
+        Group {
+            Color(uiColor: .systemBackground)
+                .opacity(0.3)
+                .transition(.opacity)
+            VStack {
+                Text("😵‍💫")
+                    .font(.largeTitle)
+                Text("Not Quite...")
+                    .font(.title)
+                Button(action: {
+                    spinnerHolder.gameState = .thinking
+                }, label: {
+                    Text("Try Again")
+                })
+            }
+                .padding()
+                .background(content: {
+                    RoundedRectangle(cornerRadius: 15)
+                        .foregroundColor(Color(uiColor: .secondarySystemBackground))
+                })
+                .transition(.opacity)
         }
     }
 }
