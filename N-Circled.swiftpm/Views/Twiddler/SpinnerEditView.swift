@@ -36,19 +36,14 @@ struct SpinnerEditView: View {
         VStack(alignment: .leading) {
             Text("Edit Spinner")
                 .font(.title.bold())
+                .padding(.bottom, SpinnerEditView.buttonPadding)
             HStack {
                 CancelButton
                 Spacer()
                 DoneButton
             }
             
-            Stepper(value: $modified.frequency, in: Spinner.allowedFrequencies, step: 1, label: {
-                Text(Image(systemName: "tornado"))
-                + Text(" ")
-                + Text("Do \(modified.frequency) \(modified.frequency == 1 ? "rotation" : "rotations")")
-            })
-                .padding(SpinnerEditView.buttonPadding)
-                .modifier(TwiddleBackground())
+            FrequencyComponent(modified: $modified)
             
             AmplitudeSliderView(spinner: $modified)
                 .padding(SpinnerEditView.buttonPadding)
@@ -122,6 +117,46 @@ struct SpinnerEditView: View {
                 RoundedRectangle(cornerRadius: cornerRadius)
                     .stroke(buttonStroke)
             })
+    }
+}
+
+fileprivate struct FrequencyComponent: View {
+    
+    @Binding public var modified: Spinner
+    
+    var body: some View {
+        VStack(alignment: .leading) {
+            Text(Image(systemName: "tornado"))
+            + Text(" ")
+            + Text("Rotations (Frequency)")
+            
+            Stepper(value: $modified.frequency, in: Spinner.allowedFrequencies, step: 1, label: {
+                Text(direction(of: modified.frequency))
+            })
+        }
+            .padding(SpinnerEditView.buttonPadding)
+            .modifier(TwiddleBackground())
+    }
+    
+    private func direction(of spin: Int) -> String {
+        var str = "\(abs(modified.frequency))"
+        
+        switch spin {
+        case let x where x < 0:
+            str += " counter-clockwise"
+        case let x where x > 0:
+            str += " clockwise"
+        default:
+            break
+        }
+        
+        str += " "
+        str += "rotation"
+        if abs(modified.frequency) != 1 {
+            str += "s"
+        }
+        
+        return str
     }
 }
 
