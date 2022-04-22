@@ -33,7 +33,9 @@ struct SpinnerEditView: View {
     }
     
     var body: some View {
-        VStack {
+        VStack(alignment: .leading) {
+            Text("Edit Spinner")
+                .font(.title.bold())
             HStack {
                 CancelButton
                 Spacer()
