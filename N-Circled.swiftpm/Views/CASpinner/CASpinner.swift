@@ -303,7 +303,7 @@ func makeGradient(spinner: Spinner) -> CAGradientLayer {
     
     gl.colors = [
         UIColor.systemBackground.cgColor,
-        spinner.color.cgColor,
+        spinner.color.uiColor.cgColor,
     ]
     
     /// Make sure gradient direction matches spin direction.

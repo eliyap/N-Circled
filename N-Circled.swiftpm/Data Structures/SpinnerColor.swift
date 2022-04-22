@@ -14,18 +14,18 @@ public enum SpinnerColor: Int, CaseIterable {
     case yellow
     case green
     
-    var cgColor: CGColor {
+    var uiColor: UIColor {
         switch self {
             case .green:
-                return UIColor.SCGreen.cgColor
+                return UIColor.SCGreen
             case .yellow:
-                return UIColor.SCYellow.cgColor
+                return UIColor.SCYellow
             case .red:
-                return UIColor.SCRed.cgColor
+                return UIColor.SCRed
             case .purple:
-                return UIColor.SCPurple.cgColor
+                return UIColor.SCPurple
             case .blue:
-                return UIColor.SCBlue.cgColor
+                return UIColor.SCBlue
         }
     }
 }
