@@ -51,13 +51,14 @@ struct SpinnerEditView: View {
                 .padding(SpinnerEditView.buttonPadding)
                 .modifier(TwiddleBackground())
             
-            VStack {
-                HStack {
-                    Text(Image(systemName: "dial.min.fill")) + Text(" ") + Text("Spin Start")
-                    
+            VStack(alignment: .leading) {
+                HStack(alignment: .top )  {
+                    VStack(alignment: .leading, spacing: SpinnerEditView.buttonPadding) {
+                        (Text(Image(systemName: "dial.min.fill")) + Text(" ") + Text("Circle Start Angle (Phase)"))
+                        (Text(Image(systemName: "hand.draw.fill")) + Text(" ") + Text("Drag to Adjust"))
+                    }
                     Spacer()
-                    
-                    Text(Image(systemName: "hand.draw.fill")) + Text(" ") + Text("Drag to Adjust")
+                    Text("\(modified.phaseInDegrees)°")
                 }
                     .padding(SpinnerEditView.buttonPadding)
                 
