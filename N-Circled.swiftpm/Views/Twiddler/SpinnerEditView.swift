@@ -32,48 +32,46 @@ struct SpinnerEditView: View {
     }
     
     var body: some View {
-        ScrollView {
-            VStack {
-                HStack {
-                    CancelButton
-                    Spacer()
-                    DoneButton
-                }
-                
-                Stepper(value: $modified.frequency, in: Spinner.allowedFrequencies, step: 1, label: {
-                    Text(Image(systemName: "tornado"))
-                    + Text(" ")
-                    + Text("Do \(modified.frequency) \(modified.frequency == 1 ? "rotation" : "rotations")")
-                })
-                    .padding(SpinnerEditView.buttonPadding)
-                    .modifier(TwiddleBackground())
-                
-                AmplitudeSliderView(spinner: $modified)
-                    .padding(SpinnerEditView.buttonPadding)
-                    .modifier(TwiddleBackground())
-                
-                VStack(alignment: .leading) {
-                    HStack(alignment: .top )  {
-                        VStack(alignment: .leading, spacing: SpinnerEditView.buttonPadding) {
-                            (Text(Image(systemName: "dial.min.fill")) + Text(" ") + Text("Circle Start Angle (Phase)"))
-                            (Text(Image(systemName: "hand.draw.fill")) + Text(" ") + Text("Drag to Adjust"))
-                        }
-                        Spacer()
-                        Text("\(modified.phaseInDegrees)°")
-                    }
-                        .padding(SpinnerEditView.buttonPadding)
-                    
-                    GeometryReader { geo in
-                        DialView(size: geo.size, spinner: $modified)
-                    }
-                        .aspectRatio(1, contentMode: .fit)
-                }
-                    .modifier(TwiddleBackground())
-                
+        VStack {
+            HStack {
+                CancelButton
                 Spacer()
+                DoneButton
             }
-                .padding(SpinnerEditView.buttonPadding * 2)
-        }   
+            
+            Stepper(value: $modified.frequency, in: Spinner.allowedFrequencies, step: 1, label: {
+                Text(Image(systemName: "tornado"))
+                + Text(" ")
+                + Text("Do \(modified.frequency) \(modified.frequency == 1 ? "rotation" : "rotations")")
+            })
+                .padding(SpinnerEditView.buttonPadding)
+                .modifier(TwiddleBackground())
+            
+            AmplitudeSliderView(spinner: $modified)
+                .padding(SpinnerEditView.buttonPadding)
+                .modifier(TwiddleBackground())
+            
+            VStack(alignment: .leading) {
+                HStack(alignment: .top )  {
+                    VStack(alignment: .leading, spacing: SpinnerEditView.buttonPadding) {
+                        (Text(Image(systemName: "dial.min.fill")) + Text(" ") + Text("Circle Start Angle (Phase)"))
+                        (Text(Image(systemName: "hand.draw.fill")) + Text(" ") + Text("Drag to Adjust"))
+                    }
+                    Spacer()
+                    Text("\(modified.phaseInDegrees)°")
+                }
+                    .padding(SpinnerEditView.buttonPadding)
+                
+                GeometryReader { geo in
+                    DialView(size: geo.size, spinner: $modified)
+                }
+                    .aspectRatio(1, contentMode: .fit)
+            }
+                .modifier(TwiddleBackground())
+            
+            Spacer()
+        }
+            .padding(SpinnerEditView.buttonPadding * 2)
     }
     
     public static let buttonPadding: CGFloat = 7.5
