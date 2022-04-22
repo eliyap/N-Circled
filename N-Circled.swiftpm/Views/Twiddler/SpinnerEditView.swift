@@ -76,9 +76,9 @@ struct SpinnerEditView: View {
             Button(role: .destructive, action: {
                 showDeleteAlert = true
             }, label: {
-                Text("Delete Spinner?")
+                Text("Delete Spinner")
             })
-                .alert("Delete Spinner", isPresented: $showDeleteAlert, actions: {
+                .alert("Delete Spinner?", isPresented: $showDeleteAlert, actions: {
                     Button(role: .destructive, action: {
                         bound.spinner = nil
                         presentationMode.wrappedValue.dismiss()
