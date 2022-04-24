@@ -8,14 +8,27 @@
 import Foundation
 
 struct Puzzle {
+    
+    /// Makes `SwiftUI.ForEach` usage easier.
     internal private(set) var id: UUID = .init()
+    
     public var name: String
+    
     public let solution: Solution
+    
+    /// The player's input, compared to the solution to determine "correctness".
     public var attempt: [SpinnerSlot]
+    
+    /// Whether the puzzle is available to try.
     public var unlocked: Bool
+    
+    /// Hints and instructions to get the player started.
     public var playerMessage: String
     
+    /// How "close" players must score to the intended solution.
     public static let scoreThreshold = 0.8
+    
+    /// Shows name and lock status to players.
     internal var displayName: String {
         var str = name
         if unlocked == false {
