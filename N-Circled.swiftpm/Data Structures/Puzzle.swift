@@ -51,6 +51,7 @@ extension Puzzle {
             SpinnerSlot(Spinner(amplitude: 0.66, frequency: -1, phase: .zero, color: SpinnerColor(rawValue: 0)!)),
             SpinnerSlot(Spinner(amplitude: 0.33, frequency: -3, phase: .zero, color: SpinnerColor(rawValue: 1)!)),
             SpinnerSlot(nil),
+            SpinnerSlot(nil),
         ],
         unlocked: false
     )
@@ -62,6 +63,7 @@ extension Puzzle {
             SpinnerSlot(Spinner(amplitude: 0.66, frequency: -1, phase: .zero, color: SpinnerColor(rawValue: 0)!)),
             SpinnerSlot(Spinner(amplitude: 0.33, frequency: -3, phase: .zero, color: SpinnerColor(rawValue: 1)!)),
             SpinnerSlot(nil),
+            SpinnerSlot(nil),
         ],
         unlocked: false
     )
@@ -72,6 +74,8 @@ extension Puzzle {
         attempt: [
             SpinnerSlot(Spinner(amplitude: 0.66, frequency: -1, phase: .zero, color: SpinnerColor(rawValue: 0)!)),
             SpinnerSlot(Spinner(amplitude: 0.33, frequency: -3, phase: .zero, color: SpinnerColor(rawValue: 1)!)),
+            SpinnerSlot(nil),
+            SpinnerSlot(nil),
             SpinnerSlot(nil),
             SpinnerSlot(nil),
         ],
