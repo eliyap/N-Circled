@@ -16,8 +16,6 @@ final class SpinnerHolder: ObservableObject {
         SpinnerSlot(nil),
     ]
     
-    @Published var highlighted: Spinner? = nil
-    
     @Published var gameState: GameState = .thinking
     
     init(spinnerSlots: [SpinnerSlot]) {
