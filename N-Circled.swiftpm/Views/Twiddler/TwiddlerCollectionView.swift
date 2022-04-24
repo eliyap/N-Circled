@@ -11,15 +11,15 @@ struct TwiddlerCollectionView: View {
     
     @ObservedObject public var spinnerHolder: SpinnerHolder
     
-    public static let viewHeight: CGFloat = 100
+    public static let viewWidth: CGFloat = 100
     public static let spacing: CGFloat = 8
     
     var body: some View {
         ScrollView(.vertical) {
             VStack {
                 LazyVGrid(columns: [
-                    GridItem(.fixed(TwiddlerCollectionView.viewHeight), spacing: TwiddlerCollectionView.spacing),
-                    GridItem(.fixed(TwiddlerCollectionView.viewHeight), spacing: TwiddlerCollectionView.spacing),
+                    GridItem(.fixed(TwiddlerCollectionView.viewWidth), spacing: TwiddlerCollectionView.spacing),
+                    GridItem(.fixed(TwiddlerCollectionView.viewWidth), spacing: TwiddlerCollectionView.spacing),
                 ]) {
                     ForEach($spinnerHolder.spinnerSlots) { $spinnerSlot in
                         SpinnerThumbnailView(spinnerSlot: $spinnerSlot, spinnerIndex: spinnerHolder.spinnerSlots.firstIndex(of: spinnerSlot))
@@ -27,7 +27,7 @@ struct TwiddlerCollectionView: View {
                 }
             }
         }
-            .frame(width: TwiddlerCollectionView.viewHeight * 2 + TwiddlerCollectionView.spacing)
+            .frame(width: TwiddlerCollectionView.viewWidth * 2 + TwiddlerCollectionView.spacing)
             .padding(TwiddlerCollectionView.spacing)
             /// Don't allow user interaction while grading.
             .disabled(spinnerHolder.gameState != .thinking)
@@ -65,7 +65,7 @@ struct SpinnerThumbnailView: View {
                 .foregroundColor(.accentColor)
         }
             .padding(3)
-            .frame(width: TwiddlerCollectionView.viewHeight, height: TwiddlerCollectionView.viewHeight)
+            .frame(width: TwiddlerCollectionView.viewWidth, height: TwiddlerCollectionView.viewWidth)
             .aspectRatio(1, contentMode: .fit)
             .background(content: {
                 RoundedRectangle(cornerRadius: cornerRadius)
