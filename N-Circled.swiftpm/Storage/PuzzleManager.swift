@@ -8,6 +8,7 @@
 import Foundation
 import Combine
 
+/// Developer abstraction, auto-saves player's progress to disk.
 internal final class PuzzleManager: ObservableObject {
     @Published public var puzzles: [Puzzle] {
         didSet {

@@ -7,9 +7,14 @@
 
 import Foundation
 
-extension UserDefaults {
+internal extension UserDefaults {
+    
     static var groupSuite = UserDefaults(suiteName: "group.com.wwdc.ncircle")!
 
+    /// Developer abstraction, simply `get` and `set` to
+    /// fetch from / save to disk respectively.
+    ///
+    /// Leverages `Codable` conformance.
     var puzzles: [Puzzle] {
         get {
             guard let data = object(forKey: #function) as? Data else {
