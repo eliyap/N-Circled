@@ -50,6 +50,16 @@ struct ContentView: View {
                             .alert("DEBUG: Unlocked All Puzzles", isPresented: $didUnlockPuzzles) {
                                 Button("OK", role: .cancel) { }
                             }
+                        
+                        /// Set perfect answers for all puzzles.
+                        Button(action: {
+                            for idx in 0..<puzzleManager.puzzles.count {
+                                puzzleManager.puzzles[idx].attempt = puzzleManager.puzzles[idx].solution.spinners.map { spinner in return SpinnerSlot(spinner) }
+                            }
+                        }, label: {
+                            Image(systemName: "rectangle.portrait.and.arrow.right")
+                                .font(.body.bold())
+                        })
                     })
                 })
                 #endif
