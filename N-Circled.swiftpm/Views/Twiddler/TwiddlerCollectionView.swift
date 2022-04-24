@@ -17,7 +17,7 @@ struct TwiddlerCollectionView: View {
     
     var body: some View {
         ScrollView(.vertical) {
-            VStack {
+            VStack(alignment: .leading) {
                 LazyVGrid(columns: [
                     GridItem(.fixed(TwiddlerCollectionView.viewWidth), spacing: TwiddlerCollectionView.spacing),
                     GridItem(.fixed(TwiddlerCollectionView.viewWidth), spacing: TwiddlerCollectionView.spacing),
@@ -26,8 +26,8 @@ struct TwiddlerCollectionView: View {
                         SpinnerThumbnailView(spinnerSlot: $spinnerSlot, spinnerIndex: spinnerHolder.spinnerSlots.firstIndex(of: spinnerSlot))
                     }
                 }
+                Text(playerMessage)
             }
-            Text(playerMessage)
         }
             .frame(width: TwiddlerCollectionView.viewWidth * 2 + TwiddlerCollectionView.spacing)
             .padding(TwiddlerCollectionView.spacing)

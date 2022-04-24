@@ -43,7 +43,17 @@ extension Puzzle {
             SpinnerSlot(Spinner(amplitude: 0.33, frequency: -3, phase: .zero, color: SpinnerColor(rawValue: 1)!)),
         ],
         unlocked: true,
-        playerMessage: ""
+        playerMessage: """
+            👋 Welcome!
+            
+            🫥 In N-Circle, your goal is to match the dotted line
+            
+            🌀 Adjust your spinners to get closer
+            
+            ▶️ When ready, hit Play!
+            
+            ℹ️ Hint: spin in opposite directions
+            """
     )
     
     internal static let Star = Puzzle(
@@ -56,7 +66,11 @@ extension Puzzle {
             SpinnerSlot(nil),
         ],
         unlocked: false,
-        playerMessage: ""
+        playerMessage: """
+            💫 It's hard to believe, but circles can make spiky shapes!
+            
+            ℹ️ Hint: Opposite directions, different frequencies
+            """
     )
     
     internal static let BowTie = Puzzle(
@@ -69,7 +83,11 @@ extension Puzzle {
             SpinnerSlot(nil),
         ],
         unlocked: false,
-        playerMessage: ""
+        playerMessage: """
+            💪 Let's draw a harder shape!
+            
+            ℹ️ Hint: Try frequencies two apart
+            """
     )
     
     internal static let Heart = Puzzle(
@@ -84,6 +102,10 @@ extension Puzzle {
             SpinnerSlot(nil),
         ],
         unlocked: false,
-        playerMessage: ""
+        playerMessage: """
+            💖 Don't give up!
+            
+            ℹ️ Hint: You'll need all spinners but one!
+            """
     )
 }
