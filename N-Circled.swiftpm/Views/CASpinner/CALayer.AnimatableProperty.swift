@@ -20,6 +20,7 @@ extension CALayer {
         case string
     }
     
+    /// Use safer enum keys instead of stringly-typed input.
     func add(_ animation: CAAnimation, property: AnimatableProperty) -> Void {
         /// `async` solves an issue where embedding in `NavigationView` stops the animation on appearance.
         /// Source: https://developer.apple.com/forums/thread/682779
