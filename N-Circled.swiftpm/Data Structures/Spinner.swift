@@ -58,6 +58,7 @@ extension Spinner {
     /// Default line width for rendering.
     public static let lineWidth: CGFloat = 4.0
     
+    /// Circle radius when `radius == 1.0`.
     public static let baseRadius: CGFloat = 200
 }
 
