@@ -293,7 +293,7 @@ final class UIGradingView: UIView {
         
         for sampleNo in 0...sampleCount {
             let proportion: Double = Double(sampleNo) / Double(sampleCount)
-            let score = Solution.score(upTo: sampleNo, of: distances)
+            let score = Scorer.score(upTo: sampleNo, of: distances)
             times.append(proportion as NSNumber)
             barValues.append(score)
             textValues.append("Score: \(Int(score * 100)) / \(Int(Puzzle.scoreThreshold * 100))")
