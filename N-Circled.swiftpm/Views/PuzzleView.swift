@@ -9,8 +9,6 @@ import SwiftUI
 
 struct PuzzleView: View {
     
-    @Environment(\.presentationMode) private var presentationMode
-    
     @StateObject private var spinnerHolder: SpinnerHolder
     
     public static let transitionDuration: TimeInterval = 0.5
@@ -124,11 +122,7 @@ struct PuzzleView: View {
                     .font(.largeTitle)
                 Text("Nice Work!")
                     .font(.title)
-                Button(action: {
-                    presentationMode.wrappedValue.dismiss()
-                }, label: {
-                    Text("Next Puzzle")
-                })
+                Text("⬅️ Try Another?")
             }
                 .padding()
                 .background(content: {
