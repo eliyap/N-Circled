@@ -10,6 +10,8 @@ import KDTree
 
 struct Solution {
     
+    /// Technically speaking, this represents the "ideal" phase, frequency,
+    /// and radius values that result in the traced shape.
     public let spinners: [Spinner]
     
     /// Given a player's puzzle attempt, samples the resulting IDFT and finds 
@@ -35,7 +37,9 @@ struct Solution {
         
         for attemptSample in attemptSamples {
             guard let closest = solutionTree.nearest(to: attemptSample) else {
+                /// Highlight bad values to developer, but silently ignore in production.
                 assert(false, "Could not find closest point to \(attemptSample)")
+                
                 continue
             }
             let distance = sqrt(attemptSample.squaredDistance(to: closest))
