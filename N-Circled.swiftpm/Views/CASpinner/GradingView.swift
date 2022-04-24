@@ -307,7 +307,7 @@ final class UIGradingView: UIView {
         textAnim.keyTimes = times
         textAnim.duration = UIGradingView.animationDuration
         
-        let finalScore = Solution.score(upTo: distances.count, of: distances)
+        let finalScore = Scorer.score(upTo: distances.count, of: distances)
         self.delayAnimation(layer: scoreStrokeLayer, animation: barAnim, property: .strokeEnd, completion: { [weak self] in
             guard let self = self else { return }
             self.scoreStrokeLayer?.strokeEnd = finalScore
