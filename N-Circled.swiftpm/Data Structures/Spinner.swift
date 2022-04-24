@@ -19,6 +19,8 @@ struct Spinner {
     
     /// Discrete frequency.
     public var frequency: Int
+    
+    /// Limited to keep puzzles simple.
     public static let allowedFrequencies = (-5)...(+5)
     
     /// Unit: radians.
@@ -28,15 +30,16 @@ struct Spinner {
     public var color: SpinnerColor
     
     /// Given a proportion in the `[0, 1]` range, returns the angle in radians
-    /// that the `Spinner` points to at that proportion of the way through `frequency`
-    /// complete turns (starting at `phase`).
-    func radians(proportion: Double) -> Double {
+    /// that the `Spinner` points to at that proportion of the way through
+    /// `frequency` complete turns (starting at `phase`).
+    public func radians(proportion: Double) -> Double {
         (proportion * 2 * .pi * CGFloat(frequency)) + phase
     }
     
-    /// Returns a point within the unit circle, from a [0, 1] proportion.
-    /// The full [0, 1] range will show increments through `frequency` full turns.
-    func unitOffset(proportion: Double) -> CGPoint {
+    /// Returns a point within the unit circle, from a `[0, 1]` proportion.
+    /// Iterating over `[0, 1]` will show increments through `frequency` full
+    /// turns.
+    public func unitOffset(proportion: Double) -> CGPoint {
         let angle: CGFloat = self.radians(proportion: proportion)
         return CGPoint(
             x: amplitude * cos(angle),
@@ -44,7 +47,7 @@ struct Spinner {
         )
     }
     
-    var phaseInDegrees: Int {
+    public var phaseInDegrees: Int {
         var phase = phase
         if phase < 0 { phase += 2 * .pi }
         return Int(phase * 360 / (2 * .pi))
@@ -64,8 +67,8 @@ extension Spinner: Codable { /** Automatically synthesized. **/ }
 
 extension Spinner: Hashable { /** Automatically synthesized. **/ }
 
-extension Spinner: CustomStringConvertible {
-    var description: String {
+extension Spinner: CustomDebugStringConvertible {
+    var debugDescription: String {
         String(
             format: """
                 Frequency %d, \
@@ -80,6 +83,7 @@ extension Spinner: CustomStringConvertible {
 }
 
 extension Collection where Element == Spinner {
+    /// Convenience method.
     /// Combines the offsets for all spinners at the same proportion.
     func vectorFor(proportion: Double) -> CGPoint {
         self
@@ -96,7 +100,7 @@ extension Collection where Element == Spinner {
 }
 
 extension Spinner {
-    /// New spinner if one is not available.
+    /// New spinner if one is not available, with a color determined by `index`.
     public static func defaultNew(index: Int) -> Spinner {
         let rawValue = index % SpinnerColor.allCases.count
         let color: SpinnerColor = {
