@@ -15,14 +15,20 @@ struct TwiddlerCollectionView: View {
     public static let spacing: CGFloat = 8
     
     var body: some View {
-        ScrollView(.horizontal) {
-            HStack {
-                ForEach($spinnerHolder.spinnerSlots) { $spinnerSlot in
-                    SpinnerThumbnailView(spinnerSlot: $spinnerSlot, spinnerIndex: spinnerHolder.spinnerSlots.firstIndex(of: spinnerSlot))
+        ScrollView(.vertical) {
+            VStack {
+                LazyVGrid(columns: [
+                    GridItem(.fixed(TwiddlerCollectionView.viewHeight), spacing: TwiddlerCollectionView.spacing),
+                    GridItem(.fixed(TwiddlerCollectionView.viewHeight), spacing: TwiddlerCollectionView.spacing),
+                ]) {
+                    ForEach($spinnerHolder.spinnerSlots) { $spinnerSlot in
+                        SpinnerThumbnailView(spinnerSlot: $spinnerSlot, spinnerIndex: spinnerHolder.spinnerSlots.firstIndex(of: spinnerSlot))
+                    }
                 }
             }
-                .padding(SpinnerThumbnailView.shadowRadius)
         }
+            .frame(width: TwiddlerCollectionView.viewHeight * 2 + TwiddlerCollectionView.spacing)
+            .padding(TwiddlerCollectionView.spacing)
             /// Don't allow user interaction while grading.
             .disabled(spinnerHolder.gameState != .thinking)
     }

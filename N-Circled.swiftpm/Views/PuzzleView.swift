@@ -27,7 +27,7 @@ struct PuzzleView: View {
     
     var body: some View {
         ZStack {
-            VStack {
+            HStack {
                 GeometryReader { geo in
                     if spinnerHolder.gameState == .thinking {
                         CASpinner.init(size: geo.size, spinnerHolder: spinnerHolder, solution: puzzle.solution)
@@ -38,7 +38,6 @@ struct PuzzleView: View {
                     }
                 }
                 TwiddlerCollectionView(spinnerHolder: spinnerHolder)
-                    .frame(height: TwiddlerCollectionView.viewHeight)
             }
             ResultScreen
         }
