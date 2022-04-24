@@ -9,7 +9,7 @@ import SwiftUI
 import Combine
 
 /// A `CoreAnimation` powered view for displaying `Spinner`s.
-struct CASpinner: UIViewRepresentable {
+internal struct CASpinner: UIViewRepresentable {
     typealias UIViewType = CASpinnerView
     
     public let size: CGSize
@@ -27,7 +27,7 @@ struct CASpinner: UIViewRepresentable {
     }
 }
 
-final class CASpinnerView: UIView {
+internal final class CASpinnerView: UIView {
     
     public static let animationDuration: TimeInterval = 4.0
     
@@ -59,8 +59,7 @@ final class CASpinnerView: UIView {
         self.solution = solution
         super.init(frame: .zero)
         
-        addShape(size: size)
-        addSpinners(size: size)
+        redrawSpinners()
         
         let spinnersObserver = spinnerHolder.$spinnerSlots
             .sink(receiveValue: { [weak self] spinnerSlots in
@@ -77,6 +76,17 @@ final class CASpinnerView: UIView {
         })
     }
     
+    public func redrawSpinners() {
+        for sublayer in sublayers {
+            sublayer.removeFromSuperlayer()
+        }
+        addSpinners(size: size)
+        drawSolutionLayer()
+        
+        /// Call last so that layer is frontmost.
+        addShape(size: size)
+    }
+    
     private func drawSolutionLayer() {
         let solutionLayer: CAShapeLayer = .init()
         solutionLayer.path = getIdftPath(spinners: solution.spinners, frameSize: size)
@@ -87,17 +97,6 @@ final class CASpinnerView: UIView {
         solutionLayer.lineDashPattern = [10, 10]
         layer.addSublayer(solutionLayer)
         sublayers.append(solutionLayer)
-    }
-    
-    public func redrawSpinners() {
-        for sublayer in sublayers {
-            sublayer.removeFromSuperlayer()
-        }
-        addSpinners(size: size)
-        drawSolutionLayer()
-        
-        /// Call last so that layer is frontmost.
-        addShape(size: size)
     }
     
     private func addShape(size: CGSize) -> Void {
