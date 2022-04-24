@@ -67,6 +67,7 @@ struct ContentView: View {
             /// Default view when nothing is selected.
             WelcomeView()
         }
+            .navigationViewStyle(.columns)
     }
     
     private func didWinPuzzle(_ puzzle: Puzzle) -> Void {
