@@ -63,6 +63,9 @@ struct ContentView: View {
                     })
                 })
                 #endif
+            
+            /// Default view when nothing is selected.
+            WelcomeView()
         }
     }
     
