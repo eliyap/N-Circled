@@ -78,3 +78,16 @@ struct ContentView: View {
         }
     }
 }
+
+/// Work around `NavigationView`'s limitations as described here:
+/// https://www.hackingwithswift.com/books/ios-swiftui/making-navigationview-work-in-landscape
+fileprivate struct WelcomeView: View {
+    var body: some View {
+        VStack {
+            Text("Welcome to N-Circle!")
+                .font(.largeTitle)
+            Text("⬅️ Select a Puzzle")
+                .foregroundColor(.secondary)
+        }
+    }
+}
