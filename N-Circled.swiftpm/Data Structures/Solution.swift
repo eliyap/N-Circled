@@ -24,7 +24,7 @@ struct Solution {
         var score: Double = .zero
         
         for distance in distances[0..<index] {
-            score += scorer.normalizedScore(distance: distance)
+            score += scorer.score(distance: distance)
         }
         
         /// Normalize score.

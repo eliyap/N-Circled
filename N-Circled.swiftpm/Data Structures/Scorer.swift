@@ -7,40 +7,33 @@
 
 import Foundation
 
+/// Transforms distance between the player's attempt and the intended
+/// solution into a percentage score.
 struct Scorer {
-    let base: Double
-    let maxExponent: Double
-    let scalar: Double
+    
+    /// Parameters for the score calculation.
+    /// Tweaking these affects the "harshness" of the scoring.
+    public let base: Double
+    public let scalar: Double
     
     init(
         base: Double = 2.0,
-        maxExponent: Double = 2.0,
         scalar: Double = 5.0
     ) {
         self.base = base
-        self.maxExponent = maxExponent
         self.scalar = scalar
     }
     
     /** Scores a distance.
      *  Scoring goals:
-     *  - higher is better, better is higher
-     *  - should always be positive
-     *  - bounded values (has a minimum and maximum)
+     *  - higher is better, better is higher (score gradient is always positive)
+     *  - score falls within `[0, 1]` interval.
      *
-     *  Exponents satisfy all these criteria.
+     *  Exponents satisfy all these criteria (provided distance is non-negative).
      */
     func score(distance: Double) -> Double {
         assert(distance >= 0, "Received negative distance: \(distance)")
         
-        return pow(base, maxExponent - (scalar * distance))
-    }
-
-    func normalizedScore(distance: Double) -> Double {
-        return score(distance: distance) / maxScore
-    }
-
-    var maxScore: Double {
-        return pow(base, maxExponent)
+        return pow(base, -scalar * distance)
     }
 }
