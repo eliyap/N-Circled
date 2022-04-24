@@ -43,13 +43,16 @@ struct SpinnerEditView: View {
                 DoneButton
             }
             
-            FrequencyComponent(modified: $modified)
-            
-            AmplitudeSliderView(spinner: $modified)
-                .padding(SpinnerEditView.buttonPadding)
-                .modifier(TwiddleBackground())
-            
-            DialComponent(modified: $modified)
+            AdaptiveStack {
+                VStack(alignment: .leading) {
+                    FrequencyComponent(modified: $modified)
+                    
+                    AmplitudeSliderView(spinner: $modified)
+                        .padding(SpinnerEditView.buttonPadding)
+                        .modifier(TwiddleBackground())
+                }
+                DialComponent(modified: $modified)
+            }
             
             Spacer()
             
