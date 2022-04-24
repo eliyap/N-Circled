@@ -73,7 +73,7 @@ struct ContentView: View {
         }
         
         /// Unlock the next puzzle, if any.
-        if index < puzzleManager.puzzles.count {
+        if index < (puzzleManager.puzzles.endIndex - 1) {
             puzzleManager.puzzles[index + 1].unlocked = true
         }
     }
