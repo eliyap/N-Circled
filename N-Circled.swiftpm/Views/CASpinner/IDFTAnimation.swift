@@ -7,7 +7,6 @@
 
 import UIKit
 
-let baseRadius: CGFloat = 200
 /// Approximate the path traced by taking the Inverse Discrete Fourier Transform
 /// of `spinners`, by sampling points of a complete rotation in steps of size `stepSize`.
 func getIdftPath(
@@ -21,8 +20,8 @@ func getIdftPath(
         var offset: CGPoint = .zero
         for spinner in spinners {
             let spinnerOffset = spinner.unitOffset(proportion: proportion)
-            offset.x += spinnerOffset.x * baseRadius
-            offset.y += spinnerOffset.y * baseRadius
+            offset.x += spinnerOffset.x * Spinner.baseRadius
+            offset.y += spinnerOffset.y * Spinner.baseRadius
         }
         
         /// Rotate point 90 degrees.

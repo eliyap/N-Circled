@@ -120,8 +120,6 @@ internal final class CASpinnerView: UIView {
     }
     
     private func addSpinners(size: CGSize) -> Void {
-        let baseRadius: CGFloat = 200
-        
         var prevLayer: CALayer = layer
         var prevFrameSize: CGSize = size
         var prevSpinner: Spinner? = nil
@@ -129,7 +127,7 @@ internal final class CASpinnerView: UIView {
         for index in spinners.indices {
             let spinner = spinners[index]
             
-            let diameter: CGFloat = baseRadius * spinner.amplitude
+            let diameter: CGFloat = Spinner.baseRadius * spinner.amplitude
             let layerFrame = CGRect(x: 0, y: 0, width: diameter, height: diameter)
             
             /// Create layers.
