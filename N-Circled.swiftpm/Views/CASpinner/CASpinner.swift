@@ -87,6 +87,7 @@ internal final class CASpinnerView: UIView {
         addShape(size: size)
     }
     
+    /// Shows the `Puzzle`'s intended `Solution` as a dotted line.
     private func drawSolutionLayer() {
         let solutionLayer: CAShapeLayer = .init()
         solutionLayer.path = getIdftPath(spinners: solution.spinners, frameSize: size)
@@ -99,6 +100,8 @@ internal final class CASpinnerView: UIView {
         sublayers.append(solutionLayer)
     }
     
+    /// Renders the user's `Puzzle.attempt` as a "streamer"
+    /// to hint at the shape being drawn.
     private func addShape(size: CGSize) -> Void {
         let approxPath: CGPath = getIdftPath(spinners: spinners, frameSize: self.size)
         
@@ -119,6 +122,7 @@ internal final class CASpinnerView: UIView {
         sublayers.append(contentsOf: [strokeStartLayer, strokeEndLayer])
     }
     
+    /// Renders the `Puzzle.attempt` `Spinner`s in a looping animation.
     private func addSpinners(size: CGSize) -> Void {
         var prevLayer: CALayer = layer
         var prevFrameSize: CGSize = size
