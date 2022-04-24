@@ -7,10 +7,14 @@
 
 import UIKit
 
+/// A simplified color representation to allow easy `Hashable`, `Codable`,
+/// etc. conformance.
 public enum SpinnerColor: Int, CaseIterable {
+    
     case blue
     case purple
     case red
+    /// `orange` omitted for being confusingly similar.
     case yellow
     case green
     
@@ -38,7 +42,7 @@ extension SpinnerColor: Hashable { /** Automatically synthesized. **/ }
 
 extension UIColor {
     /// SC could be https://sixcolors.com/
-    /// or Southern California, or SpinnerColor. Pick one.
+    /// or Southern California, or SpinnerColor. Who knows?
     /// Permission obtained from Jason Snell via email.
     static let SCGreen = UIColor(named: "SC_Green")!
     static let SCYellow = UIColor(named: "SC_Yellow")!
@@ -47,12 +51,3 @@ extension UIColor {
     static let SCPurple = UIColor(named: "SC_Purple")!
     static let SCBlue = UIColor(named: "SC_Blue")!
 }
-
-let SCColors: [UIColor] = [
-    .SCGreen,
-    .SCYellow,
-    .SCOrange,
-    .SCRed,
-    .SCPurple,
-    .SCBlue,
-]
