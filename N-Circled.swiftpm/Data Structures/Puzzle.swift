@@ -13,6 +13,7 @@ struct Puzzle {
     public let solution: Solution
     public var attempt: [SpinnerSlot]
     public var unlocked: Bool
+    public var playerMessage: String
     
     public static let scoreThreshold = 0.8
     internal var displayName: String {
@@ -41,7 +42,8 @@ extension Puzzle {
             SpinnerSlot(Spinner(amplitude: 0.66, frequency: -1, phase: .zero, color: SpinnerColor(rawValue: 0)!)),
             SpinnerSlot(Spinner(amplitude: 0.33, frequency: -3, phase: .zero, color: SpinnerColor(rawValue: 1)!)),
         ],
-        unlocked: true
+        unlocked: true,
+        playerMessage: ""
     )
     
     internal static let Star = Puzzle(
@@ -53,7 +55,8 @@ extension Puzzle {
             SpinnerSlot(nil),
             SpinnerSlot(nil),
         ],
-        unlocked: false
+        unlocked: false,
+        playerMessage: ""
     )
     
     internal static let BowTie = Puzzle(
@@ -65,7 +68,8 @@ extension Puzzle {
             SpinnerSlot(nil),
             SpinnerSlot(nil),
         ],
-        unlocked: false
+        unlocked: false,
+        playerMessage: ""
     )
     
     internal static let Heart = Puzzle(
@@ -79,6 +83,7 @@ extension Puzzle {
             SpinnerSlot(nil),
             SpinnerSlot(nil),
         ],
-        unlocked: false
+        unlocked: false,
+        playerMessage: ""
     )
 }

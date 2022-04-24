@@ -37,7 +37,7 @@ struct PuzzleView: View {
                             .transition(.opacity.combined(with: .scale))
                     }
                 }
-                TwiddlerCollectionView(spinnerHolder: spinnerHolder)
+                TwiddlerCollectionView(spinnerHolder: spinnerHolder, playerMessage: puzzle.playerMessage)
             }
             ResultScreen
         }

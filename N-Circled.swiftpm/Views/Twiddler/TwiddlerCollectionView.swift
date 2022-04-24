@@ -10,6 +10,7 @@ import SwiftUI
 struct TwiddlerCollectionView: View {
     
     @ObservedObject public var spinnerHolder: SpinnerHolder
+    public let playerMessage: String
     
     public static let viewWidth: CGFloat = 100
     public static let spacing: CGFloat = 8
@@ -26,6 +27,7 @@ struct TwiddlerCollectionView: View {
                     }
                 }
             }
+            Text(playerMessage)
         }
             .frame(width: TwiddlerCollectionView.viewWidth * 2 + TwiddlerCollectionView.spacing)
             .padding(TwiddlerCollectionView.spacing)
