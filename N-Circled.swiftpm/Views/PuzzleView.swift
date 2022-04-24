@@ -97,6 +97,7 @@ struct PuzzleView: View {
         }
     }
     
+    /// Multiplex over game-state `View`s, including "game in progress" states.
     @ViewBuilder
     private var ResultScreen: some View {
         switch spinnerHolder.gameState {
@@ -109,6 +110,7 @@ struct PuzzleView: View {
         }
     }
     
+    /// Overlay shown when the player wins.
     private var WinScreen: some View {
         Group {
             GeometryReader { geo in
@@ -137,6 +139,7 @@ struct PuzzleView: View {
         }
     }
     
+    /// Overlay shown when the player loses.
     private var LossScreen: some View {
         Group {
             Color(uiColor: .systemBackground)
